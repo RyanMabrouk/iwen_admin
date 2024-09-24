@@ -1,9 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { DashboardNav } from '@/components/dashboard-nav';
 import { navItems } from '@/constants/data';
 import { cn } from '@/lib/utils';
-import { ChevronLeft } from 'lucide-react';
+import {  ChevronRight } from 'lucide-react';
 import { useSidebar } from '@/hooks/useSidebar';
 import Link from 'next/link';
 
@@ -20,13 +20,14 @@ export default function Sidebar({ className }: SidebarProps) {
 
   return (
     <aside
+      dir="rtl"
       className={cn(
         `relative  hidden h-screen flex-none border-r bg-card transition-[width] duration-500 md:block`,
         !isMinimized ? 'w-72' : 'w-[72px]',
         className
       )}
     >
-      <div className="hidden p-5 pt-10 lg:block">
+      <div className="hidden p-5 pt-10 lg:block ml-auto">
         <Link
           href={'https://github.com/Kiranism/next-shadcn-dashboard-starter'}
           target="_blank"
@@ -45,9 +46,9 @@ export default function Sidebar({ className }: SidebarProps) {
           </svg>
         </Link>
       </div>
-      <ChevronLeft
+      <ChevronRight // Use ChevronRight instead of ChevronLeft for RTL
         className={cn(
-          'absolute -right-3 top-10 z-50  cursor-pointer rounded-full border bg-background text-3xl text-foreground',
+          'absolute -left-3 top-10 z-50 cursor-pointer rounded-full border bg-background text-3xl text-foreground', // Change '-right-3' to '-left-3'
           isMinimized && 'rotate-180'
         )}
         onClick={handleToggle}
