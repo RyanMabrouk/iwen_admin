@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className}  `}
+        className={`${inter.className} bg-bgcolor1  `}
         suppressHydrationWarning={true}
       >
         <NextTopLoader showSpinner={false} />

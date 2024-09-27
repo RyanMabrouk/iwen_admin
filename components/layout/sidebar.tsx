@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import {  ChevronRight } from 'lucide-react';
 import { useSidebar } from '@/hooks/useSidebar';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type SidebarProps = {
   className?: string;
@@ -22,7 +23,7 @@ export default function Sidebar({ className }: SidebarProps) {
     <aside
       dir="rtl"
       className={cn(
-        `relative  hidden h-screen flex-none border-r bg-card transition-[width] duration-500 md:block`,
+        `relative  hidden  flex-none border-r bg-color1 text-white transition-[width] duration-500 md:block`,
         !isMinimized ? 'w-72' : 'w-[72px]',
         className
       )}
@@ -32,18 +33,7 @@ export default function Sidebar({ className }: SidebarProps) {
           href={'https://github.com/Kiranism/next-shadcn-dashboard-starter'}
           target="_blank"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2 h-6 w-6"
-          >
-            <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-          </svg>
+          <Image src="/logo.png" width={150} height={150} alt="logo" />
         </Link>
       </div>
       <ChevronRight // Use ChevronRight instead of ChevronLeft for RTL

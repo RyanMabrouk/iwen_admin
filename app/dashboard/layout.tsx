@@ -15,7 +15,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex">
-      <main className="w-full flex-1 overflow-hidden">
+      <main className="w-full flex-1 overflow-hidden " >
         <Header />
         {children}
       </main>

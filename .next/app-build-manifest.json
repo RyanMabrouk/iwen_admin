@@ -21,15 +21,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/dashboard/addBook/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/dashboard/addBook/page.js"
+    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/dashboard/addBook/page": [
+    "/(auth)/(signin)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/addBook/page.js"
+      "static/chunks/app/(auth)/(signin)/page.js"
     ],
     "/dashboard/user/page": [
       "static/chunks/webpack.js",
