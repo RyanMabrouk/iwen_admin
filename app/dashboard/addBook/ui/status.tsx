@@ -1,7 +1,7 @@
-"use client";
-
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+'use client';
+import SelectGeneric from '@/components/selectGeneric';
 import React from 'react';
+import AddWindow from './addTools/addWindow';
 
 const Options: { label: string; value: string }[] = [
   { label: 'أ', value: '1' },
@@ -12,18 +12,14 @@ export default function Status() {
   return (
     <div>
       <label className="block font-semibold">الحالة</label>
-      <Select name='status'>
-        <SelectTrigger dir='rtl' className='w-[10rem]'>
-          <SelectValue placeholder="أدخل الحالة" />
-        </SelectTrigger>
-        <SelectContent dir='rtl'>
-          {Options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex items-center gap-2">
+        <SelectGeneric options={Options} placeholder="أدخل الحالة" name="status" />
+        <AddWindow
+          title="إضافة حالة"
+          placeholder="أدخل اسم الحالة"
+          tableName="statuses"
+        />
+      </div>
     </div>
   );
 }

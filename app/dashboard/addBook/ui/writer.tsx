@@ -1,28 +1,29 @@
-"use client"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import React from 'react'
+'use client';
+import SelectGeneric from '@/components/selectGeneric';
+import React from 'react';
+import AddWindow from './addTools/addWindow';
+
 const Options: { label: string; value: string }[] = [
-    { label: 'أ', value: '1' },
-    { label: 'ب', value: '2' }
-  ];
+  { label: 'أ', value: '1' },
+  { label: 'ب', value: '2' }
+];
 
 export default function Writer() {
   return (
     <div>
-    <label className="block font-semibold">المؤلف</label>
-    <Select name='writer'>
-      <SelectTrigger dir='rtl' className='w-[10rem]'>
-        <SelectValue placeholder="أدخل المؤلف" />
-      </SelectTrigger>
-      <SelectContent dir='rtl'>
-        {Options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-
-  </div>
-  )
+      <label className="block font-semibold">المؤلف</label>
+      <div className="flex items-center gap-2">
+        <SelectGeneric
+          options={Options}
+          placeholder="أدخل المؤلف"
+          name="writer"
+        />
+        <AddWindow       
+          title="إضافة مؤلف" 
+          placeholder="أدخل اسم المؤلف" 
+          tableName="writers" 
+        /> 
+      </div>
+    </div>
+  );
 }

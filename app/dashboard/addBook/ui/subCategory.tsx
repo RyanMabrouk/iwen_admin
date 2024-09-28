@@ -1,28 +1,29 @@
-"use client"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import React from 'react'
+'use client';
+import SelectGeneric from '@/components/selectGeneric';
+import React from 'react';
+import AddWindow from './addTools/addWindow';
+
 const Options: { label: string; value: string }[] = [
-    { label: 'أ', value: '1' },
-    { label: 'ب', value: '2' }
-  ];
+  { label: 'أ', value: '1' },
+  { label: 'ب', value: '2' }
+];
+
 export default function SubCategory() {
   return (
-
     <div>
-    <label className="block font-semibold">الفئة الفرعية</label>
-    <Select name='subCategory'>
-      <SelectTrigger dir='rtl' className='w-[10rem]'>
-        <SelectValue placeholder="أدخل الفئة الفرعية" />
-      </SelectTrigger>
-      <SelectContent dir='rtl'>
-        {Options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-
-  </div>
-  )
+      <label className="block font-semibold">الفئة الفرعية</label>
+      <div className="flex items-center gap-2">
+        <SelectGeneric
+          options={Options}
+          placeholder="أدخل الفئة الفرعية"
+          name="subCategory"
+        />
+        <AddWindow       
+          title="إضافة فئة فرعية" 
+          placeholder="أدخل اسم الفئة الفرعية" 
+          tableName="subCategories" 
+        /> 
+      </div>
+    </div>
+  );
 }

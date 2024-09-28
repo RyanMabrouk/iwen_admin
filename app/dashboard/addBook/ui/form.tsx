@@ -1,22 +1,23 @@
-import React from 'react';
-import BookPic from './bookPic';
-import Writer from './writer';
-import ShareHouse from './shareHouse';
-import Status from './status';
-import Category from './category';
-import SubCategory from './subCategory';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import BookPic from "./bookPic";
+
+import { Button } from "@/components/ui/button";
+import Writer from "./writer";
+import ShareHouse from "./shareHouse";
+import Status from "./status";
+import Category from "./category";
+import SubCategory from "./subCategory";
 
 export default function Form() {
   return (
-    <form className="flex flex-col gap-4 ">
+    <form className="flex flex-col gap-4">
       <BookPic />
       <div>
         <label className="block font-semibold">العنوان</label>
         <input
           type="text"
           name="title"
-          className="mt-2 w-full rounded-sm  border border-gray-300 p-2 focus:outline-none"
+          className="mt-2 w-full rounded-sm border border-gray-300 p-2 focus:outline-none"
           placeholder="أدخل العنوان"
         />
       </div>
@@ -50,7 +51,7 @@ export default function Form() {
           placeholder="أدخل الوصف"
         />
       </div>
-      <Category />
+      <Category/>
       <SubCategory />
 
       <div>
@@ -81,9 +82,7 @@ export default function Form() {
         />
       </div>
       <div>
-        <label className="block font-semibold">
-          الرقم الدولي الموحد للكتاب
-        </label>
+        <label className="block font-semibold">الرقم الدولي الموحد للكتاب</label>
         <input
           type="text"
           name="isbn"
@@ -127,7 +126,8 @@ export default function Form() {
           placeholder="أدخل المخزون"
         />
       </div>
-        <Button className="mt-5 text-lg text-white bg-color2  w-fit">اضافة الكتاب</Button>
+      <Button className="mt-5 text-lg text-white bg-color2  w-fit">اضافة الكتاب</Button>
+
     </form>
   );
 }

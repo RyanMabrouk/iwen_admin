@@ -18,7 +18,7 @@ import * as z from 'zod';
 import GithubSignInButton from '../github-auth-button';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' })
+  email: z.string().email({ message: 'أدخل عنوان بريد إلكتروني صالح' })
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
@@ -50,15 +50,16 @@ export default function UserAuthForm() {
           className="w-full space-y-2"
         >
           <FormField
+            
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
+              <FormItem dir='rtl'>
+                <FormLabel>البريد الإلكتروني</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="Enter your email..."
+                    placeholder="أدخل بريدك الإلكتروني..."
                     disabled={loading}
                     {...field}
                   />
@@ -68,9 +69,9 @@ export default function UserAuthForm() {
             )}
           />
 
-          <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
-          </Button>
+          <button disabled={loading} className="ml-auto p-2 bg-color2 text-white w-full" type="submit">
+            المتابعة باستخدام البريد الإلكتروني
+          </button>
         </form>
       </Form>
       <div className="relative">
@@ -79,7 +80,7 @@ export default function UserAuthForm() {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            أو المتابعة باستخدام
           </span>
         </div>
       </div>

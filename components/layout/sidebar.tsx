@@ -29,12 +29,7 @@ export default function Sidebar({ className }: SidebarProps) {
       )}
     >
       <div className="hidden p-5 pt-10 lg:block ml-auto">
-        <Link
-          href={'https://github.com/Kiranism/next-shadcn-dashboard-starter'}
-          target="_blank"
-        >
           <Image src="/logo.png" width={150} height={150} alt="logo" />
-        </Link>
       </div>
       <ChevronRight // Use ChevronRight instead of ChevronLeft for RTL
         className={cn(

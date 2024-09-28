@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/dashboard/page": [
+    "/dashboard/addBook/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/page.js"
+      "static/chunks/app/dashboard/addBook/page.js"
     ],
     "/dashboard/layout": [
       "static/chunks/webpack.js",
@@ -21,11 +21,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/dashboard/addBook/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/addBook/page.js"
-    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -36,10 +31,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/(signin)/page.js"
     ],
-    "/dashboard/user/page": [
+    "/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/user/page.js"
+      "static/chunks/app/dashboard/page.js"
     ]
   }
 }
