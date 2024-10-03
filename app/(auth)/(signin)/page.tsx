@@ -22,8 +22,9 @@ export default function AuthenticationPage() {
       >
         تسجيل الدخول
       </Link>
-      <div className="relative hidden h-full flex-col bg-color1 p-10 text-white lg:flex ">
-          <Image src="/logo.png" width={300} height={300} alt="شعار" className='m-auto' />
+      <div className="relative hidden h-full flex-col justify-center items-center bg-color1 p-10 text-white lg:flex ">
+          <Image src="/logo.png" width={300} height={300} alt="شعار"  />
+          <div dir='rtl' className='text-center text-xl mt-5 '>من أجل خدمة أفضل للعلم و أهله</div>
       </div>
       <div className="flex h-full bg-bgcolor1 items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
