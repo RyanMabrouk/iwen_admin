@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { Icons } from '@/components/icons';
 import { cn } from '@/lib/utils';
+
 import { NavItem } from '@/types';
 import { Dispatch, SetStateAction } from 'react';
 import { useSidebar } from '@/hooks/useSidebar';
@@ -14,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
-import signOut from '@/actions/(auth)/signout';
+import ConfirmationWindow from '@/app/dashboard/ui/confirmationWindow';
 
 interface DashboardNavProps {
   items: NavItem[];
@@ -29,6 +31,7 @@ export function DashboardNav({
 }: DashboardNavProps) {
   const path = usePathname();
   const { isMinimized } = useSidebar();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (!items?.length) {
     return null;
@@ -41,43 +44,57 @@ export function DashboardNav({
           const Icon = Icons[item.icon || 'arrowRight'];
 
           return (
-            item.href && (
-              <Tooltip key={index}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={item.disabled ? '/' : item.href}
+            <Tooltip key={index}>
+              <TooltipTrigger asChild>
+                {item.label === 'logOut' ? (
+                  <button
                     className={cn(
-                      'flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium ',
-                      item.disabled && 'cursor-not-allowed opacity-80'
+                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:opacity-50'
                     )}
-                    onClick={async () => {
-                      if (setOpen) setOpen(false);
-                      if (item.label === 'logOut') {
-                        await signOut(); 
-                      }
-                    }}
+                    onClick={() => setIsDialogOpen(true)}
                   >
-                    <Icon className={`ml-3 size-5 flex-none`} />
+                    <Icon className="ml-3 size-5 flex-none" />
+                    {isMobileNav || (!isMinimized && !isMobileNav) ? (
+                      <span className="mr-2 truncate">{item.title}</span>
+                    ) : (
+                      ''
+                    )}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.disabled ? '/' : item?.href || '/'}
+                    className={cn(
+                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-sm font-medium',
+                      item.disabled && 'cursor-not-allowed opacity-80',
+                      path === item.href && 'bg-white text-color1',
+                      path !== item.href ? 'hover:opacity-50' : ''
+                    )}
+                  >
+                    <Icon className="ml-3 size-5 flex-none" />
                     {isMobileNav || (!isMinimized && !isMobileNav) ? (
                       <span className="mr-2 truncate">{item.title}</span>
                     ) : (
                       ''
                     )}
                   </Link>
-                </TooltipTrigger>
-                <TooltipContent
-                  align="center"
-                  side="right"
-                  sideOffset={8}
-                  className={!isMinimized ? 'hidden' : 'inline-block'}
-                >
-                  {item.title}
-                </TooltipContent>
-              </Tooltip>
-            )
+                )}
+              </TooltipTrigger>
+              <TooltipContent
+                align="center"
+                side="right"
+                sideOffset={8}
+                className={!isMinimized ? 'hidden' : 'inline-block'}
+              >
+                {item.title}
+              </TooltipContent>
+            </Tooltip>
           );
         })}
       </TooltipProvider>
+      
+      {isDialogOpen && (
+        <ConfirmationWindow isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+      )}
     </nav>
   );
 }
