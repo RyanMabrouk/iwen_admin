@@ -20,31 +20,27 @@
         "app/(auth)/(signin)/page": "action-browser"
       }
     },
-    "85e5761a0af274c385aed2aabc632cdd7618e485": {
-      "workers": {
-        "app/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/dashboard/page": "action-browser",
-        "app/dashboard/user/page": "action-browser",
-        "app/dashboard/addBook/page": "action-browser"
-      }
-    },
     "bcf472d9fb230a0f3ebfb2c6f9d66e2355bb6ae8": {
       "workers": {
         "app/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
         "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/dashboard/page": "action-browser",
-        "app/dashboard/user/page": "action-browser",
+        "app/dashboard/addBook/page": "action-browser"
+      }
+    },
+    "85e5761a0af274c385aed2aabc632cdd7618e485": {
+      "workers": {
+        "app/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
+        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/dashboard/page": "action-browser",
         "app/dashboard/addBook/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "rLdXzSc8ajtVgSG+jDh1bVRBt3Knp6x1ZVDVY4Bh/2c="
+  "encryptionKey": "YzlEMuciJovoeWMYS6PUSd4u2Cztw9DFC04OzQR4M18="
 }
