@@ -1,4 +1,5 @@
-'use client';
+"use client"
+import signOut from '@/actions/(auth)/signout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,20 +12,20 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { signOut, useSession } from 'next-auth/react';
-export function UserNav() {
-  const { data: session } = useSession();
-  if (session) {
+import useUser from '@/hooks/data/user/useUser';
+export  function UserNav() {
+  const {data:user} = useUser()
+  if (user) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
               <AvatarImage
-                src={session.user?.image ?? ''}
-                alt={session.user?.name ?? ''}
+                src={user.data?.avatar}
+                alt={user.data?.first_name + ' ' + user.data?.last_name}
               />
-              <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
+              <AvatarFallback>{user.data?.first_name + ' ' + user.data?.last_name}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -32,10 +33,10 @@ export function UserNav() {
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">
-                {session.user?.name}
+                {user.data?.first_name + ' ' + user.data?.last_name}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                {session.user?.email}
+                {user.data?.email}
               </p>
             </div>
           </DropdownMenuLabel>

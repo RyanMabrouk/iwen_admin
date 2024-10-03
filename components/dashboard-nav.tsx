@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
+import signOut from '@/actions/(auth)/signout';
 
 interface DashboardNavProps {
   items: NavItem[];
@@ -32,11 +33,13 @@ export function DashboardNav({
   if (!items?.length) {
     return null;
   }
+
   return (
     <nav className="grid items-start gap-2">
       <TooltipProvider>
         {items.map((item, index) => {
           const Icon = Icons[item.icon || 'arrowRight'];
+
           return (
             item.href && (
               <Tooltip key={index}>
@@ -45,15 +48,16 @@ export function DashboardNav({
                     href={item.disabled ? '/' : item.href}
                     className={cn(
                       'flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium ',
-                     /* path === item.href ? 'bg-accent' : 'transparent',*/
                       item.disabled && 'cursor-not-allowed opacity-80'
                     )}
-                    onClick={() => {
+                    onClick={async () => {
                       if (setOpen) setOpen(false);
+                      if (item.label === 'logOut') {
+                        await signOut(); 
+                      }
                     }}
                   >
                     <Icon className={`ml-3 size-5 flex-none`} />
-
                     {isMobileNav || (!isMinimized && !isMobileNav) ? (
                       <span className="mr-2 truncate">{item.title}</span>
                     ) : (

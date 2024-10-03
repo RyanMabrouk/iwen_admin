@@ -130,9 +130,9 @@ export const navItems: NavItem[] = [
     label: 'add book'
   },
   {
-    title: 'Login',
+    title: 'تسجي الخروج',
     href: '/',
     icon: 'login',
-    label: 'login'
+    label: 'logOut'
   }
 ];
