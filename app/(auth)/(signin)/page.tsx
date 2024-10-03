@@ -38,7 +38,7 @@ export default async function AuthenticationPage() {
             تسجيل الدخول
             </h1>
             <p className="text-sm text-muted-foreground">
-              أدخل بيانات حسابك أدناه تسجيل الدخول
+              أدخل بيانات حسابك أدناه لتسجيل الدخول
 
             </p>
           </div>

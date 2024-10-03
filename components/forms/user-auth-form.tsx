@@ -28,13 +28,9 @@ type UserFormValue = z.infer<typeof formSchema>;
 export default function UserAuthForm() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ general?: string } | null>(null);
-  const defaultValues = {
-    email: 'demo@gmail.com',
-    password: 'fofuorecom'
-  };
+
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
-    defaultValues
   });
    const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
