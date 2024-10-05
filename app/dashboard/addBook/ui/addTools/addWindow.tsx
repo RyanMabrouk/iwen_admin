@@ -9,14 +9,16 @@ import {
 } from '@/components/ui/dialog';
 import { Icons } from '@/components/icons';
 import ConfirmationWindow from './confirmationWindow';
+import { IResourse } from '@/services/getEndpoint';
 
 interface AddWindowProps {
   title: string;
   placeholder: string;
-  tableName: string;
+  url: string;
+  resourse: IResourse;
 }
 
-export default function AddWindow({ title, placeholder, tableName }: AddWindowProps) {
+export default function AddWindow({ title, placeholder, url , resourse }: AddWindowProps) {
   const [inputValue, setInputValue] = useState('');
 
   return (
@@ -28,20 +30,20 @@ export default function AddWindow({ title, placeholder, tableName }: AddWindowPr
         <DialogTitle>{title}</DialogTitle>
         <input
           type="text"
-          name={tableName}
+          name="title"
           className="mt-2 w-full rounded-sm border border-gray-300 p-2 focus:outline-none"
           placeholder={placeholder}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
         <div className="flex w-full justify-between">
-          <ConfirmationWindow thing={inputValue} tableName={tableName} />
+          <ConfirmationWindow name={inputValue} url={url} resource={resourse}/>
+
           <DialogClose asChild>
-            <button 
-              className="mt-5 w-fit rounded-md border bg-white px-4 py-2 text-lg text-color2 shadow-md">
+            <button className="mt-5 w-fit rounded-md border bg-white px-4 py-2 text-lg text-color2 shadow-md">
               الغاء
             </button>
-          </DialogClose> 
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>

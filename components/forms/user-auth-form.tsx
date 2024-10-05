@@ -35,10 +35,6 @@ export default function UserAuthForm() {
    const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: async (formObject: FormData) => {
-      const data = Object.fromEntries(formObject) as {
-        email: string;
-        password: string;
-      };
       const email = String(formObject.get("email")) ;
       const password = String(formObject.get("password")) ;
       const { error } = await login({ email, password });
@@ -104,7 +100,7 @@ export default function UserAuthForm() {
 
           <button
             disabled={loading}
-            className="ml-auto w-full bg-color2 p-2 text-white"
+            className="hover:opacity-50 ml-auto w-full bg-color2 p-2 text-white"
             type="submit"
           >
             تأكيد الدخول
