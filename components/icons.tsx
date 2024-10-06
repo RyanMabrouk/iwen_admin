@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  Book,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -39,6 +40,7 @@ export const Icons = {
   logo: Command,
   login: LogIn,
   close: X,
+  book: Book,
   profile: User2Icon,
   spinner: Loader2,
   kanban: CircuitBoardIcon,

@@ -124,10 +124,18 @@ export const navItems: NavItem[] = [
     label: 'user'
   },
   {
+    title: 'الكتب',
+    href: '/dashboard/books',
+    icon: 'book',
+    label: 'books'
+
+  }
+  ,
+  {
     title: 'إضافة كتاب',
     href: '/dashboard/addBook',
     icon: 'add',
-    label: 'add book'
+    label: 'addBook'
   },
   {
     title: 'تسجي الخروج',

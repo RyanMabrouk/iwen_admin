@@ -1,59 +1,59 @@
-"use client";
-import React, { useState } from "react";
-import Writer from "./writer";
-import Status from "./status";
-import Category from "./category";
-import SubCategory from "./subCategory";
-import PictureUploader from "./picture_uploader";
-import CoverTypes from "./coverType";
-import PublishHouse from "./publishHouse";
-import { useMutation } from "@tanstack/react-query";
-import { uploadFile } from "@/app/api/uploadFile";
-import getEndpoint from "@/services/getEndpoint";
-import CRUDData from "@/services/CRUDData";
-import { useToast } from "@/components/ui/use-toast";
+'use client';
+import React, { useState, useRef } from 'react';
+import Writer from './writer';
+import Status from './status';
+import Category from './category';
+import SubCategory from './subCategory';
+import PictureUploader from './picture_uploader';
+import CoverTypes from './coverType';
+import PublishHouse from './publishHouse';
+import { useMutation } from '@tanstack/react-query';
+import { uploadFile } from '@/app/api/uploadFile';
+import { useToast } from '@/components/ui/use-toast';
 import { v4 as uuidv4 } from 'uuid';
-
+import CRUDData from '@/services/CRUDData';
+import getEndpoint from '@/services/getEndpoint';
 
 export default function Form() {
   const [images, setImages] = useState<File[]>([]);
-  const url = getEndpoint({ resourse: "books", action: "createBook" });
-  const toast=useToast();
-
+  const formRef = useRef<HTMLFormElement>(null); // Reference to form element
+  const url = getEndpoint({ resourse: 'books', action: 'createBook' });
+  const toast = useToast();
   const addBookMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const title = String(formData.get("title"));
-      const writer_id = String(formData.get("writer")); // Assuming you have a writerId input
-      const share_house_id = String(formData.get("shareHouse")); // Assuming you have a shareHouseId input
-      const editor = String(formData.get("editor"));
-      const release_year = Number(formData.get("releaseYear"));
-      const status = String(formData.get("status"));
-      const description = String(formData.get("description"));
-      const category = String(formData.get("category"));
-      const subcategory = String(formData.get("subCategory"));
-      const cover_type_id = String(formData.get("cover_type")); // Assuming you have a coverType input
-      const weight = Number(formData.get("weight"));
-      const page_count = Number(formData.get("pageCount"));
-      const isbn = String(formData.get("isbn"));
-      const price = Number(formData.get("priceDinar"));
-      const price_usd = Number(formData.get("priceDollar"));
-      const discount = Number(formData.get("discount"));
-      const stock = Number(formData.get("stock"));
-      
+      const title = String(formData.get('title'));
+      const writer_id = String(formData.get('writer'));
+      const share_house_id = String(formData.get('shareHouse'));
+      const editor = String(formData.get('editor'));
+      const release_year = Number(formData.get('releaseYear'));
+      const status = String(formData.get('status'));
+      const description = String(formData.get('description'));
+      const category = String(formData.get('category'));
+      const subcategory = String(formData.get('subCategory'));
+      const cover_type_id = String(formData.get('cover_type'));
+      const weight = Number(formData.get('weight'));
+      const page_count = Number(formData.get('pageCount'));
+      const isbn = String(formData.get('isbn'));
+      const price = Number(formData.get('priceDinar'));
+      const price_usd = Number(formData.get('priceDollar'));
+      const discount = Number(formData.get('discount'));
+      const stock = Number(formData.get('stock'));
+
       let images_urls: string[] = [];
       if (images.length > 0) {
         images_urls = await Promise.all(
           images.map(async (image) => {
             const formDataImage = new FormData();
-            formDataImage.append("file", image);
+            formDataImage.append('file', image);
             return await uploadFile({
               formData: formDataImage,
-              name: "file",
-              title: uuidv4(),
+              name: 'file',
+              title: uuidv4()
             });
           })
         );
       }
+
       const payload = {
         title,
         writer_id,
@@ -73,28 +73,33 @@ export default function Form() {
         subcategories_ids: [subcategory],
         cover_type_id,
         status,
-        discount_type : "percentage",
+        discount_type: 'percentage'
       };
-      console.log("🚀 ~ mutationFn: ~ payload:", payload)
-      const{error} = await CRUDData({ method: "POST", url: url(), payload });
+
+      const { error } = await CRUDData({ method: 'POST', url: url(), payload });
       if (error) {
-        throw new  Error(error);
+        throw new Error(error);
       }
     },
     onSuccess: () => {
-      toast.toast({ description: "تمت عملية الإضافة بنجاح" });
-    }
-    ,
+      toast.toast({ description: 'تمت عملية الإضافة بنجاح' });
+
+      // Reset the form after a successful submission
+      if (formRef.current) {
+        formRef.current.reset();
+        setImages([]); // Reset the images state
+      }
+    },
     onError: (error) => {
       console.log(error);
-      toast.toast({ description: "حدث خطأ أثناء عملية الإضافة"  });
-    },
+      toast.toast({ description: 'حدث خطأ أثناء عملية الإضافة' });
+    }
   });
-
   return (
-    <form className="flex flex-col gap-4"
-    action={addBookMutation.mutate}
-    
+    <form
+      ref={formRef}
+      className="flex flex-col gap-4 "
+      action={addBookMutation.mutate}
     >
       <PictureUploader images={images} setImages={setImages} />
       <div>
@@ -158,7 +163,9 @@ export default function Form() {
         />
       </div>
       <div>
-        <label className="block font-semibold">الرقم الدولي الموحد للكتاب</label>
+        <label className="block font-semibold">
+          الرقم الدولي الموحد للكتاب
+        </label>
         <input
           type="text"
           name="isbn"
@@ -202,7 +209,10 @@ export default function Form() {
           placeholder="أدخل المخزون"
         />
       </div>
-      <button className="hover:opacity-50 mt-5 text-lg text-white bg-color2 rounded-sm w-fit px-4 py-2">
+      <button
+        type="submit" // Change the button to submit type
+        className="mt-5 w-fit rounded-sm bg-color2 px-4 py-2 text-lg text-white hover:opacity-50"
+      >
         اضافة الكتاب
       </button>
     </form>
