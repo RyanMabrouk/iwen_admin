@@ -1,55 +1,33 @@
-import { infinityPagination } from "@/helpers/infinityPagination";
-import CRUDData from "@/services/CRUDData";
-import getEndpoint from "@/services/getEndpoint";
+import createNewPathname from '@/helpers/createNewPathname';
+import CRUDData from '@/services/CRUDData';
+import getEndpoint from '@/services/getEndpoint';
+import {
+  IBookPopulated,
+  InfinityPaginationQueryType,
+  InfinityPaginationResultType
+} from '@/types';
+import { Tables } from '@/types/database.types';
 
-type CRUDDataResponse = {
-  data?: {
-    count?: number;
-    [key: string]: any;
-  };
-  error?: any;
-};
-const booksQuery = (args: {
-  pagination?:{
-    limit: number;
-    page: number;
-  }
-  search?: { columns: string[]; value: string };
-}) => ({
-  queryKey: ["books"],
+const booksQuery = (
+  args: InfinityPaginationQueryType<`books.${keyof Tables<'books'>}`>
+) => ({
+  queryKey: ['books',args],
   queryFn: async () => {
-    const url = await getEndpoint({ resourse: "books", action: "getBooks" });
-    const [data, countData] = await Promise.all([
-      CRUDData({
-        method: "GET",
-        url: url(),
-        pagination: args.pagination,
-      }) as Promise<CRUDDataResponse>,
-      CRUDData({
-        method: "GET",
-        url: url(),
-        pagination: args.pagination,
-      }).then((res) => ({
-        count: (res as CRUDDataResponse).data?.count ?? 0, 
-        error: res.error,
-      })),
-    ]);
+    const url = getEndpoint({ resourse: 'books', action: 'getBooks' });
+    const searchParams = Object.keys(args).map((key) => ({
+      name: key,
+      value: JSON.stringify(args[key as keyof typeof args])
+    }));
+    const newUrl= createNewPathname({currentPathname: url() , values : searchParams   })
+    const { error, data } = await CRUDData<
+      InfinityPaginationResultType<IBookPopulated>
+    >({
+      method: 'GET',
+      url: newUrl
+    });
 
-    if (args.pagination) {
-      return infinityPagination(Array.isArray(data?.data) ? data.data : [], {
-        total_count: countData.count ?? 0,
-        limit: args.pagination.limit,
-        page: args.pagination.page,
-      });
-    } else {
-      return {
-        data: data?.data ?? [],
-        meta: null,
-        error: data.error || countData.error,
-        count: countData.count,
-      };
-    }
-  },
+    if (error) return { data: null, error: error };
+    else return { data, error: null };
+  }
 });
-
 export { booksQuery };

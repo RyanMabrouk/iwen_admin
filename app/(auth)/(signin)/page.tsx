@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function AuthenticationPage() {
   const { session } = await getSession();
-  if (session) redirect("/dashboard");
+  if (session) redirect("/dashboard/addBook");
   
   return (
     <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">

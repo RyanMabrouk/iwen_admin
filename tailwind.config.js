@@ -1,12 +1,14 @@
+const {nextui} = require('@nextui-org/theme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './constants/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}'
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./constants/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./node_modules/@nextui-org/theme/dist/components/(table|checkbox|spacer).js"
   ],
   theme: {
     container: {
@@ -78,5 +80,4 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
-};
+  plugins: [require(tailwindcss-animate),nextui()]};

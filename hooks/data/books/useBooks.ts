@@ -1,13 +1,9 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { booksQuery } from "./booksQuery";
-export default function useBooks({pagination,search}:{ pagination?:{
-  limit: number;
-  page: number;
-};
-search?: { columns: string[]; value: string };
-
-} = {}) {
-  const query = useQuery(booksQuery({ pagination, search}));
+import { InfinityPaginationQueryType } from "@/types";
+import { Tables } from "@/types/database.types";
+export default function useBooks(args:InfinityPaginationQueryType<`books.${keyof Tables<"books">}`>) {
+  const query = useQuery(booksQuery(args));
   return query;
 }
