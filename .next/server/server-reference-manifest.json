@@ -1,98 +1,64 @@
 {
   "node": {
-    "896ff3523927594c990208f1fab378bd2e6a793b": {
+    "27e7e8938c0cf62b07acfdc85afecb7799fb76c7": {
       "workers": {
-        "app/(auth)/(signin)/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
-        "app/dashboard/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
-        "app/dashboard/addBook/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
-        "app/dashboard/user/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
-        "app/dashboard/books/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
-        "app/dashboard/user/[userId]/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!"
+        "app/(auth)/(signin)/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
+        "app/dashboard/addBook/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!",
+        "app/dashboard/books/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetSession.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!"
       },
       "layer": {
         "app/(auth)/(signin)/page": "rsc",
-        "app/dashboard/page": "rsc",
         "app/dashboard/addBook/page": "rsc",
-        "app/dashboard/user/page": "rsc",
-        "app/dashboard/books/page": "rsc",
-        "app/dashboard/user/[userId]/page": "rsc"
+        "app/dashboard/books/page": "rsc"
       }
     },
-    "4b532269d91397137995336a6182687c8bbb97e5": {
+    "49d8190a6cbd681f48acd391a83af2151fd15fdf": {
       "workers": {
-        "app/(auth)/(signin)/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Clogin.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+        "app/(auth)/(signin)/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Clogin.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/(auth)/(signin)/page": "action-browser"
       }
     },
-    "bcf472d9fb230a0f3ebfb2c6f9d66e2355bb6ae8": {
+    "3ffa44e6bbc2573a2a0d8fc2a75c110c4469e8ba": {
       "workers": {
-        "app/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/[userId]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/dashboard/page": "action-browser",
-        "app/dashboard/addBook/page": "action-browser",
-        "app/dashboard/user/page": "action-browser",
-        "app/dashboard/books/page": "action-browser",
-        "app/dashboard/user/[userId]/page": "action-browser"
-      }
-    },
-    "85e5761a0af274c385aed2aabc632cdd7618e485": {
-      "workers": {
-        "app/dashboard/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/user/[userId]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/dashboard/page": "action-browser",
-        "app/dashboard/addBook/page": "action-browser",
-        "app/dashboard/user/page": "action-browser",
-        "app/dashboard/books/page": "action-browser",
-        "app/dashboard/user/[userId]/page": "action-browser"
-      }
-    },
-    "bd157edf154383739077a038731b2b55d525f525": {
-      "workers": {
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
-        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
+        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/dashboard/addBook/page": "action-browser",
         "app/dashboard/books/page": "action-browser"
       }
     },
-    "df207b336efed429c93dda4f6fd0158d63a94e6e": {
+    "1bbb0fb0110d76e53c5718c495e5532372e66569": {
       "workers": {
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/dashboard/addBook/page": "action-browser"
       }
     },
-    "88a4d72cf9daadbb13d5b5f7cf04bc5601cf0146": {
+    "88641f206f410e9b729926fd24b56d999fe071a5": {
       "workers": {
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
+        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/dashboard/addBook/page": "action-browser"
+        "app/dashboard/addBook/page": "action-browser",
+        "app/dashboard/books/page": "action-browser"
       }
     },
-    "3191ba2b1e647ec920c82a02024d7fa9a1096d58": {
+    "62981c03e5bc19070d1b8a02a04b49a534801e3a": {
       "workers": {
-        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+        "app/dashboard/addBook/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capp%5C%5Capi%5C%5CuploadFile.ts%22%2C%5B%22uploadFile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!",
+        "app/dashboard/books/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cservices%5C%5CCRUDData.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Cactions%5C%5C(auth)%5C%5Csignout.ts%22%2C%5B%22default%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CR%20I%20B%5C%5CDesktop%5C%5Ciwan-admin%5C%5Capi%5C%5CgetProfile.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/dashboard/addBook/page": "action-browser"
+        "app/dashboard/addBook/page": "action-browser",
+        "app/dashboard/books/page": "action-browser"
       }
     }
   },
   "edge": {},
-  "encryptionKey": "/2sTNLEqogJ4h0Z4M2kRx69DuyJZ+qC+a1iZPy8oiIo="
+  "encryptionKey": "etWQjRyaEur8TqnF+lLjc4u/WVhVEwsJ74dyiPZSO1E="
 }

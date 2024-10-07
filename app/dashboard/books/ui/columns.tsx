@@ -4,7 +4,7 @@ import { IBookPopulated } from '@/types';
 
 export const columns: ColumnDef<IBookPopulated>[] = [
   {
-    id: 'select',
+    id: 'id',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -23,12 +23,12 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'cover_type_id',
-    header: 'نوع الغلاف',
+    accessorKey: 'title',
+    header: 'العنوان',
   },
   {
-    accessorKey: 'created_at',
-    header: 'تاريخ الإنشاء',
+    accessorKey: 'writer_id',
+    header: 'الكاتب',
   },
   {
     accessorKey: 'category',
@@ -43,38 +43,6 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     header: 'الوصف',
   },
   {
-    accessorKey: 'discount',
-    header: 'الخصم',
-  },
-  {
-    accessorKey: 'discount_type',
-    header: 'نوع الخصم',
-  },
-  {
-    accessorKey: 'editor',
-    header: 'المحرر',
-  },
-  {
-    accessorKey: 'id',
-    header: 'المعرف',
-  },
-  {
-    accessorKey: 'images_urls',
-    header: 'روابط الصور',
-  },
-  {
-    accessorKey: 'isbn',
-    header: 'رقم ISBN',
-  },
-  {
-    accessorKey: 'name',
-    header: 'الاسم',
-  },
-  {
-    accessorKey: 'page_count',
-    header: 'عدد الصفحات',
-  },
-  {
     accessorKey: 'price',
     header: 'السعر',
   },
@@ -83,8 +51,36 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     header: 'السعر بالدولار',
   },
   {
+    accessorKey: 'discount',
+    header: 'الخصم',
+  },
+  {
+    accessorKey: 'discount_type',
+    header: 'نوع الخصم',
+  },
+  {
+    accessorKey: 'stock',
+    header: 'المخزون',
+  },
+  {
+    accessorKey: 'isbn',
+    header: 'رقم ISBN',
+  },
+  {
     accessorKey: 'release_year',
     header: 'سنة الإصدار',
+  },
+  {
+    accessorKey: 'cover_type_id',
+    header: 'نوع الغلاف',
+  },
+  {
+    accessorKey: 'page_count',
+    header: 'عدد الصفحات',
+  },
+  {
+    accessorKey: 'weight',
+    header: 'الوزن',
   },
   {
     accessorKey: 'share_house_id',
@@ -94,24 +90,9 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     accessorKey: 'status',
     header: 'الحالة',
   },
+
   {
-    accessorKey: 'stock',
-    header: 'المخزون',
-  },
-  {
-    accessorKey: 'title',
-    header: 'العنوان',
-  },
-  {
-    accessorKey: 'updated_at',
-    header: 'تاريخ التحديث',
-  },
-  {
-    accessorKey: 'weight',
-    header: 'الوزن',
-  },
-  {
-    accessorKey: 'writer_id',
-    header: 'معرف الكاتب',
+    accessorKey: 'editor',
+    header: 'المحرر',
   },
 ];

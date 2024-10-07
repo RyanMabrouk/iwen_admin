@@ -1,31 +1,32 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import useBooks from "@/hooks/data/books/useBooks";
 import { booksQuery } from "@/hooks/data/books/booksQuery";
 import { columns } from "./columns"; // Ensure this includes new column definitions
 import { IBookPopulated } from "@/types";
 import { useBooksPagination } from "../context/useBooksPagination";
-import DataTable from "./dataTable";
+import { BooksData } from "./booksData";
+export default function Table() {
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-export default function Table({ searchQuery }: { searchQuery: string }) {
-  const { page, setPage } = useBooksPagination();
+  const { page } = useBooksPagination();
   const limit = 8;
 
   const { data: books, isLoading } = useBooks({
     page,
     limit,
-    search: searchQuery
-      ? {
+    search: 
+       {
           'books.title': [
             {
               operator: 'ilike',
-              value: searchQuery,
+              value: `%${searchQuery}%`, // Add wildcards for partial matching
             },
           ],
         }
-      : undefined, 
   });
+  
   
   const queryClient = useQueryClient();
   
@@ -35,35 +36,35 @@ export default function Table({ searchQuery }: { searchQuery: string }) {
         booksQuery({
           page: page + 1,
           limit,
-          search: searchQuery
-            ? {
-                'books.title': [
-                  {
-                    operator: 'ilike',
-                    value: searchQuery,
-                  },
-                ],
-              }
-            : undefined,
+          search: 
+          {
+             'books.title': [
+               {
+                 operator: 'ilike',
+                 value: `%${searchQuery}%`, // Add wildcards for partial matching
+               },
+             ],
+           }
         })
       );
     }
   }, [page, books?.data?.meta?.has_next_page, queryClient, searchQuery]); // Add searchQuery to the dependency array
   
-  if (books?.data?.meta.total_count === 0) {
-    return <div>No products found</div>;
-  }
-
   const transformedBooksData = books?.data?.data?.map((book: IBookPopulated) => ({
     ...book,
     category: book.categories.length > 0 ? book.categories[0].name : "No Category",
     subcategory: book.subcategories.length > 0 ? book.subcategories[0].name : "No Subcategory",
-})) || []; // Ensure it defaults to an empty array if undefined
+    writer_id: book.writer?.name ?? "No Writer",
+    share_house_id: book.share_house?.name?? "No Share House",
+    cover_type_id: book.cover_type?.name ?? "No Cover Type",
+  })) || [];  
+
+
 
   return (
     <div>
-     {/* <DataTable data={transformedBooksData} columns={columns} />*/
-    }
+      <BooksData  data={transformedBooksData} columns={columns}  setSearchQuery={setSearchQuery} searchQuery={searchQuery} total_pages={books?.data?.meta.total_pages ?? 0}/>
+  
     </div>
   );
   
