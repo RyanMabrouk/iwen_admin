@@ -1,19 +1,19 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
-import { UserClient } from '@/components/tables/user-tables/client';
-import { users } from '@/constants/data';
-
+import Users from './ui/users';
 const breadcrumbItems = [
-  { title: 'Dashboard', link: '/dashboard' },
-  { title: 'User', link: '/dashboard/user' }
-];
+    { title: 'إحصائيات', link: '/dashboard' },
+    { title: 'المستخدمين', link: '/dashboard/users' }
+  ];
 export default function page() {
   return (
     <PageContainer>
-      <div className="space-y-2">
+      <div className="space-y-2" 
+      dir='rtl'>
         <Breadcrumbs items={breadcrumbItems} />
-        <UserClient data={users} />
+        <Users />
       </div>
+
     </PageContainer>
   );
 }

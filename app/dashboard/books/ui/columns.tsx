@@ -1,26 +1,21 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Pencil } from 'lucide-react';
+import Link from 'next/link';
 import { IBookPopulated } from '@/types';
 
 export const columns: ColumnDef<IBookPopulated>[] = [
   {
-    id: 'id',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
+    id: 'edit',
+    header: '', // No header for the edit column
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
+      <Link href={`/dashboard/editBook/${row.original.id}`} passHref>
+        <Pencil className="cursor-pointer text-sm" />
+      </Link>
     ),
     enableSorting: false,
     enableHiding: false,
+    // You can set a fixed width if needed:
+    size: 50,
   },
   {
     accessorKey: 'title',
@@ -90,7 +85,6 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     accessorKey: 'status',
     header: 'الحالة',
   },
-
   {
     accessorKey: 'editor',
     header: 'المحرر',

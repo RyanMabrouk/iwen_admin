@@ -6,11 +6,11 @@ import { booksQuery } from "@/hooks/data/books/booksQuery";
 import { columns } from "./columns"; // Ensure this includes new column definitions
 import { IBookPopulated } from "@/types";
 import { useBooksPagination } from "../context/useBooksPagination";
-import { BooksData } from "./booksData";
+import { GenericTableData } from "@/components/genericTableData";
 export default function Table() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const { page } = useBooksPagination();
+  const { page , setPage} = useBooksPagination();
   const limit = 8;
 
   const { data: books, isLoading } = useBooks({
@@ -63,7 +63,7 @@ export default function Table() {
 
   return (
     <div>
-      <BooksData  data={transformedBooksData} columns={columns}  setSearchQuery={setSearchQuery} searchQuery={searchQuery} total_pages={books?.data?.meta.total_pages ?? 0}/>
+      <GenericTableData  data={transformedBooksData} columns={columns}  setSearchQuery={setSearchQuery} page={page} setPage={setPage} searchQuery={searchQuery} total_pages={books?.data?.meta.total_pages ?? 0}/>
   
     </div>
   );

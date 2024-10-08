@@ -1,7 +1,6 @@
 import getSession from '@/api/getSession';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
-import useUser from '@/hooks/data/user/useUser';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 

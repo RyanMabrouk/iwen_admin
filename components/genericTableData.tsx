@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-
 import Image from 'next/image';
 import { useBooksPagination } from '@/app/dashboard/books/context/useBooksPagination';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -28,13 +27,17 @@ interface DataTableProps<TData, TValue> {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   total_pages: number;
+  page: number;
+  setPage: (page: number) => void;
 }
 
-export function BooksData<TData, TValue>({
+export function GenericTableData<TData , TValue>({
   columns,
   data,
   searchQuery,
   setSearchQuery,
+  page,
+  setPage,
   total_pages
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
@@ -43,7 +46,6 @@ export function BooksData<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel()
   });
-  const { page, setPage } = useBooksPagination();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPage(1);
@@ -51,7 +53,7 @@ export function BooksData<TData, TValue>({
   }
 
   return (
-    <div dir='rtl'>
+    <div dir="rtl">
       <div className="m-2 flex w-full max-w-md flex-row items-center gap-2 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
         <input
           type="text"
@@ -71,17 +73,20 @@ export function BooksData<TData, TValue>({
         </button>
       </div>
 
-      <ScrollArea dir='rtl' className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(80dvh-200px)]">
+      <ScrollArea
+        dir="rtl"
+        className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(80dvh-200px)]"
+      >
         {table.getRowModel().rows.length === 0 ? (
-          <div dir='rtl'> لا يوجد كتب </div>
+          <div dir="rtl"> لا يوجد </div>
         ) : (
-          <Table className="relative" dir='rtl'>
-            <TableHeader dir='rtl'>
+          <Table className="relative" dir="rtl">
+            <TableHeader dir="rtl">
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="w-fit" dir='rtl'>
+                <TableRow key={headerGroup.id} className="w-fit" dir="rtl">
                   {headerGroup.headers.map((header) => (
                     <TableHead
-                      dir='rtl'
+                      dir="rtl"
                       key={header.id}
                       className="w-fit whitespace-nowrap text-right"
                     >
@@ -103,7 +108,7 @@ export function BooksData<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
-                    dir='rtl'
+                    dir="rtl"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="text-right">
@@ -131,12 +136,12 @@ export function BooksData<TData, TValue>({
 
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-      <div className="flex items-center justify-end space-x-reverse space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 space-x-reverse py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-reverse space-x-2">
+        <div className="space-x-2 space-x-reverse">
           <Button
             variant="outline"
             size="sm"

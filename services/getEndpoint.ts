@@ -3,9 +3,11 @@ import { categoriesEndpoints } from '@/endpoints/categoriesRoutes';
 import { cover_typesEndpoints } from '@/endpoints/coverTypes';
 import { publishHousesEndpoints } from '@/endpoints/publishHouses';
 import { subCategoriesEndpoints } from '@/endpoints/subCategories';
+import { usersEndpoints } from '@/endpoints/users';
 import { writersEndpoints } from '@/endpoints/writers';
 export type CRUDMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 const resources = {
+  users: usersEndpoints,
   books: booksEndpoints,
   categories: categoriesEndpoints,
   cover_types: cover_typesEndpoints,

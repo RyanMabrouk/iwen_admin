@@ -12,9 +12,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import useUser from '@/hooks/data/user/useUser';
+import useCurrentUser from '@/hooks/data/user/useCurrentUser';
 export  function UserNav() {
-  const {data:user} = useUser()
+  const {data:user} = useCurrentUser()
   if (user) {
     return (
       <DropdownMenu>
