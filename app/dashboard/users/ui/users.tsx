@@ -3,9 +3,6 @@
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
-import {
-  BooksPaginationProvider,
-} from '../context/useBooksPagination';
 import Table from './table';
 import AddAdmin from './addAdmin';
 
