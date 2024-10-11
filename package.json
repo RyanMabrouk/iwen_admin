@@ -27,6 +27,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.3.2",
+    "@lottiefiles/react-lottie-player": "^3.5.4",
     "@mui/material": "^6.1.2",
     "@nextui-org/system": "^2.2.6",
     "@nextui-org/table": "^2.0.40",

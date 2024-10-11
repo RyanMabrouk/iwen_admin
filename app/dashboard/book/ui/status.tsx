@@ -1,6 +1,6 @@
 'use client';
 import SelectGeneric from '@/components/selectGeneric';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Options: { label: string; value: string }[] = [
   { label: 'متوفر', value: 'available' },
@@ -8,11 +8,13 @@ const Options: { label: string; value: string }[] = [
 ];
 
 export default function Status({defaultValue}:{defaultValue: string}) {
+  const [value, setValue] = useState<string>(defaultValue);
+
   return (
     <div>
       <label className="block font-semibold">الحالة</label>
       <div className="flex items-center gap-2">
-        <SelectGeneric options={Options} placeholder="أدخل الحالة" name="status" defaultValue={defaultValue} />
+        <SelectGeneric options={Options} placeholder="أدخل الحالة" name="status" selectedValue={value} setSelectedValue={setValue} />
       </div>
     </div>
   );

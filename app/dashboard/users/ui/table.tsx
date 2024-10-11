@@ -5,8 +5,10 @@ import { columns } from './columns';
 import { GenericTableData } from '@/components/genericTableData';
 import useUsers from '@/hooks/data/user/useUsers';
 import { usersQuery } from '@/hooks/data/user/usersQuery';
+import { Tables } from '@/types/database.types';
 export default function Table() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+
   const [page, setPage] = useState<number>(1); 
   const limit = 8;
 
@@ -15,6 +17,12 @@ export default function Table() {
     limit,
     search: {
       'users.first_name': [
+        {
+          operator: 'ilike',
+          value: `%${searchQuery}%` // Add wildcards for partial matching
+        }
+      ],
+      'users.last_name': [
         {
           operator: 'ilike',
           value: `%${searchQuery}%` // Add wildcards for partial matching
@@ -44,16 +52,24 @@ export default function Table() {
     }
   }, [page, users?.data?.meta?.has_next_page, queryClient, searchQuery]); 
 
+  const transformedUsersData = users?.data?.data?.map((user: Tables<"users">) => ({
+    ...user,
+    role: user.roles?.includes("admin") ? "مسؤل" : "مستخدم",
+  })) || [];
+  
+
   return (
     <div>
       <GenericTableData
-        data={users?.data?.data ?? []}
-        columns={columns}
+        data={transformedUsersData}
+        columns={columns} 
         setSearchQuery={setSearchQuery}
         page={page}
         setPage={setPage}
         searchQuery={searchQuery}
         total_pages={users?.data?.meta.total_pages ?? 0}
+        total_counts={users?.data?.meta.total_count ?? 0}
+
       />
     </div>
   );

@@ -1,23 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Pencil, Trash } from 'lucide-react';
-import Link from 'next/link';
 import { Tables } from '@/types/database.types'; // Importing the correct type from your schema
-import DeleteUser from './deleteUser';
-import { url } from 'inspector';
+import { Checkbox } from '@/components/ui/checkbox';
+import { CellAction } from './cell-action';
 
-export const columns: ColumnDef<Tables<'users'>>[] = [/*
-  {
-    id: 'edit',
-    header: '', 
-    cell: ({ row }) => (
-    
-      <DeleteUser id={row.original.user_id}  />
-     
-    ),
-    enableSorting: false,
-    enableHiding: false,
-    size: 50
-  },*/
+export const columns: ColumnDef<Tables<'users'>>[] = [
   {
     accessorKey: 'first_name',
     header: 'الاسم الأول'
@@ -31,7 +17,11 @@ export const columns: ColumnDef<Tables<'users'>>[] = [/*
     header: 'البريد الإلكتروني'
   },
   {
-    accessorKey: 'roles',
+    accessorKey: 'role',
     header: 'الأدوار',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <CellAction data={row.original} />
   }
 ];

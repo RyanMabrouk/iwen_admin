@@ -31,7 +31,7 @@ export default function Sidebar({ className }: SidebarProps) {
       <div className="hidden p-5 pt-10 lg:block ml-auto">
           <Image src="/logo.png" width={150} height={150} alt="logo" />
       </div>
-      <ChevronRight // Use ChevronRight instead of ChevronLeft for RTLaaaaaaaaaaaaaaaaaa
+      <ChevronRight 
         className={cn(
           'absolute -left-3 top-10 z-50 cursor-pointer rounded-full border bg-background text-3xl text-foreground', // Change '-right-3' to '-left-3'
           isMinimized && 'rotate-180'

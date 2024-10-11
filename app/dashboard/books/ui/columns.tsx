@@ -2,21 +2,48 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { IBookPopulated } from '@/types';
+import { CellAction } from './cell-action';
+import { Checkbox } from '@/components/ui/checkbox';
 
-export const columns: ColumnDef<IBookPopulated>[] = [
+export const columns = ({
+  selectedIds,
+  setSelectedIds
+}: {
+  selectedIds: string[],
+  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>
+}): ColumnDef<IBookPopulated>[] => [
   {
-    id: 'edit',
-    header: '', // No header for the edit column
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => {
+          // Toggle all rows selection
+          const allIds = table.getRowModel().rows.map((row) => row.original.id);
+          setSelectedIds(value ? allIds : []);
+          table.toggleAllPageRowsSelected(!!value);
+        }}
+        aria-label="Select all"
+      />
+    ),
     cell: ({ row }) => (
-      <Link href={`/dashboard/editBook/${row.original.id}`} passHref>
-        <Pencil className="cursor-pointer text-sm" />
-      </Link>
+      <Checkbox
+        checked={selectedIds.includes(row.original.id)}
+        onCheckedChange={(value) => {
+          // Toggle single row selection
+          const id = row.original.id;
+          setSelectedIds((prev) =>
+            value ? [...prev, id] : prev.filter((selectedId) => selectedId !== id)
+          );
+          row.toggleSelected(!!value);
+        }}
+        aria-label="Select row"
+      />
     ),
     enableSorting: false,
-    enableHiding: false,
-    // You can set a fixed width if needed:
-    size: 50,
+    enableHiding: false
   },
+  // Other columns
   {
     accessorKey: 'title',
     header: 'العنوان',
@@ -42,15 +69,15 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     header: 'السعر',
   },
   {
-    accessorKey: 'price_usd',
-    header: 'السعر بالدولار',
+    accessorKey: 'price_dhs',
+    header: 'السعر بالدرهم المغربي',
   },
   {
     accessorKey: 'discount',
     header: 'الخصم',
   },
   {
-    accessorKey: 'discount_type',
+    accessorKey: 'discount_type_arabic',
     header: 'نوع الخصم',
   },
   {
@@ -82,11 +109,15 @@ export const columns: ColumnDef<IBookPopulated>[] = [
     header: 'دار النشر',
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'status_arabic',
     header: 'الحالة',
   },
   {
     accessorKey: 'editor',
     header: 'المحرر',
   },
+  {
+    id: 'actions',
+    cell: ({ row }) => <CellAction data={row.original} />
+  }
 ];

@@ -19,7 +19,7 @@ export default function Images({
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   setUpdatedImages: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
- const toast = useToast();
+  const toast = useToast();
   const url = getEndpoint({ resourse: "books", action: "updateBook" });
   const queryClient = useQueryClient();
 
@@ -29,18 +29,19 @@ export default function Images({
         method: "PATCH",
         url: url(bookId),
         payload: {
-          images_urls: updatedImages, 
+          images_urls: updatedImages,
         },
       });
     },
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["books",bookId]});
-      toast.toast({ description: "لقد تم حذف الصورة بنجاح"}); // Optional
+      queryClient.invalidateQueries({ queryKey: ["books", bookId] });
+      toast.toast({ description: "لقد تم حذف الصورة بنجاح" }); // Optional
     },
     onError: (error: any) => {
       toast.toast({ description: "حدث خطأ أثناء عملية الحذف" }); // Optional
     },
   });
+
   const removeImage = (fileName: string) => {
     setImages((prevImages) =>
       prevImages.filter((file) => file.name !== fileName)
@@ -52,32 +53,33 @@ export default function Images({
     setUpdatedImages(updatedImageList);
     deleteSavedImageMutation.mutate();
   };
+
   return (
     <>
       {[...images, ...updatedImages].map((file, index) => (
         <div
           key={index}
-          className="relative m-2 h-32 w-32 cursor-default"
+          className="group relative m-2 h-32 w-32 cursor-default"
           onClick={(e) => e.stopPropagation()}
         >
           <Image
             src={file instanceof File ? URL.createObjectURL(file) : file}
             alt={file instanceof File ? file.name : `Saved image ${index}`}
             className="h-full w-full rounded-md object-cover"
-            width={500}
-            height={500}
+            width={450}
+            height={450}
             draggable={false}
           />
           <div
             onClick={(e) => {
               e.stopPropagation();
               if (file instanceof File) {
-                removeImage(file.name); 
+                removeImage(file.name);
               } else {
-                deleteSavedImage(file); 
+                deleteSavedImage(file);
               }
             }}
-            className="absolute right-0 top-0 cursor-pointer rounded-full bg-red-500 px-2 py-1 text-sm text-white"
+            className="absolute right-0 top-0 hidden cursor-pointer rounded-full bg-red-500 px-2 py-1 text-sm text-white group-hover:block"
           >
             X
           </div>

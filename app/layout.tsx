@@ -5,6 +5,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Store from '@/provider/QCStore';
+import AuthGuard from './guard/authGard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
   return (
     <html lang="en">
       <body
@@ -26,11 +26,11 @@ export default async function RootLayout({
         suppressHydrationWarning={true}
       >
         <NextTopLoader showSpinner={false} />
-        <Store>
-          <Toaster />
-          {children}
-        </Store>
-   
+          <Store>
+            <Toaster />
+            {children}
+          </Store> 
+
       </body>
     </html>
   );
