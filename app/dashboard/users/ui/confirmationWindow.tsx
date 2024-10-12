@@ -47,7 +47,6 @@ export default function ConfirmationWindow({ payload, formRef, isDialogOpen2, se
         description: `تمت إضافة ${payload.first_name + " " + payload.last_name} بنجاح.`,
       });
 
-      // Reset the form on success
       if (formRef.current) {
         formRef.current.reset();
       }

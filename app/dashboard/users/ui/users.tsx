@@ -8,12 +8,12 @@ import AddAdmin from './addAdmin';
 import useUsers from '@/hooks/data/user/useUsers';
 
 export default function Users() {
-  const { data: users, isLoading } = useUsers({});
+  const { data: users , isLoading } = useUsers({});
   return (
     <>
       <div className="flex items-start justify-between">
       <Heading 
-  title={`المستخدمين (${users?.data?.meta?.total_count})`} 
+  title={`المستخدمين (${isLoading ? 0 :users?.data?.meta?.total_count})`} 
   description="قائمة بجميع المستخدمين" 
 />
         <AddAdmin />

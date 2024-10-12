@@ -1,11 +1,9 @@
 "use client";
 
 import { useToast } from "@/components/ui/use-toast";
-import Image from "next/image";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import Images from "./images";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function PictureUploader({
   bookId,
@@ -40,14 +38,6 @@ export default function PictureUploader({
     },
     [images, setImages, toast]
   );
-
-  const removeImage = (fileName: string) => {
-    setImages((prevImages) =>
-      prevImages.filter((file) => file.name !== fileName)
-    );
-  };
-
-  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [] },

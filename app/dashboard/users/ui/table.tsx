@@ -6,6 +6,7 @@ import { GenericTableData } from '@/components/genericTableData';
 import useUsers from '@/hooks/data/user/useUsers';
 import { usersQuery } from '@/hooks/data/user/usersQuery';
 import { Tables } from '@/types/database.types';
+import { Player } from '@lottiefiles/react-lottie-player';
 export default function Table() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -57,7 +58,18 @@ export default function Table() {
     role: user.roles?.includes("admin") ? "مسؤل" : "مستخدم",
   })) || [];
   
-
+  if (isLoading) {
+    return (
+      <div className="m-auto flex min-h-screen items-center justify-center">
+      <Player
+        className="m-auto"
+        autoplay
+        loop
+        src="/loading.json"
+        style={{ height: "10rem", width: "10rem" }}
+      />
+    </div>
+    );}
   return (
     <div>
       <GenericTableData

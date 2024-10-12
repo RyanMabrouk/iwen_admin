@@ -117,7 +117,7 @@ export function GenericTableData<TData, TValue>({
                     <TableHead
                       dir="rtl"
                       key={header.id}
-                      className="w-fit whitespace-nowrap text-right font-semibold text-color1 hover:bg-color3"
+                      className="w-fit whitespace-nowrap text-center font-semibold text-lg px-4 text-color1 hover:bg-color3 "
                     >
                       {header.isPlaceholder
                         ? null
@@ -140,7 +140,7 @@ export function GenericTableData<TData, TValue>({
                     dir="rtl"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-right">
+                      <TableCell key={cell.id} className="text-center px-4">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

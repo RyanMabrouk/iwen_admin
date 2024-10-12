@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import CRUDData from '@/services/CRUDData';
 import getEndpoint from '@/services/getEndpoint';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import {  useRouter, useSearchParams } from 'next/navigation';
 import useBook from '@/hooks/data/books/useBook';
 
 import MetaPic from './metaPic';
@@ -119,7 +119,6 @@ export default function Form() {
         slug,
         structured_data
       };
-      console.log("🚀 ~ mutationFn: ~ payload:", payload)
       if (bookId) {
         const urlUpdate = getEndpoint({
           resourse: 'books',
