@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "sync": "nextjs-toploader",
     "format": "prettier . --write",
     "prepare": "husky"
   },
