@@ -18,7 +18,6 @@ export const columns = ({
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
         onCheckedChange={(value) => {
-          // Toggle all rows selection
           const allIds = table.getRowModel().rows.map((row) => row.original.id);
           setSelectedIds(value ? allIds : []);
           table.toggleAllPageRowsSelected(!!value);
