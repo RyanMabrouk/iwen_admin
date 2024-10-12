@@ -50,7 +50,7 @@ export default async function CRUDData<
       if (backendError.errors) {
         return {
           data: null,
-          error: null,
+          error: error.message,
           valdiationErrors: backendError.errors
         };
       } else {
