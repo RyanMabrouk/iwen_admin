@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,20 @@ export default function UpdateUser({ userId }: { userId: string }) {
   const [isPending, setIsPending] = useState(false);
   const { data: user } = useUser(userId);
   const [value, setValue] = useState<string>(user?.data?.roles.includes("admin") ? "admin" : "user");
-  const [preview, setPreview] = useState<string>(user?.data?.avatar ?? '/noAvatar.jpg');
+  const [preview, setPreview] = useState<string>('/noAvatar.jpg');
+  
+  useEffect(() => {
+    if (user) {
+      setValue(user.data?.roles.includes('admin') ? 'admin' : 'user');
+      
+      if (user.data?.avatar) {
+        setPreview(user.data.avatar);
+      } else {
+        setPreview('/noAvatar.jpg');
+      }
+    }
+  }, [user]);
+
   const Options: { label: string; value: string }[] = [
     { label: 'مسؤل', value: 'admin' },
     { label: 'مستخدم', value: 'user' }
@@ -38,9 +51,8 @@ export default function UpdateUser({ userId }: { userId: string }) {
       const first_name = String(formData.get('first_name'));
       const last_name = String(formData.get('last_name'));
       const filepicture = formData.get('filepicture') as File;
-      let avatar = user?.data?.avatar ?? ''; // Default to existing avatar
+      let avatar = user?.data?.avatar ?? ''; 
 
-      // Only upload if a new file is selected
       if (filepicture && filepicture.size > 0) {
         avatar = await uploadFile({
           formData,
@@ -77,10 +89,9 @@ export default function UpdateUser({ userId }: { userId: string }) {
       setIsDialogOpen(false);
       setIsPending(false);
     },
-    onError: () => {
+    onError: (error) => {
       toast({
-        title: 'خطأ!',
-        description: 'حدث خطأ أثناء تعديل المستخدم. حاول مرة أخرى.'
+        description: `حدث خطأ أثناء تعديل بيانات المستخدم: ${error.message}`
       });
       setIsPending(false);
     }
@@ -90,7 +101,7 @@ export default function UpdateUser({ userId }: { userId: string }) {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild dir="rtl">
         <button
-          onClick={() => setIsDialogOpen(true)} // Ensure this triggers the dialog opening
+          onClick={() => setIsDialogOpen(true)}
           className="ml-auto mr-2 flex items-center justify-start gap-2"
         >
           <Edit className="mr-2 h-4 w-4" />

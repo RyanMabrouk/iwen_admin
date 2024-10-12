@@ -10,7 +10,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import signUp from '@/actions/(auth)/signup';
 
-// Update the props type to reflect the new payload structure
 interface ConfirmationWindowProps {
   payload: {
     first_name: string;
@@ -18,13 +17,14 @@ interface ConfirmationWindowProps {
     email: string;
     password: string;
   };
-  resetForm: () => void; 
+  formRef: React.RefObject<HTMLFormElement>; // Added formRef prop
+  isDialogOpen2: boolean;
+  setIsDialogOpen2: (isOpen: boolean) => void;
 }
 
-export default function ConfirmationWindow({ payload, resetForm }: ConfirmationWindowProps) {
+export default function ConfirmationWindow({ payload, formRef, isDialogOpen2, setIsDialogOpen2 }: ConfirmationWindowProps) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
   const AddMutation = useMutation({
@@ -46,9 +46,14 @@ export default function ConfirmationWindow({ payload, resetForm }: ConfirmationW
         title: 'نجاح!',
         description: `تمت إضافة ${payload.first_name + " " + payload.last_name} بنجاح.`,
       });
-      setIsDialogOpen(false);
+
+      // Reset the form on success
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+
+      setIsDialogOpen2(false);
       setIsPending(false);
-      resetForm(); // Reset the form
     },
     onError: (error: any) => {
       console.error(error);
@@ -66,13 +71,8 @@ export default function ConfirmationWindow({ payload, resetForm }: ConfirmationW
   };
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger>
-        <button className="hover:opacity-50 mt-5 w-fit rounded-md border bg-color2 px-4 py-2 text-lg text-white shadow-md"
-          type='submit'>
-          تسجيل
-        </button>
-      </DialogTrigger>
+    <Dialog open={isDialogOpen2} onOpenChange={setIsDialogOpen2}>
+      <DialogTrigger></DialogTrigger>
       <DialogContent dir="rtl">
         <DialogTitle>
           {payload?.first_name && payload?.last_name 
