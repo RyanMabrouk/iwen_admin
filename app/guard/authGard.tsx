@@ -2,6 +2,8 @@ import getSession from "@/api/getSession"
 import CRUDData from "@/services/CRUDData";
 import getEndpoint from "@/services/getEndpoint";
 import { Tables } from "@/types/database.types";
+import { redirect } from "next/navigation";
+import YouAreNotAnAdmin from "./youAreNotAnAdmin";
 
 async function AuthGuard({children}:{children:React.ReactNode}) {
     const url =  getEndpoint({  resourse: "users", action: "getCurrentUser" });
@@ -10,7 +12,7 @@ async function AuthGuard({children}:{children:React.ReactNode}) {
    
     return (
     <>{
-    isAdmin ? children : null
+    isAdmin ? children : <YouAreNotAnAdmin />
     }</>
     )
    }
