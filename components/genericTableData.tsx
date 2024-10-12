@@ -135,7 +135,7 @@ export function GenericTableData<TData, TValue>({
                     dir="rtl"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-center px-4">
+                      <TableCell key={cell.id} className="text-center px-4 whitespace-nowrap max-w-[15rem] overflow-hidden text-ellipsis  ">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
