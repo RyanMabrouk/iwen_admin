@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import CRUDData from '@/services/CRUDData';
 import getEndpoint from '@/services/getEndpoint';
-import {  useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import useBook from '@/hooks/data/books/useBook';
 
 import MetaPic from './metaPic';
@@ -41,16 +41,16 @@ export default function Form() {
 
   const updateBookMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const title = String(formData.get('title'));
-      const writer_id = String(formData.get('writer'));
-      const share_house_id = String(formData.get('shareHouse'));
+      const title = String(formData.get('title'))==='' ? undefined :  String(formData.get('title'));
+      const writer_id = String(formData.get('writer') ) ==='' ? undefined :  String(formData.get('writer'));
+      const share_house_id = String(formData.get('shareHouse')) ==='' ? undefined :  String(formData.get('shareHouse'));
       const editor = String(formData.get('editor'));
       const release_year = Number(formData.get('releaseYear'));
-      const status = String(formData.get('status'));
+      const status = String(formData.get('status'))==='' ? undefined :  String(formData.get('status'));
       const description = String(formData.get('description'));
-      const category = String(formData.get('category'));
-      const subcategory = String(formData.get('subCategory'));
-      const cover_type_id = String(formData.get('cover_type'));
+      const category = String(formData.get('category'))==='' ? [] :  [String(formData.get('category'))];
+      const subcategory = String(formData.get('subCategory'))==='' ? [] :  [String(formData.get('subCategory'))];
+      const cover_type_id = String(formData.get('cover_type'))==='' ? undefined :  String(formData.get('cover_type')) ;
       const weight = Number(formData.get('weight'));
       const page_count = Number(formData.get('pageCount'));
       const isbn = String(formData.get('isbn'));
@@ -64,8 +64,8 @@ export default function Form() {
       const structured_data = formData.get('structured_data');
       const stock = Number(formData.get('stock'));
       const filepicture = formData.get('filepicture') as File;
-      const meta_keywords = String(formData.get('meta_keywords'));
-      let meta_image = '';
+      const meta_keywords = String(formData.get('meta_keywords'))==='' ? [] :  [String(formData.get('meta_keywords'))];
+      let meta_image = undefined;
       if (filepicture.size > 0) {
         meta_image = await uploadFile({
           formData,
@@ -104,14 +104,14 @@ export default function Form() {
         price_dhs,
         discount,
         stock,
-        meta_keywords: [meta_keywords],
+        meta_keywords: meta_keywords,
         images_urls,
-        categories_ids: [category],
-        subcategories_ids: [subcategory],
+        categories_ids:category,
+        subcategories_ids: subcategory,
         page_count,
         cover_type_id,
         status,
-        discount_type: 'percentage',
+        discount_type: 'fixed',
         meta_image,
         meta_title,
         meta_description,
@@ -145,34 +145,42 @@ export default function Form() {
       }
     },
     onSuccess: () => {
-      toast.toast({ description: 'تمت عملية تعديل بنجاح' });
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      if (bookId) router.push('/dashboard/books');
+      if(bookId) {
+        toast.toast({ description: 'تمت عملية تعديل بنجاح' });
+        router.push('/dashboard/books')
+      }
       else {
+        toast.toast({ description: 'تمت عملية الإضافة بنجاح' });
         if (formRef.current) {
           formRef.current.reset();
           setImages([]);
           setPreview('/add-book.png');
         }
       }
+      queryClient.invalidateQueries({ queryKey: ['books'] });
     },
     onError: (error) => {
       console.log(error);
-      toast.toast({ description: 'حدث خطأ أثناء عملية تعديل' });
+      if(bookId) {
+        toast.toast({ description: 'حدث خطأ أثناء عملية تعديل' });
+      }
+      else {
+        toast.toast({ description: 'حدث خطأ أثناء عملية الإضافة' });
+      }
     }
   });
 
   if (isLoading) {
     return (
       <div className="m-auto flex min-h-screen items-center justify-center">
-      <Player
-        className="m-auto"
-        autoplay
-        loop
-        src="/loading.json"
-        style={{ height: "10rem", width: "10rem" }}
-      />
-    </div>
+        <Player
+          className="m-auto"
+          autoplay
+          loop
+          src="/loading.json"
+          style={{ height: '10rem', width: '10rem' }}
+        />
+      </div>
     );
   }
 
@@ -292,7 +300,6 @@ export default function Form() {
           name="meta_keywords"
           placeholder="أدخل الكلمات المفتاحية مفصولة بفواصل"
           defaultValue={book?.data?.meta_keywords || ''}
-
         />
         <Input
           label="Canonical Meta "
@@ -312,15 +319,20 @@ export default function Form() {
           name="slug"
           placeholder="أدخل Slug"
           defaultValue={book?.data?.slug || ''}
-          />
-
-
+        />
       </div>
       <button
         type="submit"
         className="mt-5 w-fit rounded-sm bg-color1 px-4 py-3 text-lg font-semibold text-white shadow-lg transition-opacity hover:opacity-80"
+        disabled={updateBookMutation.isPending}
       >
-        {bookId ? ' تعديل الكتاب' : 'إضافة كتاب'}{' '}
+        {
+          updateBookMutation.isPending
+            ? 'جاري المعالجة...' 
+            : bookId
+            ? 'تعديل الكتاب' 
+            : 'إضافة كتاب' 
+        }
       </button>
     </form>
   );

@@ -8,19 +8,22 @@ import {
   SelectContent
 } from '@/components/ui/select';
 import { undefined } from 'zod';
+import { Trash } from 'lucide-react';
 
 export default function SelectGeneric({
   options,
   placeholder,
   name,
   selectedValue,
-  setSelectedValue
+  setSelectedValue,
+  handelDeleteOption
 }: {
   options: { value: string; label: string }[];
   placeholder: string;
   name: string;
   selectedValue?: string;
   setSelectedValue?: (option: string) => void;
+  handelDeleteOption?: (id: string) => void;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -36,21 +39,23 @@ export default function SelectGeneric({
 
   return (
     <Select
+    
       name={name}
-      {...(selectedValue ? { value: selectedValue } : {})}      onValueChange={setSelectedValue}
+      {...(selectedValue ? { value: selectedValue } : {})}
+      onValueChange={setSelectedValue}
     >
-      <SelectTrigger dir="rtl" className="w-[10rem] bg-white">
+      <SelectTrigger dir="rtl" className="w-[15rem] overflow-hidden break-words line-clamp-1 bg-white">
         <SelectValue
           placeholder={placeholder}
           {...(selectedValue ? { defaultValue: selectedValue } : {})}
         />
       </SelectTrigger>
-      <SelectContent dir="rtl" className="w-[10rem]">
+      <SelectContent dir="rtl" className="w-[15rem]">
         <div className="p-2">
           <input
             type="text"
             placeholder="ابحث..."
-            className="w-full rounded-md border border-gray-300 p-2 outline-none"
+            className="w-full rounded-md border border-gray-300 p-2 outline-none  "
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -60,9 +65,23 @@ export default function SelectGeneric({
             <SelectItem
               key={option.value}
               value={option.value}
-              className="w-full truncate cursor-pointer"
+              className="relative w-full cursor-pointer truncate text-right line-clamp-1  overflow-hidden break-words "
             >
-              {option.label}
+              <span className="line-clamp-1 w-full text-right overflow-hidden break-words  ">
+                <span className='w-[50%]'>
+                {option.label}
+
+
+                </span>
+              </span>
+              {handelDeleteOption ? (
+                <Trash
+                  className="z-100 absolute left-2 top-2 size-4"
+                  onClick={() => handelDeleteOption?.(option.value)}
+                />
+              ) : (
+                <></>
+              )}
             </SelectItem>
           ))
         ) : (

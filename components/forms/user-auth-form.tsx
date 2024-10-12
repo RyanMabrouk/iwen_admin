@@ -100,7 +100,7 @@ export default function UserAuthForm() {
 
           <button
             disabled={loading}
-            className="hover:opacity-50 ml-auto w-full bg-color2 p-2 text-white"
+            className="hover:opacity-50 ml-auto w-full bg-color2 p-2 text-white mt-5"
             type="submit"
           >
             تأكيد الدخول

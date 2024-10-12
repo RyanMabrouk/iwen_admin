@@ -7,6 +7,8 @@ const bookQuery = (bookId : string) => ({
   queryFn: async () => {
     const url = await getEndpoint({  resourse: "books", action: "getBookId" });
     return await CRUDData<IBookPopulated>({ method: "GET", url: url(bookId) });
+    
   },
+  enabled : bookId!==null
 });
 export { bookQuery };

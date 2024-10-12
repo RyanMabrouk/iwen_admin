@@ -75,11 +75,6 @@ export function GenericTableData<TData, TValue>({
             <SearchIcon size={15} />
           </button>
         </div>
-        <div className="w-fit whitespace-nowrap">
-          {total_counts ?? 0}{' '}
-          {total_counts !== undefined && total_counts >= 10 ? 'عنصر' : 'عناصر'}
-        </div>
-
         {selectedIds?.length ?? 0 > 0 ? (
           <div className="text-red-500">
             <DeleteBooks ids={selectedIds ?? []} />
@@ -168,7 +163,7 @@ export function GenericTableData<TData, TValue>({
       <div className="relative flex w-full items-center justify-center space-x-2 space-x-reverse py-4">
         <div className="absolute inset-y-0 right-0  top-1/3 flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} من{' '}
-          {table.getFilteredRowModel().rows.length} صف(وف) محدد.
+          {table.getFilteredRowModel().rows.length} صف(وف) محدد(ة)
         </div>
 
         <div className="space-x-2 ">

@@ -73,3 +73,14 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
+
+export interface IError<T extends object> {
+  message: string;
+  detail: string;
+  type: string;
+  timestamp: number;
+  errors?: IValidationErrors<T>;
+ }
+ export type IValidationErrors<T extends object> = {
+  [key in keyof T]: string[];
+ };

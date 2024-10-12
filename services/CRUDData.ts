@@ -1,9 +1,13 @@
 'use server';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import { API_URL } from './constants';
 import { cookies } from 'next/headers';
+import { IError } from '@/types';
 export type CRUDMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
-export default async function CRUDData<T>({
+export default async function CRUDData<
+  T,
+  IPayload extends object = Record<string, string>
+>({
   url,
   method,
   payload
@@ -11,15 +15,24 @@ export default async function CRUDData<T>({
   url: string;
   method: CRUDMethod;
   payload?: Record<string, any>;
-}): Promise<{ data: T | null; error: string | null }> {
+}): Promise<{
+  data: T | null;
+  error: string | null;
+  valdiationErrors: IError<IPayload>['errors'] | null;
+}> {
   const options = {
     method: method,
     url: url,
     data: payload || {}
   };
   try {
-    const token = cookies().get('sb-mqisujmkeqaqwppsnnww-auth-token')?.value.replace('base64-','').replace(' ','');
-    const decodedToken = JSON.parse(atob(token ?? ""))  as unknown as  {access_token :string }
+    const token = cookies()
+      .get('sb-mqisujmkeqaqwppsnnww-auth-token')
+      ?.value.replace('base64-', '')
+      .replace(' ', '');
+    const decodedToken = JSON.parse(atob(token ?? '')) as unknown as {
+      access_token: string;
+    };
     const api = axios.create({
       baseURL: API_URL,
       timeout: 0,
@@ -30,13 +43,21 @@ export default async function CRUDData<T>({
       }
     });
     const response = await api.request(options);
-    return { data: response.data, error: null };
+    return { data: response.data, error: null, valdiationErrors: null };
   } catch (error: any) {
-    console.log(error.response.data);
-    return {
-      
-      error: error.response?.data?.message || error.message,
-      data: null
-    };
+    if (axios.isAxiosError(error)) {
+      const backendError: IError<IPayload> = error.response?.data;
+      if (backendError.errors) {
+        return {
+          data: null,
+          error: null,
+          valdiationErrors: backendError.errors
+        };
+      } else {
+        return { data: null, error: error.message, valdiationErrors: null };
+      }
+    } else {
+      return { data: null, error: error.message, valdiationErrors: null };
+    }
   }
 }
