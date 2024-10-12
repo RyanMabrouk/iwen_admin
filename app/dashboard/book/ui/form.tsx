@@ -8,7 +8,6 @@ import PictureUploader from './picture_uploader';
 import CoverTypes from './coverType';
 import PublishHouse from './publishHouse';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { uploadFile } from '@/app/api/uploadFile';
 import { useToast } from '@/components/ui/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import CRUDData from '@/services/CRUDData';
@@ -20,6 +19,7 @@ import MetaPic from './metaPic';
 import Input from '@/components/input';
 import Textarea from '@/components/textArea';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { uploadFile } from '@/api/uploadFile';
 
 export default function Form() {
   const searchParams = useSearchParams();

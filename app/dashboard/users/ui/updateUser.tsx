@@ -16,8 +16,8 @@ import Input from '@/components/input';
 import useUser from '@/hooks/data/user/useUser';
 import UserPic from './userPic';
 import SelectGeneric from '@/components/selectGeneric';
-import { uploadFile } from '@/app/api/uploadFile';
 import { v4 as uuidv4 } from 'uuid';
+import { uploadFile } from '@/api/uploadFile';
 
 export default function UpdateUser({ userId }: { userId: string }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
