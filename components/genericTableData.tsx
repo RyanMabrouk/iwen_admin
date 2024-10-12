@@ -106,7 +106,7 @@ export function GenericTableData<TData, TValue>({
           </div>
         ) : (
           <Table className="relative" dir="rtl">
-            <TableHeader dir="rtl" className="bg-color3 font-semibold">
+            <TableHeader dir="rtl" className="bg-color3 font-semibold ">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
@@ -117,7 +117,7 @@ export function GenericTableData<TData, TValue>({
                     <TableHead
                       dir="rtl"
                       key={header.id}
-                      className="w-fit whitespace-nowrap text-center font-semibold text-lg px-4 text-color1 hover:bg-color3 "
+                      className="w-fit whitespace-nowrap text-center font-semibold text-lg px-4 py-3 text-color1 hover:bg-color3 "
                     >
                       {header.isPlaceholder
                         ? null
