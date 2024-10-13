@@ -1,4 +1,4 @@
-export default function Textarea({ label, name, placeholder , defaultValue }: { label: string,defaultValue?:string, name: string, placeholder: string }) {
+export default function Textarea({ label, name, placeholder , defaultValue,error }: { label: string,defaultValue?:string, name: string, placeholder: string ,error?:string[]}) {
     return (
       <div>
         <label className="block font-semibold text-color5">{label}</label>
@@ -8,6 +8,9 @@ export default function Textarea({ label, name, placeholder , defaultValue }: { 
           placeholder={placeholder}
           defaultValue={defaultValue}
         />
+              {error?.map((err, index) => (
+          <p key={index} className="text-red-500 mt-2">{err}</p>
+        ))}
       </div>
     );
   }

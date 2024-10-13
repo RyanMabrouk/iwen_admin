@@ -4,13 +4,13 @@ import CRUDData from "@/services/CRUDData";
 import getEndpoint from "@/services/getEndpoint";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useDeleteCategory() {
+export function useDeletePublishHouse() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const url = getEndpoint({ resourse: "categories", action: "deleteCategory" });
+      const url = getEndpoint({ resourse: "publish_houses", action: "deletePublishHouse" });
       const { error } = await CRUDData({
         method: "DELETE",
         url: url(id),
@@ -20,7 +20,7 @@ export function useDeleteCategory() {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["publish_houses"] });
       toast({
         title: "نجاح!",
         description: "تمت الإزالة بنجاح.",

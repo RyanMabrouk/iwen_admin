@@ -47,61 +47,27 @@ export const columns = ({
     accessorKey: 'title',
     header: 'العنوان',
   },
-  {
-    accessorKey: 'writer_id',
-    header: 'الكاتب',
-  },
+
   {
     accessorKey: 'category',
     header: 'الفئة',
   },
-  {
-    accessorKey: 'subcategory',
-    header: 'الفئة الفرعية',
-  },
+
   {
     accessorKey: 'description',
     header: 'الوصف',
   },
   {
-    accessorKey: 'price',
-    header: 'السعر',
-  },
-  {
     accessorKey: 'price_dhs',
-    header: 'السعر بالدرهم المغربي',
+    header: 'السعر',
   },
   {
     accessorKey: 'discount',
     header: 'الخصم',
   },
   {
-    accessorKey: 'discount_type_arabic',
-    header: 'نوع الخصم',
-  },
-  {
     accessorKey: 'stock',
     header: 'المخزون',
-  },
-  {
-    accessorKey: 'isbn',
-    header: 'رقم ISBN',
-  },
-  {
-    accessorKey: 'release_year',
-    header: 'سنة الإصدار',
-  },
-  {
-    accessorKey: 'cover_type_id',
-    header: 'نوع الغلاف',
-  },
-  {
-    accessorKey: 'page_count',
-    header: 'عدد الصفحات',
-  },
-  {
-    accessorKey: 'weight',
-    header: 'الوزن',
   },
   {
     accessorKey: 'share_house_id',
@@ -111,10 +77,7 @@ export const columns = ({
     accessorKey: 'status_arabic',
     header: 'الحالة',
   },
-  {
-    accessorKey: 'editor',
-    header: 'المحرر',
-  },
+
   {
     id: 'actions',
     cell: ({ row }) => <CellAction data={row.original} />

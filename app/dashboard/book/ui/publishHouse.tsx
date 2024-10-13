@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import getEndpoint from '@/services/getEndpoint';
 import usePublishHouses from '@/hooks/data/books/publish_house/usePublishHouses';
 import AddWindow from './addTools/addWindow';
+import { useDeletePublishHouse } from '@/hooks/data/books/publish_house/deletePublishHouse';
 
 
 
@@ -11,6 +12,10 @@ const url = getEndpoint({  resourse: "publish_houses", action : "createPublishHo
 
 export default function PublishHouse({defaultValue}:{defaultValue: string}) {
   const [value, setValue] = useState<string>(defaultValue);
+  const deletePublishHouse = useDeletePublishHouse();
+  const handleDeleteOption = (id: string) => {
+    deletePublishHouse.mutate(id); 
+  };
 
   const {data:publishHouses} = usePublishHouses();
   const Options = publishHouses?.data?.map((item) => ({ label: item.name, value: item.id }));
@@ -19,7 +24,7 @@ export default function PublishHouse({defaultValue}:{defaultValue: string}) {
     <div>
       <label className="block font-semibold">الناشرون</label>
       <div className="flex items-center gap-2">
-        <SelectGeneric options={Options ?? []} placeholder="أدخل الناشر" name="shareHouse"  selectedValue={value} setSelectedValue={setValue}/>
+        <SelectGeneric options={Options ?? []} placeholder="أدخل الناشر" name="shareHouse"  selectedValue={value} setSelectedValue={setValue} handelDeleteOption={handleDeleteOption}/>
         <AddWindow
           title="إضافة ناشر"
           placeholder="أدخل اسم الناشر"

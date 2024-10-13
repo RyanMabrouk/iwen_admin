@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import getEndpoint from '@/services/getEndpoint';
 import useCoverTypes from '@/hooks/data/books/cover_types/useCoverTypes';
 import AddWindow from './addTools/addWindow';
+import { useDeleteCoverType } from '@/hooks/data/books/cover_types/deleteCoverType';
 
 const url = getEndpoint({
   resourse: 'cover_types',
@@ -12,7 +13,10 @@ const url = getEndpoint({
 
 export default function CoverTypes({ defaultValue }: { defaultValue: string }) {
   const [value, setValue] = useState<string>(defaultValue);
-
+  const deleteCoverType = useDeleteCoverType(); 
+  const handleDeleteOption = (id: string) => {
+    deleteCoverType.mutate(id); 
+  };
   const { data: coverTypes } = useCoverTypes();
   const Options = coverTypes?.data?.map((item) => ({
     label: item.name,
@@ -28,6 +32,7 @@ export default function CoverTypes({ defaultValue }: { defaultValue: string }) {
           name="cover_type"
           selectedValue={value}
           setSelectedValue={setValue}
+          handelDeleteOption={handleDeleteOption}
         />
         <AddWindow
           title="إضافة نوع الغلاف"

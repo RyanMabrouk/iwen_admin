@@ -1,4 +1,4 @@
-export default function Input({ label, name, type = "text", placeholder ,defaultValue ,disabled}: { label: string, defaultValue?:any , name: string, type?: string, placeholder?: string , disabled?: boolean}) {
+export default function Input({ label, name, type = "text", placeholder ,defaultValue ,disabled ,error}: { label: string, defaultValue?:any , name: string, type?: string, placeholder?: string , disabled?: boolean , error?: string[]}) {
     return (
       <div>
         <label className="block font-semibold text-color5">{label}</label>
@@ -10,6 +10,9 @@ export default function Input({ label, name, type = "text", placeholder ,default
           defaultValue={defaultValue}
           disabled={disabled}
         />
+        {error?.map((err, index) => (
+          <p key={index} className="text-red-500 mt-2">{err}</p>
+        ))}
       </div>
     );
   }

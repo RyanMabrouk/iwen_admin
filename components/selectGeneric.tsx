@@ -39,12 +39,14 @@ export default function SelectGeneric({
 
   return (
     <Select
-    
       name={name}
       {...(selectedValue ? { value: selectedValue } : {})}
       onValueChange={setSelectedValue}
     >
-      <SelectTrigger dir="rtl" className="w-[15rem] overflow-hidden break-words line-clamp-1 bg-white">
+      <SelectTrigger
+        dir="rtl"
+        className="line-clamp-1 w-[15rem] overflow-hidden break-words bg-white"
+      >
         <SelectValue
           placeholder={placeholder}
           {...(selectedValue ? { defaultValue: selectedValue } : {})}
@@ -65,22 +67,20 @@ export default function SelectGeneric({
             <SelectItem
               key={option.value}
               value={option.value}
-              className="relative w-full cursor-pointer truncate text-right line-clamp-1  overflow-hidden break-words "
+              className="relative line-clamp-1 w-full cursor-pointer overflow-hidden truncate break-words text-right"
             >
-              <span className="line-clamp-1 w-full text-right overflow-hidden break-words  ">
-                <span className='w-[50%]'>
-                {option.label}
-
-
-                </span>
+              <span className="line-clamp-1 w-[10rem] overflow-hidden break-words text-right">
+                <span >{option.label}</span>
               </span>
-              {handelDeleteOption ? (
+              {handelDeleteOption && (
                 <Trash
-                  className="z-100 absolute left-2 top-2 size-4"
-                  onClick={() => handelDeleteOption?.(option.value)}
+                  className="z-100 absolute left-2 top-2 size-4 cursor-pointer hover:text-red-500"
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent the default behavior (e.g., closing the dropdown)
+                    e.stopPropagation(); // Prevent the click from affecting the SelectItem
+                    handelDeleteOption(option.value); // Execute delete action
+                  }}
                 />
-              ) : (
-                <></>
               )}
             </SelectItem>
           ))

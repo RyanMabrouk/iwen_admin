@@ -20,8 +20,10 @@ import Input from '@/components/input';
 import Textarea from '@/components/textArea';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { uploadFile } from '@/api/uploadFile';
+import { IBookPopulated, IValidationErrors } from '@/types';
 
 export default function Form() {
+  const [errors, setErrors ]= useState<IValidationErrors<IBookPopulated> | null | undefined>()
   const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
   const bookId = searchParams.get('bookId');
@@ -54,8 +56,8 @@ export default function Form() {
       const weight = Number(formData.get('weight'));
       const page_count = Number(formData.get('pageCount'));
       const isbn = String(formData.get('isbn'));
-      const price = Number(formData.get('priceDinar'));
-      const price_dhs = Number(formData.get('priceDollar'));
+      const price = Number(formData.get('price'));
+      const price_dhs = Number(formData.get('price_dhs'));
       const discount = Number(formData.get('discount'));
       const slug = String(formData.get('slug'));
       const meta_title = String(formData.get('meta_title'));
@@ -124,7 +126,7 @@ export default function Form() {
           resourse: 'books',
           action: 'updateBook'
         });
-        const { error } = await CRUDData({
+        const { error } = await CRUDData <IBookPopulated,IBookPopulated>({
           method: 'PATCH',
           url: urlUpdate(String(bookId)),
           payload
@@ -134,12 +136,15 @@ export default function Form() {
         }
       } else {
         const urlAdd = getEndpoint({ resourse: 'books', action: 'createBook' });
-        const { error } = await CRUDData({
+        const { error , valdiationErrors } = await CRUDData<IBookPopulated,IBookPopulated>({
           method: 'POST',
           url: urlAdd(),
           payload
         });
         if (error) {
+          if (valdiationErrors){
+            setErrors(valdiationErrors);
+          }
           throw new Error(error);
         }
       }
@@ -203,6 +208,7 @@ export default function Form() {
           name="title"
           defaultValue={book?.data?.title || ''}
           placeholder="أدخل العنوان"
+          error={errors?.title}
         />
         <Writer defaultValue={book?.data?.writer_id || ''} />
         <PublishHouse defaultValue={book?.data?.share_house_id || ''} />
@@ -211,6 +217,7 @@ export default function Form() {
           name="editor"
           defaultValue={book?.data?.editor || ''}
           placeholder="أدخل المحقق"
+          error={errors?.editor}
         />
         <Input
           label="سنة الإصدار"
@@ -218,18 +225,21 @@ export default function Form() {
           type="number"
           defaultValue={book?.data?.release_year || ''}
           placeholder="أدخل سنة الإصدار"
+          error={errors?.release_year}
         />
         <Status defaultValue={book?.data?.status || ''} />
-        <Input
+        <Textarea
           label="الوصف"
           name="description"
           defaultValue={book?.data?.description || ''}
           placeholder="أدخل الوصف"
+          error={errors?.description}
         />
         <Category category_id={category_id} setCategory_id={setCategory_id} />
         <SubCategory
           defaultValue={book?.data?.subcategories[0]?.id || ''}
           category_id={category_id}
+          error={errors?.subcategories}
         />
         <CoverTypes defaultValue={book?.data?.cover_type_id || ''} />
         <Input
@@ -238,6 +248,8 @@ export default function Form() {
           type="number"
           defaultValue={book?.data?.weight || ''}
           placeholder="أدخل الوزن"
+          error={errors?.weight}
+        
         />
         <Input
           label="عدد الصفحات"
@@ -245,26 +257,37 @@ export default function Form() {
           type="number"
           defaultValue={book?.data?.page_count || ''}
           placeholder="أدخل عدد الصفحات"
+          error={errors?.page_count}
+        />
+            <Input
+          label="عدد المجلدات"
+          name="moujaledCount"
+          type="number"
+          defaultValue={book?.data?.page_count || ''}
+          placeholder="أدخل عدد المجلدات"
         />
         <Input
           label="الرقم الدولي الموحد للكتاب"
           name="isbn"
           defaultValue={book?.data?.isbn || ''}
           placeholder="أدخل الرقم الدولي الموحد للكتاب"
+          error={errors?.isbn}
         />
         <Input
-          label="السعر (بالدينار)"
-          name="priceDinar"
+          label="السعر (بالدرهم)"
+          name="price_dhs"
           type="number"
-          defaultValue={book?.data?.price || ''}
+          defaultValue={book?.data?.price_dhs || ''}
           placeholder="أدخل السعر (بالدينار)"
+          error={errors?.price_dhs}
         />
         <Input
           label="السعر (بالدولار)"
-          name="priceDollar"
+          name="price"
           type="number"
-          defaultValue={book?.data?.price_dhs || ''}
+          defaultValue={book?.data?.price || ''}
           placeholder="أدخل السعر (بالدولار)"
+          error={errors?.price}
         />
         <Input
           label="الخصم (%)"
@@ -272,6 +295,7 @@ export default function Form() {
           type="number"
           defaultValue={book?.data?.discount || ''}
           placeholder="أدخل الخصم (%)"
+          error={errors?.discount}
         />
         <Input
           label="المخزون"
@@ -279,6 +303,7 @@ export default function Form() {
           type="number"
           defaultValue={book?.data?.stock || ''}
           placeholder="أدخل المخزون"
+          error={errors?.stock}
         />
         <h2 className="text-color5 mb-4 text-2xl font-bold">معلومات SEO</h2>
         <Input
@@ -286,12 +311,14 @@ export default function Form() {
           name="meta_title"
           placeholder="أدخل عنوان الميتا"
           defaultValue={book?.data?.meta_title || ''}
+          error={errors?.meta_title}
         />
         <Textarea
           label="وصف الميتا"
           name="meta_description"
           placeholder="أدخل وصف الميتا"
           defaultValue={book?.data?.meta_description || ''}
+          error={errors?.meta_description}
         />
         <label className="text-color5 block font-semibold">صورة الميتا</label>
         <MetaPic picture={preview} setPicture={setPreview} />
@@ -300,18 +327,21 @@ export default function Form() {
           name="meta_keywords"
           placeholder="أدخل الكلمات المفتاحية مفصولة بفواصل"
           defaultValue={book?.data?.meta_keywords || ''}
+          error={errors?.meta_keywords}
         />
         <Input
           label="Canonical Meta "
           name="canonical"
           placeholder="أدخل    Canonical Meta"
           defaultValue={book?.data?.canonical || ''}
+          error={errors?.canonical}
         />
         <Textarea
           label="البيانات المنظمة"
           name="structured_data"
           placeholder="أدخل البيانات المنظمة (JSON-LD)"
           defaultValue={book?.data?.structured_data || ''}
+          error={errors?.structured_data}
         />
 
         <Input
@@ -319,6 +349,7 @@ export default function Form() {
           name="slug"
           placeholder="أدخل Slug"
           defaultValue={book?.data?.slug || ''}
+          error={errors?.slug}
         />
       </div>
       <button
