@@ -10,7 +10,7 @@ import { useDeletePublishHouse } from '@/hooks/data/books/publish_house/deletePu
 
 const url = getEndpoint({  resourse: "publish_houses", action : "createPublishHouse" });
 
-export default function PublishHouse({defaultValue}:{defaultValue: string}) {
+export default function PublishHouse({defaultValue,errors}:{defaultValue: string,errors?:string[]}) {
   const [value, setValue] = useState<string>(defaultValue);
   const deletePublishHouse = useDeletePublishHouse();
   const handleDeleteOption = (id: string) => {
@@ -32,6 +32,9 @@ export default function PublishHouse({defaultValue}:{defaultValue: string}) {
           url={url()}
         />
       </div>
+      {errors?.map((err, index) => (
+          <p key={index} className="text-red-500 mt-2">{err}</p>
+        ))}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { useDeleteCategory } from '@/hooks/data/books/categories/deleteCategory'
 
 const url = getEndpoint({ resourse: "categories", action: "createCategory" });
 
-export default function Category({ category_id, setCategory_id }: { category_id: string, setCategory_id: (option: string) => void; }) {
+export default function Category({ category_id, setCategory_id , errors}: { category_id: string, setCategory_id: (option: string) => void; errors?: string[]}) {
   const { data: categories } = useCategories();
   const deleteCategory = useDeleteCategory(); // Initialize the mutation
   const Options = categories?.data?.map((item) => ({ label: item.name, value: item.id }));
@@ -36,6 +36,9 @@ export default function Category({ category_id, setCategory_id }: { category_id:
           resourse='categories'
         />
       </div>
+      {errors?.map((err, index) => (
+        <p key={index} className="text-red-500 mt-2">{err}</p>
+      ))}
     </div>
   );
 }

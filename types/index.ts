@@ -45,6 +45,35 @@ export interface NavItem {
   label?: string;
   description?: string;
 }
+
+export interface IBookPayload {
+  title?: string;
+  writer_id?: string;
+  share_house_id?: string;
+  editor: string;
+  release_year: number;
+  description: string;
+  weight: number;
+  isbn: string;
+  price: number;
+  price_dhs: number;
+  discount: number;
+  stock: number;
+  meta_keywords: string[];
+  images_urls: string[];
+  categories_ids: string[];
+  subcategories_ids: string[];
+  page_count: number;
+  cover_type_id?: string;
+  status?: string;
+  discount_type: string;
+  meta_image?: string;
+  meta_title: string;
+  meta_description: string;
+  canonical: string;
+  slug: string;
+  structured_data: FormDataEntryValue | null;
+}
 export interface IBookPopulated extends Tables<"books"> {
   categories: Tables<"categories">[];
   subcategories: Tables<"subcategories">[];

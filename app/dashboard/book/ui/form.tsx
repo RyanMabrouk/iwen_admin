@@ -20,11 +20,11 @@ import Input from '@/components/input';
 import Textarea from '@/components/textArea';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { uploadFile } from '@/api/uploadFile';
-import { IBookPopulated, IValidationErrors } from '@/types';
+import { IBookPayload, IBookPopulated, IValidationErrors } from '@/types';
 
 export default function Form() {
   const [errors, setErrors] = useState<
-    IValidationErrors<IBookPopulated> | null | undefined
+    IValidationErrors<IBookPayload> | null | undefined
   >();
   const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
@@ -152,19 +152,22 @@ export default function Form() {
           resourse: 'books',
           action: 'updateBook'
         });
-        const { error } = await CRUDData<IBookPopulated, IBookPopulated>({
+        const { error,valdiationErrors } = await CRUDData<IBookPopulated, IBookPayload>({
           method: 'PATCH',
           url: urlUpdate(String(bookId)),
           payload
         });
         if (error) {
+          if (valdiationErrors) {
+            setErrors(valdiationErrors);
+          }
           throw new Error(error);
         }
       } else {
         const urlAdd = getEndpoint({ resourse: 'books', action: 'createBook' });
         const { error, valdiationErrors } = await CRUDData<
           IBookPopulated,
-          IBookPopulated
+          IBookPayload
         >({
           method: 'POST',
           url: urlAdd(),
@@ -237,8 +240,8 @@ export default function Form() {
           placeholder="أدخل العنوان"
           error={errors?.title}
         />
-        <Writer defaultValue={book?.data?.writer_id || ''} />
-        <PublishHouse defaultValue={book?.data?.share_house_id || ''} />
+        <Writer defaultValue={book?.data?.writer_id || ''}  errors={errors?.writer_id}/>
+        <PublishHouse defaultValue={book?.data?.share_house_id || ''} errors={errors?.share_house_id}  />
         <Input
           label="المحقق"
           name="editor"
@@ -254,7 +257,7 @@ export default function Form() {
           placeholder="أدخل سنة الإصدار"
           error={errors?.release_year}
         />
-        <Status defaultValue={book?.data?.status || ''} />
+        <Status defaultValue={book?.data?.status || ''} errors={errors?.status} />
         <Textarea
           label="الوصف"
           name="description"
@@ -262,13 +265,13 @@ export default function Form() {
           placeholder="أدخل الوصف"
           error={errors?.description}
         />
-        <Category category_id={category_id} setCategory_id={setCategory_id} />
+        <Category category_id={category_id} setCategory_id={setCategory_id} errors={errors?.categories_ids}/>
         <SubCategory
           defaultValue={book?.data?.subcategories[0]?.id || ''}
           category_id={category_id}
-          error={errors?.subcategories}
+          error={errors?.subcategories_ids}
         />
-        <CoverTypes defaultValue={book?.data?.cover_type_id || ''} />
+        <CoverTypes defaultValue={book?.data?.cover_type_id || ''} errors={errors?.cover_type_id} />
         <Input
           label="الوزن"
           name="weight"

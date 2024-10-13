@@ -11,7 +11,7 @@ const url = getEndpoint({
   action: 'createcover_type'
 });
 
-export default function CoverTypes({ defaultValue }: { defaultValue: string }) {
+export default function CoverTypes({ defaultValue , errors}: { defaultValue: string , errors?: string[]}) {
   const [value, setValue] = useState<string>(defaultValue);
   const deleteCoverType = useDeleteCoverType(); 
   const handleDeleteOption = (id: string) => {
@@ -41,6 +41,9 @@ export default function CoverTypes({ defaultValue }: { defaultValue: string }) {
           resourse="cover_types"
         />
       </div>
+      {errors?.map((err, index) => (
+          <p key={index} className="text-red-500 mt-2">{err}</p>
+        ))}
     </div>
   );
 }

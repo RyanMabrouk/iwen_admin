@@ -1,6 +1,5 @@
 'use server';
 import axios, { Axios } from 'axios';
-import { API_URL } from './constants';
 import { cookies } from 'next/headers';
 import { IError } from '@/types';
 export type CRUDMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -34,7 +33,7 @@ export default async function CRUDData<
       access_token: string;
     };
     const api = axios.create({
-      baseURL: API_URL,
+      baseURL: process.env.BACKEND_URL!,
       timeout: 0,
       headers: {
         accept: 'application/json',

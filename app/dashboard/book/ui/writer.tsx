@@ -8,7 +8,7 @@ import { useDeleteWriter } from '@/hooks/data/books/writers/deleteWriter';
 
 
 
-export default function Writer({defaultValue}:{defaultValue: string}) {
+export default function Writer({defaultValue,errors}:{defaultValue: string , errors?: string[]}) {
   const url = getEndpoint({  resourse: "writers", action : "createWriter" });
   const {data: writers} = useWriters();
   const Options = writers?.data?.map((writer) => ({
@@ -39,6 +39,9 @@ export default function Writer({defaultValue}:{defaultValue: string}) {
           resourse='writers'
         /> 
       </div>
+      {errors?.map((err, index) => (
+          <p key={index} className="text-red-500 mt-2">{err}</p>
+        ))}
     </div>
   );
 }
