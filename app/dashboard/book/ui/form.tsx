@@ -23,7 +23,9 @@ import { uploadFile } from '@/api/uploadFile';
 import { IBookPopulated, IValidationErrors } from '@/types';
 
 export default function Form() {
-  const [errors, setErrors ]= useState<IValidationErrors<IBookPopulated> | null | undefined>()
+  const [errors, setErrors] = useState<
+    IValidationErrors<IBookPopulated> | null | undefined
+  >();
   const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
   const bookId = searchParams.get('bookId');
@@ -43,16 +45,37 @@ export default function Form() {
 
   const updateBookMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const title = String(formData.get('title'))==='' ? undefined :  String(formData.get('title'));
-      const writer_id = String(formData.get('writer') ) ==='' ? undefined :  String(formData.get('writer'));
-      const share_house_id = String(formData.get('shareHouse')) ==='' ? undefined :  String(formData.get('shareHouse'));
+      const title =
+        String(formData.get('title')) === ''
+          ? undefined
+          : String(formData.get('title'));
+      const writer_id =
+        String(formData.get('writer')) === ''
+          ? undefined
+          : String(formData.get('writer'));
+      const share_house_id =
+        String(formData.get('shareHouse')) === ''
+          ? undefined
+          : String(formData.get('shareHouse'));
       const editor = String(formData.get('editor'));
       const release_year = Number(formData.get('releaseYear'));
-      const status = String(formData.get('status'))==='' ? undefined :  String(formData.get('status'));
+      const status =
+        String(formData.get('status')) === ''
+          ? undefined
+          : String(formData.get('status'));
       const description = String(formData.get('description'));
-      const category = String(formData.get('category'))==='' ? [] :  [String(formData.get('category'))];
-      const subcategory = String(formData.get('subCategory'))==='' ? [] :  [String(formData.get('subCategory'))];
-      const cover_type_id = String(formData.get('cover_type'))==='' ? undefined :  String(formData.get('cover_type')) ;
+      const category =
+        String(formData.get('category')) === ''
+          ? []
+          : [String(formData.get('category'))];
+      const subcategory =
+        String(formData.get('subCategory')) === ''
+          ? []
+          : [String(formData.get('subCategory'))];
+      const cover_type_id =
+        String(formData.get('cover_type')) === ''
+          ? undefined
+          : String(formData.get('cover_type'));
       const weight = Number(formData.get('weight'));
       const page_count = Number(formData.get('pageCount'));
       const isbn = String(formData.get('isbn'));
@@ -66,7 +89,10 @@ export default function Form() {
       const structured_data = formData.get('structured_data');
       const stock = Number(formData.get('stock'));
       const filepicture = formData.get('filepicture') as File;
-      const meta_keywords = String(formData.get('meta_keywords'))==='' ? [] :  [String(formData.get('meta_keywords'))];
+      const meta_keywords =
+        String(formData.get('meta_keywords')) === ''
+          ? []
+          : [String(formData.get('meta_keywords'))];
       let meta_image = undefined;
       if (filepicture.size > 0) {
         meta_image = await uploadFile({
@@ -108,7 +134,7 @@ export default function Form() {
         stock,
         meta_keywords: meta_keywords,
         images_urls,
-        categories_ids:category,
+        categories_ids: category,
         subcategories_ids: subcategory,
         page_count,
         cover_type_id,
@@ -126,7 +152,7 @@ export default function Form() {
           resourse: 'books',
           action: 'updateBook'
         });
-        const { error } = await CRUDData <IBookPopulated,IBookPopulated>({
+        const { error } = await CRUDData<IBookPopulated, IBookPopulated>({
           method: 'PATCH',
           url: urlUpdate(String(bookId)),
           payload
@@ -136,13 +162,16 @@ export default function Form() {
         }
       } else {
         const urlAdd = getEndpoint({ resourse: 'books', action: 'createBook' });
-        const { error , valdiationErrors } = await CRUDData<IBookPopulated,IBookPopulated>({
+        const { error, valdiationErrors } = await CRUDData<
+          IBookPopulated,
+          IBookPopulated
+        >({
           method: 'POST',
           url: urlAdd(),
           payload
         });
         if (error) {
-          if (valdiationErrors){
+          if (valdiationErrors) {
             setErrors(valdiationErrors);
           }
           throw new Error(error);
@@ -150,11 +179,10 @@ export default function Form() {
       }
     },
     onSuccess: () => {
-      if(bookId) {
+      if (bookId) {
         toast.toast({ description: 'تمت عملية تعديل بنجاح' });
-        router.push('/dashboard/books')
-      }
-      else {
+        router.push('/dashboard/books');
+      } else {
         toast.toast({ description: 'تمت عملية الإضافة بنجاح' });
         if (formRef.current) {
           formRef.current.reset();
@@ -166,10 +194,9 @@ export default function Form() {
     },
     onError: (error) => {
       console.log(error);
-      if(bookId) {
+      if (bookId) {
         toast.toast({ description: 'حدث خطأ أثناء عملية تعديل' });
-      }
-      else {
+      } else {
         toast.toast({ description: 'حدث خطأ أثناء عملية الإضافة' });
       }
     }
@@ -249,7 +276,6 @@ export default function Form() {
           defaultValue={book?.data?.weight || ''}
           placeholder="أدخل الوزن"
           error={errors?.weight}
-        
         />
         <Input
           label="عدد الصفحات"
@@ -259,13 +285,13 @@ export default function Form() {
           placeholder="أدخل عدد الصفحات"
           error={errors?.page_count}
         />
-            <Input
+        {/* <Input
           label="عدد المجلدات"
           name="moujaledCount"
           type="number"
           defaultValue={book?.data?.page_count || ''}
           placeholder="أدخل عدد المجلدات"
-        />
+        /> */}
         <Input
           label="الرقم الدولي الموحد للكتاب"
           name="isbn"
@@ -357,13 +383,11 @@ export default function Form() {
         className="mt-5 w-fit rounded-sm bg-color1 px-4 py-3 text-lg font-semibold text-white shadow-lg transition-opacity hover:opacity-80"
         disabled={updateBookMutation.isPending}
       >
-        {
-          updateBookMutation.isPending
-            ? 'جاري المعالجة...' 
-            : bookId
-            ? 'تعديل الكتاب' 
-            : 'إضافة كتاب' 
-        }
+        {updateBookMutation.isPending
+          ? 'جاري المعالجة...'
+          : bookId
+          ? 'تعديل الكتاب'
+          : 'إضافة كتاب'}
       </button>
     </form>
   );

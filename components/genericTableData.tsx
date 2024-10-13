@@ -63,8 +63,8 @@ export function GenericTableData<TData, TValue>({
   }
 
   return (
-    <div dir="rtl">
-      <div className="flex items-center gap-2">
+    <div dir="rtl" className="z-0 overflow-visible">
+      <div className="z-0 flex items-center gap-2 !overflow-visible">
         <div className="m-2 flex w-full max-w-md flex-row items-center gap-2 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
           <input
             type="text"
@@ -79,7 +79,10 @@ export function GenericTableData<TData, TValue>({
         </div>
         {selectedIds?.length ?? 0 > 0 ? (
           <div className="text-red-500">
-            <DeleteBooks ids={selectedIds ?? []} setSelectedIds={setSelectedIds} />
+            <DeleteBooks
+              ids={selectedIds ?? []}
+              setSelectedIds={setSelectedIds}
+            />
           </div>
         ) : (
           ''
@@ -88,16 +91,16 @@ export function GenericTableData<TData, TValue>({
 
       <ScrollArea
         dir="rtl"
-        className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(80dvh-200px)]"
+        className="z-0 h-[calc(80vh-220px)] !overflow-visible rounded-md border md:h-[calc(80dvh-200px)]"
       >
         {isLoading ? (
-          <div  className="m-auto mt-[10%] flex h-full w-full max-w-[40rem] items-center justify-center rounded-md">
+          <div className="m-auto mt-[10%] flex h-full w-full max-w-[40rem] items-center justify-center rounded-md">
             <Player
               className="m-auto"
               autoplay
               loop
               src="/loading.json"
-              style={{ height: "10rem", width: "10rem" }}
+              style={{ height: '10rem', width: '10rem' }}
             />
           </div>
         ) : table.getRowModel().rows.length === 0 ? (
@@ -112,7 +115,7 @@ export function GenericTableData<TData, TValue>({
             />
           </div>
         ) : (
-          <Table className="relative" dir="rtl">
+          <Table className="relative z-0 !overflow-visible" dir="rtl">
             <TableHeader dir="rtl" className="bg-color3 font-semibold ">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
@@ -138,30 +141,34 @@ export function GenericTableData<TData, TValue>({
               ))}
             </TableHeader>
 
-            <TableBody>
+            <TableBody className="z-0 !overflow-visible">
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row,index) => (
+                table.getRowModel().rows.map((row, index) => (
                   <TableRow
                     key={row.id}
-                    className='z-0'
+                    className="z-0 !overflow-visible"
                     data-state={row.getIsSelected() && 'selected'}
                     dir="rtl"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="max-w-[15rem] z-0 w-min whitespace-nowrap px-4 text-center text-ellipsis"
+                        className="z-0 w-min max-w-[15rem] text-ellipsis whitespace-nowrap px-4 text-center"
                       >
-                        <div className={` tooltip before:z-[1000] after:z-[1000] break-words whitespace-nowrap  text-right  text-ellipsis  max-w-[15rem] h-fit ${
-                        (table.getRowModel().rows.length / 2) <= index    ? 'tooltip-top ' : 'tooltip-bottom '
-                        }`  }    data-tip={cell.getValue()}
+                        <div
+                          className={` tooltip h-fit max-w-[15rem] text-ellipsis whitespace-nowrap  break-words  text-right  before:z-[1000] after:z-[1000] ${
+                            table.getRowModel().rows.length / 2 <= index
+                              ? 'tooltip-top '
+                              : 'tooltip-bottom '
+                          }`}
+                          data-tip={cell.getValue()}
                         >
-                          <span className='overflow-hidden max-w-[15rem] text-ellipsis text-wrap line-clamp-1'>{flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                        </span>
-                        
+                          <span className="line-clamp-1 max-w-[15rem] text-ellipsis text-wrap">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </span>
                         </div>
                       </TableCell>
                     ))}
