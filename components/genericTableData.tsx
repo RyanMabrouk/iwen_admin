@@ -61,7 +61,6 @@ export function GenericTableData<TData, TValue>({
     setPage(1);
     setSearchQuery(event.target.value);
   }
-  console.log('🚀 ~ selectedIds:', selectedIds);
 
   return (
     <div dir="rtl">
@@ -141,25 +140,29 @@ export function GenericTableData<TData, TValue>({
 
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
+                table.getRowModel().rows.map((row,index) => (
                   <TableRow
                     key={row.id}
+                    className='z-0'
                     data-state={row.getIsSelected() && 'selected'}
                     dir="rtl"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        data-tip={flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                        className="max-w-[15rem]  overflow-hidden text-ellipsis whitespace-nowrap px-4 text-center"
+                        className="max-w-[15rem] z-0 w-min whitespace-nowrap px-4 text-center text-ellipsis"
                       >
-                        {flexRender(
+                        <div className={` tooltip before:z-[1000] after:z-[1000] break-words whitespace-nowrap  text-right  text-ellipsis  max-w-[15rem] h-fit ${
+                        (table.getRowModel().rows.length / 2) <= index    ? 'tooltip-top ' : 'tooltip-bottom '
+                        }`  }    data-tip={cell.getValue()}
+                        >
+                          <span className='overflow-hidden max-w-[15rem] text-ellipsis text-wrap line-clamp-1'>{flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
+                        </span>
+                        
+                        </div>
                       </TableCell>
                     ))}
                   </TableRow>
