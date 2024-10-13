@@ -20,7 +20,7 @@ export default async function DashboardLayout({
   return (
     <div className="flex">
       <AuthGuard>
-      <main className="w-full flex-1 overflow-hidden " >
+      <main className="w-full flex-1 overflow-hidden  bg-white" >
       <Header />
 
         {children}

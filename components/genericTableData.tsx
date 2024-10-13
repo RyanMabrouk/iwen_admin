@@ -155,11 +155,11 @@ export function GenericTableData<TData, TValue>({
                         key={cell.id}
                         className="max-w-[15rem]  overflow-hidden text-ellipsis whitespace-nowrap px-4 text-center"
                       >
-                          <span className='tooltip' data-tip="aaaa">{
+                          {
                           flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
-                          )}</span>
+                          )}
                       </TableCell>
                     ))}
                   </TableRow>
