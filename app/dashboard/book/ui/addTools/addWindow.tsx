@@ -57,13 +57,12 @@ export default function AddWindow({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [resourse] });
-      if (category_id) {
-      }
       toast({
         title: 'نجاح!',
         description: `تمت إضافة ${inputValue} بنجاح.`
       });
-      setIsDialogOpen(false);
+      setInputValue('');
+
       setIsPending(false);
     },
     onError: (error) => {

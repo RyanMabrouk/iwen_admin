@@ -1,7 +1,7 @@
 export default function Input({ label, name, type = "text", placeholder ,defaultValue ,disabled ,error}: { label: string, defaultValue?:any , name: string, type?: string, placeholder?: string , disabled?: boolean , error?: string[]}) {
     return (
       <div>
-        <label className="block font-semibold text-color5">{label}</label>
+        <label className="block font-semibold ">{label}</label>
         <input
           type={type}
           name={name}

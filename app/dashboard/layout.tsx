@@ -25,7 +25,7 @@ export default async function DashboardLayout({
 
         {children}
       </main>
-      <Sidebar />
+      <Sidebar className='min-h-screen' />
       </AuthGuard>
 
 

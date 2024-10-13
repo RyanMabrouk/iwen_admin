@@ -7,6 +7,7 @@ import { columns } from "./columns"; // Ensure this includes new column definiti
 import { IBookPopulated } from "@/types";
 import { useBooksPagination } from "../context/useBooksPagination";
 import { GenericTableData } from "@/components/genericTableData";
+import { Player } from "@lottiefiles/react-lottie-player";
 export default function Table() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedIds,setSelectedIds] = useState<string[]>([]);
@@ -77,7 +78,8 @@ export default function Table() {
   total_pages={books?.data?.meta.total_pages ?? 0}
   total_counts={books?.data?.meta.total_count ?? 0}
   selectedIds={selectedIds}
-  tableName="books"
+  setSelectedIds={setSelectedIds}
+  isLoading={isLoading}
 />
   
     </div>

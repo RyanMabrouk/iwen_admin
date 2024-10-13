@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CRUDData from '@/services/CRUDData';
 import getEndpoint from '@/services/getEndpoint';
 
-export default function DeleteBooks({ ids }: { ids: string[] }) {
+export default function DeleteBooks({ ids , setSelectedIds }: { ids: string[]; setSelectedIds?: (selectedIds: string[]) => void }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
@@ -40,6 +40,7 @@ export default function DeleteBooks({ ids }: { ids: string[] }) {
         title: 'نجاح!',
         description: `تم حذف الكتب بنجاح.`
       });
+      setSelectedIds?.([]); // Remove selected ids from the selectedIds array on success
       setIsDialogOpen(false); // Close dialog on success
       setIsPending(false);
     },

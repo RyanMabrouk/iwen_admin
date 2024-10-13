@@ -57,19 +57,6 @@ export default function Table() {
     ...user,
     role: user.roles?.includes("admin") ? "مسؤل" : "مستخدم",
   })) || [];
-  
-  if (isLoading) {
-    return (
-      <div className="m-auto flex min-h-screen items-center justify-center">
-      <Player
-        className="m-auto"
-        autoplay
-        loop
-        src="/loading.json"
-        style={{ height: "10rem", width: "10rem" }}
-      />
-    </div>
-    );}
   return (
     <div>
       <GenericTableData
@@ -81,6 +68,7 @@ export default function Table() {
         searchQuery={searchQuery}
         total_pages={users?.data?.meta.total_pages ?? 0}
         total_counts={users?.data?.meta.total_count ?? 0}
+        isLoading={isLoading}
 
       />
     </div>

@@ -30,9 +30,11 @@ interface DataTableProps<TData, TValue> {
   total_pages: number;
   page: number;
   setPage: (page: number) => void;
+  setSelectedIds?: (selectedIds: string[]) => void;
   selectedIds?: string[];
   total_counts?: number;
   tableName?: string;
+  isLoading?: boolean;
 }
 
 export function GenericTableData<TData, TValue>({
@@ -45,7 +47,8 @@ export function GenericTableData<TData, TValue>({
   total_pages,
   selectedIds,
   total_counts,
-  tableName
+  setSelectedIds,
+  isLoading
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -66,7 +69,7 @@ export function GenericTableData<TData, TValue>({
         <div className="m-2 flex w-full max-w-md flex-row items-center gap-2 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
           <input
             type="text"
-            placeholder="إبحث عن كتاب..."
+            placeholder="بحث ..."
             value={searchQuery}
             onChange={handleChange}
             className="w-full rounded-lg p-2 focus:outline-none"
@@ -77,7 +80,10 @@ export function GenericTableData<TData, TValue>({
         </div>
         {selectedIds?.length ?? 0 > 0 ? (
           <div className="text-red-500">
-            <DeleteBooks ids={selectedIds ?? []} />
+            <DeleteBooks
+              ids={selectedIds ?? []}
+              setSelectedIds={setSelectedIds}
+            />
           </div>
         ) : (
           ''
@@ -88,7 +94,17 @@ export function GenericTableData<TData, TValue>({
         dir="rtl"
         className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(80dvh-200px)]"
       >
-        {table.getRowModel().rows.length === 0 ? (
+        {isLoading ? (
+          <div className="m-auto mt-[10%] flex h-full w-full max-w-[40rem] items-center justify-center rounded-md">
+            <Player
+              className="m-auto"
+              autoplay
+              loop
+              src="/loading.json"
+              style={{ height: '10rem', width: '10rem' }}
+            />
+          </div>
+        ) : table.getRowModel().rows.length === 0 ? (
           <div className="m-auto mt-[5%] flex h-full w-full max-w-[40rem] items-center justify-center rounded-md">
             <Player
               src={
@@ -137,12 +153,13 @@ export function GenericTableData<TData, TValue>({
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="  max-w-[15rem] overflow-hidden text-ellipsis whitespace-nowrap  px-4 text-center  "
+                        className="max-w-[15rem]  overflow-hidden text-ellipsis whitespace-nowrap px-4 text-center"
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                          <span className='tooltip' data-tip="aaaa">{
+                          flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}</span>
                       </TableCell>
                     ))}
                   </TableRow>
@@ -164,7 +181,7 @@ export function GenericTableData<TData, TValue>({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <div className="relative flex w-full items-center justify-center space-x-2 space-x-reverse py-4">
-        <div className="absolute inset-y-0 right-0  top-1/3 flex-1 text-sm text-muted-foreground">
+        <div className="absolute inset-y-0 right-0 top-1/3 flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} من{' '}
           {table.getFilteredRowModel().rows.length} صف(وف) محدد(ة)
         </div>
