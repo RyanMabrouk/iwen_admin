@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import signOut from '@/actions/(auth)/signout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,9 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import useCurrentUser from '@/hooks/data/user/useCurrentUser';
-export  function UserNav() {
-  const {data:user} = useCurrentUser()
+import Link from 'next/link';
+export function UserNav() {
+  const { data: user } = useCurrentUser();
   if (user) {
     return (
       <DropdownMenu>
@@ -25,7 +26,9 @@ export  function UserNav() {
                 src={user.data?.avatar}
                 alt={user.data?.first_name + ' ' + user.data?.last_name}
               />
-              <AvatarFallback>{user.data?.first_name + ' ' + user.data?.last_name}</AvatarFallback>
+              <AvatarFallback>
+                {user.data?.first_name + ' ' + user.data?.last_name}
+              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -42,10 +45,12 @@ export  function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            <Link href="/dashboard/profile">
+              <DropdownMenuItem>
+                Profile
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

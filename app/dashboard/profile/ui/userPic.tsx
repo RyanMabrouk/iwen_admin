@@ -18,7 +18,7 @@ export default function UserPic( {picture , setPicture}: { picture: string, setP
 
   return (
     <div
-    className="flex h-[12rem] max-w-[12rem] mx-auto rounded-full w-full mt-2 cursor-pointer flex-col justify-center gap-2 bg-color3 "
+    className="flex h-[12rem] rounded-full mx-auto max-w-[12rem] w-full mt-2 cursor-pointer flex-col justify-center gap-2 bg-color3 "
     onClick={() =>
       document
         .querySelector<HTMLInputElement>('input[name="filepicture"]')

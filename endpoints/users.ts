@@ -3,4 +3,5 @@ export const usersEndpoints = {
     updateUser: (id:string) => `/users/${id}`,
     getUser: (id:string) => `/users/${id}`,
     getCurrentUser: () => `/users/me`,
+    updateMe : () => `/users/me`
 }

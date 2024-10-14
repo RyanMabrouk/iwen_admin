@@ -1,12 +1,4 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose
-} from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Edit } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -14,24 +6,22 @@ import CRUDData from '@/services/CRUDData';
 import getEndpoint from '@/services/getEndpoint';
 import Input from '@/components/input';
 import useUser from '@/hooks/data/user/useUser';
-import UserPic from './userPic';
 import SelectGeneric from '@/components/selectGeneric';
 import { v4 as uuidv4 } from 'uuid';
 import { uploadFile } from '@/api/uploadFile';
+import { useEffect, useState } from 'react';
+import useCurrentUser from '@/hooks/data/user/useCurrentUser';
+import UserPic from './userPic';
+import { Player } from '@lottiefiles/react-lottie-player';
+import ChangePassword from './changePassword';
 
-export default function UpdateUser({ userId }: { userId: string }) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+export default function Form() {
   const queryClient = useQueryClient();
-  const { data: user } = useUser(userId);
-  const [value, setValue] = useState<string>(
-    user?.data?.roles.includes('admin') ? 'admin' : 'user'
-  );
+  const { data: user, isLoading } = useCurrentUser();
   const [preview, setPreview] = useState<string>('/noAvatar.jpg');
 
   useEffect(() => {
     if (user) {
-      setValue(user.data?.roles.includes('admin') ? 'admin' : 'user');
-
       if (user.data?.avatar) {
         setPreview(user.data.avatar);
       } else {
@@ -39,12 +29,6 @@ export default function UpdateUser({ userId }: { userId: string }) {
       }
     }
   }, [user]);
-
-  const Options: { label: string; value: string }[] = [
-    { label: 'مسؤل', value: 'admin' },
-    { label: 'مستخدم', value: 'user' }
-  ];
-
   const { toast } = useToast();
 
   const updateMutation = useMutation({
@@ -62,32 +46,30 @@ export default function UpdateUser({ userId }: { userId: string }) {
         });
       }
 
-      const roles = value === 'admin' ? ['admin', 'user'] : ['user'];
       const payload = {
         first_name,
         last_name,
-        roles,
         avatar
       };
 
-      const url = getEndpoint({ resourse: 'users', action: 'updateUser' });
+      const url = getEndpoint({ resourse: 'users', action: 'updateMe' });
       const { error } = await CRUDData({
         method: 'PATCH',
-        url: url(userId),
+        url: url(),
         payload: payload
       });
-
       if (error) {
         throw new Error(error);
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['users', 'me'] });
+
       toast({
         title: 'نجاح!',
         description: `تم تعديل بيانات المستخدم بنجاح.`
       });
-      setIsDialogOpen(false);
     },
     onError: (error) => {
       toast({
@@ -95,28 +77,31 @@ export default function UpdateUser({ userId }: { userId: string }) {
       });
     }
   });
+  
+  if (isLoading) {
+    return (
+      <div className="m-auto flex min-h-screen items-center justify-center">
+        <Player
+          className="m-auto"
+          autoplay
+          loop
+          src="/loading.json"
+          style={{ height: '10rem', width: '10rem' }}
+        />
+      </div>
+    );
+  }
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild dir="rtl">
-        <button
-          onClick={() => setIsDialogOpen(true)}
-          className="ml-auto mr-2 flex items-center justify-start gap-2"
-        >
-          <Edit className="mr-2 h-4 w-4" />
-          <div>تحديث</div>
-        </button>
-      </DialogTrigger>
-
-      <DialogContent dir="rtl">
-        <DialogTitle> تعديل بيانات المستخدم </DialogTitle>
+    <div className="p-10">
+      <div className="mx-auto flex flex-col justify-center gap-8 w-full max-w-lg">
         <form
-          className="flex flex-col gap-8 rounded-sm p-6"
+          className="flex flex-col justify-center gap-8 rounded-sm"
           action={updateMutation.mutate}
         >
           <UserPic picture={preview} setPicture={setPreview} />
-          <div className="space-y-4">
-            <div className="flex gap-2">
+          <div className="flex flex-col justify-center gap-4">
+            <div className="flex justify-between w-full">
               <Input
                 label="الاسم الأول"
                 name="first_name"
@@ -137,32 +122,19 @@ export default function UpdateUser({ userId }: { userId: string }) {
               placeholder="أدخل البريد الإلكتروني"
               disabled={true}
             />
-            <SelectGeneric
-              options={Options}
-              placeholder="أدخل الدور"
-              name="roles"
-              selectedValue={value || ''}
-              setSelectedValue={setValue}
-            />
-          </div>
-          <div className="flex w-full justify-between">
             <button
               disabled={updateMutation.isPending}
-              className="ml-auto mt-5 w-fit bg-color2 p-2 text-xl  text-white hover:opacity-50"
+              className="ml-auto mt-5 w-full bg-color2 p-2 text-xl font-semibold text-white hover:opacity-50"
               type="submit"
             >
-              {updateMutation.isPending
-                ? 'جاري التعديل...'
-                : 'تعديل بيانات المستخدم'}
+              {updateMutation.isPending ? 'جاري التعديل...' : 'تعديل بيانات المستخدم'}
             </button>
-            <DialogClose asChild>
-              <button className="mt-5 w-fit rounded-md border bg-white px-4 py-2 text-lg text-color2 shadow-md hover:opacity-50">
-                إلغاء
-              </button>
-            </DialogClose>
           </div>
         </form>
-      </DialogContent>
-    </Dialog>
+        <div className="w-full">
+          <ChangePassword email={user?.data?.email ?? ''} />
+        </div>
+      </div>
+    </div>
   );
 }

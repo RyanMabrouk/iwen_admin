@@ -8,7 +8,7 @@ const breadcrumbItems = [
 export default function page() {
   return (
     <PageContainer>
-      <div className="space-y-2" 
+      <div className="space-y-2 bg-white p-5 shadow-md md:p-10" 
       dir='rtl'>
         <Breadcrumbs items={breadcrumbItems} />
         <Users />

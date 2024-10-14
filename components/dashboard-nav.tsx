@@ -49,7 +49,7 @@ export function DashboardNav({
                 {item.label === 'logOut' ? (
                   <button
                     className={cn(
-                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:opacity-50'
+                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-lg font-medium hover:opacity-50'
                     )}
                     onClick={() => setIsDialogOpen(true)}
                   >
@@ -64,7 +64,7 @@ export function DashboardNav({
                   <Link
                     href={item.disabled ? '/' : item?.href || '/'}
                     className={cn(
-                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-sm font-medium',
+                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-lg font-medium',
                       item.disabled && 'cursor-not-allowed opacity-80',
                       path === item.href && 'bg-white text-color1',
                       path !== item.href ? 'hover:opacity-50' : ''
