@@ -383,7 +383,7 @@ export default function Form() {
       </div>
       <button
         type="submit"
-        className="mt-5 w-fit rounded-sm bg-color1 px-4 py-3 text-lg font-semibold text-white shadow-lg transition-opacity hover:opacity-80"
+        className="mt-5 w-fit rounded-sm bg-color2 px-4 py-3 text-lg  text-white shadow-lg transition-opacity hover:opacity-80"
         disabled={updateBookMutation.isPending}
       >
         {updateBookMutation.isPending

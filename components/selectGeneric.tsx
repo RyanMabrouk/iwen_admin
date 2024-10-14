@@ -44,7 +44,7 @@ export default function SelectGeneric({
     >
       <SelectTrigger
         dir="rtl"
-        className={`line-clamp- w-[15rem] overflow-hidden break-words bg-white ${selectedValue? "" : "text-gray-400"} `}
+        className={`line-clamp- w-[15rem] mt-2 overflow-hidden break-words focus:ring-color2 focus:ring-2 bg-white ${selectedValue ? "" : "text-gray-400"}`}
       >
         <SelectValue
           placeholder={placeholder}
@@ -56,13 +56,13 @@ export default function SelectGeneric({
           <input
             type="text"
             placeholder="ابحث..."
-            className="w-full rounded-md border border-gray-300 p-2 outline-none"
+            className="w-full rounded-md border border-gray-300 p-2 outline-none focus:ring-color2 focus:ring-1" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         {filteredOptions.length > 0 ? (
-          filteredOptions.map((option) => (
+          filteredOptions.slice(0, 6).map((option) => ( // Limit to first 6 options
             <SelectItem
               key={option.value}
               value={option.value}

@@ -41,11 +41,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           />
 
           {/* Eye button for toggling visibility */}
-          <Button
+          <button
             type="button"
-            variant="ghost"
-            size="sm"
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 p-1"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-color3 rounded-sm"
             onClick={() => setShowPassword((prev) => !prev)}
             disabled={isDisabled}
           >
@@ -55,7 +53,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
               <EyeOffIcon className="h-5 w-5" aria-hidden="true" />
             )}
             <span className="sr-only">{showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}</span>
-          </Button>
+          </button>
         </div>
 
         {/* Display error messages */}
