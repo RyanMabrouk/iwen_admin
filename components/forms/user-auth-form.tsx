@@ -59,7 +59,6 @@ export default function UserAuthForm() {
             placeholder="أدخل البريد الإلكتروني"
             />
           <PasswordInput
-          className='mb-5'
             label="كلمة المرور"
             name="password"
             placeholder="أدخل كلمة المرور"
