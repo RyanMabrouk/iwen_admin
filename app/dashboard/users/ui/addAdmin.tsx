@@ -10,6 +10,7 @@ import {
 import { z } from 'zod';
 import ConfirmationWindow from './confirmationWindow';
 import Input from '@/components/input';
+import { PasswordInput } from '@/components/passwordInput';
 
 const schema = z.object({
   first_name: z.string().min(1, { message: 'الاسم الأول مطلوب' }),
@@ -88,10 +89,9 @@ export default function AddAdmin() {
               type="email"
               placeholder="أدخل بريدك الإلكتروني"
             />
-            <Input
+            <PasswordInput
               label="كلمة المرور"
               name="password"
-              type="password"
               placeholder="أدخل كلمة المرور"
             />
             {errors.map((error, index) => (

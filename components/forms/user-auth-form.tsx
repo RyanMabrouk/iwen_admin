@@ -7,7 +7,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -15,6 +14,8 @@ import GithubSignInButton from '../github-auth-button';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import login from '@/actions/(auth)/login';
+import { PasswordInput } from '../passwordInput';
+import Input from '@/components/input';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'أدخل عنوان بريد إلكتروني صالح' }),
@@ -30,13 +31,13 @@ export default function UserAuthForm() {
   const [errors, setErrors] = useState<{ general?: string } | null>(null);
 
   const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema)
   });
-   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: async (formObject: FormData) => {
-      const email = String(formObject.get("email")) ;
-      const password = String(formObject.get("password")) ;
+      const email = String(formObject.get('email'));
+      const password = String(formObject.get('password'));
       const { error } = await login({ email, password });
       if (error) {
         setErrors({ general: error.message });
@@ -45,53 +46,25 @@ export default function UserAuthForm() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries();
-    },
+    }
   });
-
 
   return (
     <>
       <Form {...form}>
-        <form
-        action={mutate}
-          className="w-full space-y-2"
-        >
-          <FormField
-            control={form.control}
+        <form dir='rtl' action={mutate} className="w-full space-y-2">
+          <Input
+            label="البريد الإلكتروني"
             name="email"
-            render={({ field }) => (
-              <FormItem dir="rtl">
-                <FormLabel>البريد الإلكتروني</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="أدخل بريدك الإلكتروني..."
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
+            placeholder="أدخل البريد الإلكتروني"
+            />
+          <PasswordInput
+          className='mb-5'
+            label="كلمة المرور"
             name="password"
-            render={({ field }) => (
-              <FormItem dir="rtl">
-                <FormLabel>كلمة المرور</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="أدخل كلمة المرور..."
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            placeholder="أدخل كلمة المرور"
           />
+
           {errors?.general && (
             <FormItem>
               <FormMessage>{errors.general}</FormMessage>
@@ -100,13 +73,14 @@ export default function UserAuthForm() {
 
           <button
             disabled={loading}
-            className="hover:opacity-50 ml-auto w-full bg-color2 p-2 text-white mt-5"
+            className="ml-auto mt-10 w-full bg-color2 p-2 text-white hover:opacity-50"
             type="submit"
           >
             تأكيد الدخول
           </button>
         </form>
-      </Form>{/*  <div className="relative">
+      </Form>
+      {/*  <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -116,8 +90,7 @@ export default function UserAuthForm() {
           </span>
         </div>
       </div>
-      <GithubSignInButton />*/ }
-    
+      <GithubSignInButton />*/}
     </>
   );
 }

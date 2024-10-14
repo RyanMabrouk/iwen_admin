@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import updatePassword from '@/actions/(auth)/updatePassword';
 import Input from '@/components/input';
+import { PasswordInput } from '@/components/passwordInput';
 
 // Define the schema for password validation using Zod
 const passwordSchema = z
@@ -73,23 +74,20 @@ export default function ChangePassword({ email }: { email: string }) {
       className="mx-auto mt-5 flex flex-col justify-center gap-4"
     >
       <h1 className="text-2xl font-bold">تغيير كلمة المرور</h1>
-      <Input
+      <PasswordInput
         label="كلمة المرور الحالية"
-        type="password"
         name="currentPassword"
         placeholder="أدخل كلمة المرور الحالية"
       />
 
-      <Input
+      <PasswordInput
         label="كلمة المرور الجديدة"
-        type="password"
         name="newPassword"
         placeholder="أدخل كلمة المرور الجديدة"
       />
 
-      <Input
+      <PasswordInput
         label="تأكيد كلمة المرور"
-        type="password"
         name="confirmPassword"
         placeholder="أكد كلمة المرور"
       />
