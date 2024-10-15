@@ -11,7 +11,7 @@ export const columnDefinitions = [
   },
   {
     accessorKey: 'writer_id',
-    header: 'المِؤلف',
+    header: 'المؤلف',
     visible: false
   },
   {
