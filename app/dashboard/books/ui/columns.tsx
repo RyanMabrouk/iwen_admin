@@ -1,16 +1,117 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Pencil } from 'lucide-react';
-import Link from 'next/link';
+
 import { IBookPopulated } from '@/types';
 import { CellAction } from './cell-action';
 import { Checkbox } from '@/components/ui/checkbox';
+export const columnDefinitions = [
+  {
+    accessorKey: 'title',
+    header: 'العنوان',
+    visible: true
+  },
+  {
+    accessorKey: 'writer_id',
+    header: 'المِؤلف',
+    visible: false
+  },
+  {
+    accessorKey: 'category',
+    header: 'الفئة',
+    visible: true
+  },
+  {
+    accessorKey: 'subcategory',
+    header: 'الفئة الفرعية',
+    visible: false
+  },
+
+  {
+    accessorKey: 'description',
+    header: 'الوصف',
+    visible: true
+  },
+  {
+    accessorKey: 'price',
+    header: 'السعر',
+    visible: true
+  },
+  {
+    accessorKey: 'price_dhs',
+    header: 'السعر بالدولار',
+    visible: false
+  },
+  {
+    accessorKey: 'discount',
+    header: 'الخصم',
+    visible: true
+  },
+  {
+    accessorKey: 'discount_type_arabic',
+    header: 'نوع الخصم',
+    visible: false
+  },
+  {
+    accessorKey: 'stock',
+    header: 'المخزون',
+    visible: true
+  },
+  {
+    accessorKey: 'share_house_id',
+    header: 'دار النشر',
+    visible: false
+  },
+  {
+    accessorKey: 'status_arabic',
+    header: 'الحالة',
+    visible: false
+  },
+
+  {
+    accessorKey: 'cover_type_id',
+    header: 'نوع الغلاف',
+    visible: false
+  },
+  {
+    accessorKey: 'release_year',
+    header: 'سنة الإصدار',
+    visible: false
+  },
+  {
+    accessorKey: 'page_count',
+    header: 'عدد الصفحات',
+    visible: false
+  },
+  {
+    accessorKey: 'weight',
+    header: 'الوزن',
+    visible: false
+  },
+  {
+    accessorKey: 'editor',
+    header: 'المحقق',
+    visible: false
+  },
+  {
+    accessorKey: 'isbn',
+    header: 'الترقيم الدولي',
+    visible: false
+  },
+  {
+    accessorKey: 'price_after_discount',
+    header: 'السعر بعد الخصم',
+    visible: false
+  }
+  
+];
 
 export const columns = ({
   selectedIds,
-  setSelectedIds
+  setSelectedIds,
+  columnState
 }: {
-  selectedIds: string[],
-  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>
+  selectedIds: string[];
+  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
+  columnState: typeof columnDefinitions;
 }): ColumnDef<IBookPopulated>[] => [
   {
     id: 'select',
@@ -29,10 +130,11 @@ export const columns = ({
       <Checkbox
         checked={selectedIds.includes(row.original.id)}
         onCheckedChange={(value) => {
-          // Toggle single row selection
           const id = row.original.id;
           setSelectedIds((prev) =>
-            value ? [...prev, id] : prev.filter((selectedId) => selectedId !== id)
+            value
+              ? [...prev, id]
+              : prev.filter((selectedId) => selectedId !== id)
           );
           row.toggleSelected(!!value);
         }}
@@ -42,42 +144,12 @@ export const columns = ({
     enableSorting: false,
     enableHiding: false
   },
-  // Other columns
-  {
-    accessorKey: 'title',
-    header: 'العنوان',
-  },
-
-  {
-    accessorKey: 'category',
-    header: 'الفئة',
-  },
-
-  {
-    accessorKey: 'description',
-    header: 'الوصف',
-  },
-  {
-    accessorKey: 'price_dhs',
-    header: 'السعر',
-  },
-  {
-    accessorKey: 'discount',
-    header: 'الخصم',
-  },
-  {
-    accessorKey: 'stock',
-    header: 'المخزون',
-  },
-  {
-    accessorKey: 'share_house_id',
-    header: 'دار النشر',
-  },
-  {
-    accessorKey: 'status_arabic',
-    header: 'الحالة',
-  },
-
+  ...columnState
+    .filter((col) => col.visible)
+    .map((col) => ({
+      accessorKey: col.accessorKey,
+      header: col.header
+    })),
   {
     id: 'actions',
     cell: ({ row }) => <CellAction data={row.original} />
