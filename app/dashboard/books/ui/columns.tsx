@@ -51,6 +51,11 @@ export const columnDefinitions = [
     visible: false
   },
   {
+    accessorKey: 'price_after_discount',
+    header: 'السعر بعد الخصم',
+    visible: false
+  },
+  {
     accessorKey: 'stock',
     header: 'المخزون',
     visible: true
@@ -95,13 +100,7 @@ export const columnDefinitions = [
     accessorKey: 'isbn',
     header: 'الترقيم الدولي',
     visible: false
-  },
-  {
-    accessorKey: 'price_after_discount',
-    header: 'السعر بعد الخصم',
-    visible: false
   }
-  
 ];
 
 export const columns = ({
