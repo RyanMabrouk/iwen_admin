@@ -24,7 +24,11 @@ export const columnDefinitions = [
     header: 'الفئة الفرعية',
     visible: false
   },
-
+   {
+    accessorKey: 'corner_id',
+    header: 'الركن ',
+    visible: false
+   },
   {
     accessorKey: 'description',
     header: 'الوصف',
@@ -86,6 +90,12 @@ export const columnDefinitions = [
     header: 'عدد الصفحات',
     visible: false
   },
+  {
+    accessorKey: 'number_of_volumes',
+    header: 'عدد المجلدات',
+    visible: false
+  }
+  ,
   {
     accessorKey: 'weight',
     header: 'الوزن',

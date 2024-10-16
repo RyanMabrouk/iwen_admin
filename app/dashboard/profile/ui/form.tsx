@@ -124,7 +124,7 @@ export default function Form() {
             />
             <button
               disabled={updateMutation.isPending}
-              className="ml-auto mt-5 w-full bg-color2 p-2 text-xl font-semibold text-white hover:opacity-50"
+              className="ml-auto mt-5 w-full rounded-sm bg-color2 p-2 text-xl font-semibold text-white hover:opacity-50"
               type="submit"
             >
               {updateMutation.isPending ? 'جاري التعديل...' : 'تعديل بيانات المستخدم'}

@@ -95,7 +95,7 @@ export default function ChangePassword({ email }: { email: string }) {
       <button
         type="submit"
         disabled={updatePasswordMutation.isPending}
-        className="ml-auto mt-5 w-full bg-color2 p-2 text-xl font-semibold text-white hover:opacity-50"
+        className="ml-auto mt-5 w-full bg-color2 p-2 text-xl rounded-sm font-semibold text-white hover:opacity-50"
       >
         {updatePasswordMutation.isPending
           ? 'جاري تغيير كلمة المرور...'

@@ -65,6 +65,7 @@ export interface IBookPayload {
   subcategories_ids: string[];
   page_count: number;
   cover_type_id?: string;
+  corner_id?: string;
   status?: string;
   discount_type: string;
   meta_image?: string;
@@ -80,6 +81,7 @@ export interface IBookPopulated extends Tables<"books"> {
   cover_type: Tables<"cover_types"> | null;
   writer: Tables<"writers"> | null;
   share_house: Tables<"share_houses"> | null;
+  corner: Tables<"corners"> | null;
  }
 
 export interface NavItemWithChildren extends NavItem {

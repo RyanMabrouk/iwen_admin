@@ -145,7 +145,7 @@ export const navItems: NavItem[] = [
     label: 'addBook'
   },
   {
-    title: 'تسجي الخروج',
+    title: 'تسجيل الخروج',
     href: '/',
     icon: 'login',
     label: 'logOut'

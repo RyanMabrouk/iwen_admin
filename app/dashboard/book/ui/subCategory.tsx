@@ -37,9 +37,9 @@ export default function SubCategory({ defaultValue, category_id ,error}: { defau
           options={Options ?? []}
           placeholder="أدخل الفئة الفرعية"
           name="subCategory"
-          selectedValue={value} // Set the selected value
+          selectedValue={value}
           setSelectedValue={setValue}
-          handelDeleteOption={handleDeleteOption} // Add the delete option handler to the select component
+          handelDeleteOption={handleDeleteOption}
         />
         <AddWindow
           title="إضافة فئة فرعية"

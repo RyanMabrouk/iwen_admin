@@ -21,6 +21,7 @@ import Textarea from '@/components/textArea';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { uploadFile } from '@/api/uploadFile';
 import { IBookPayload, IBookPopulated, IValidationErrors } from '@/types';
+import Corners from './corners';
 
 export default function Form() {
   const [errors, setErrors] = useState<
@@ -57,6 +58,10 @@ export default function Form() {
         String(formData.get('shareHouse')) === ''
           ? undefined
           : String(formData.get('shareHouse'));
+      const corner_id =
+        String(formData.get('corner')) === ''
+          ? undefined
+          : String(formData.get('corner'));
       const editor = String(formData.get('editor'));
       const release_year = Number(formData.get('releaseYear'));
       const status =
@@ -81,6 +86,7 @@ export default function Form() {
       const isbn = String(formData.get('isbn'));
       const price = Number(formData.get('price'));
       const price_dhs = Number(formData.get('price_dhs'));
+      const number_of_volumes = Number(formData.get('number_of_volumes'));
       const discount = Number(formData.get('discount'));
       const slug = String(formData.get('slug'));
       const meta_title = String(formData.get('meta_title'));
@@ -145,14 +151,19 @@ export default function Form() {
         meta_description,
         canonical,
         slug,
-        structured_data
+        structured_data,
+        number_of_volumes,
+        corner_id
       };
       if (bookId) {
         const urlUpdate = getEndpoint({
           resourse: 'books',
           action: 'updateBook'
         });
-        const { error,valdiationErrors } = await CRUDData<IBookPopulated, IBookPayload>({
+        const { error, valdiationErrors } = await CRUDData<
+          IBookPopulated,
+          IBookPayload
+        >({
           method: 'PATCH',
           url: urlUpdate(String(bookId)),
           payload
@@ -196,7 +207,6 @@ export default function Form() {
       queryClient.invalidateQueries({ queryKey: ['books'] });
     },
     onError: (error) => {
-      console.log(error);
       if (bookId) {
         toast.toast({ description: 'حدث خطأ أثناء عملية تعديل' });
       } else {
@@ -240,8 +250,14 @@ export default function Form() {
           placeholder="أدخل العنوان"
           error={errors?.title}
         />
-        <Writer defaultValue={book?.data?.writer_id || ''}  errors={errors?.writer_id}/>
-        <PublishHouse defaultValue={book?.data?.share_house_id || ''} errors={errors?.share_house_id}  />
+        <Writer
+          defaultValue={book?.data?.writer_id || ''}
+          errors={errors?.writer_id}
+        />
+        <PublishHouse
+          defaultValue={book?.data?.share_house_id || ''}
+          errors={errors?.share_house_id}
+        />
         <Input
           label="المحقق"
           name="editor"
@@ -257,7 +273,10 @@ export default function Form() {
           placeholder="أدخل سنة الإصدار"
           error={errors?.release_year}
         />
-        <Status defaultValue={book?.data?.status || ''} errors={errors?.status} />
+        <Status
+          defaultValue={book?.data?.status || ''}
+          errors={errors?.status}
+        />
         <Textarea
           label="الوصف"
           name="description"
@@ -265,13 +284,20 @@ export default function Form() {
           placeholder="أدخل الوصف"
           error={errors?.description}
         />
-        <Category category_id={category_id} setCategory_id={setCategory_id} errors={errors?.categories_ids}/>
+        <Category
+          category_id={category_id}
+          setCategory_id={setCategory_id}
+          errors={errors?.categories_ids}
+        />
         <SubCategory
           defaultValue={book?.data?.subcategories[0]?.id || ''}
           category_id={category_id}
           error={errors?.subcategories_ids}
         />
-        <CoverTypes defaultValue={book?.data?.cover_type_id || ''} errors={errors?.cover_type_id} />
+        <CoverTypes
+          defaultValue={book?.data?.cover_type_id || ''}
+          errors={errors?.cover_type_id}
+        />
         <Input
           label="الوزن"
           name="weight"
@@ -288,13 +314,17 @@ export default function Form() {
           placeholder="أدخل عدد الصفحات"
           error={errors?.page_count}
         />
-        {/* <Input
+        <Input
           label="عدد المجلدات"
-          name="moujaledCount"
+          name="number_of_volumes"
           type="number"
-          defaultValue={book?.data?.page_count || ''}
+          defaultValue={book?.data?.number_of_volumes || ''}
           placeholder="أدخل عدد المجلدات"
-        /> */}
+        />
+        <Corners
+          defaultValue={book?.data?.corner_id || ''}
+          errors={errors?.corner_id}
+        />
         <Input
           label="الرقم الدولي الموحد للكتاب"
           name="isbn"

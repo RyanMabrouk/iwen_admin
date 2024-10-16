@@ -50,10 +50,10 @@ export default function Table() {
   }, [page, books?.data?.meta?.has_next_page, queryClient, searchQuery]);
 
   const transformedBooksData =
-    books?.data?.data?.map((book: IBookPopulated) => ({
+  books?.data?.data?.map((book: IBookPopulated) => {
+    return {
       ...book,
-      category:
-        book.categories.length > 0 ? book.categories[0].name : 'لا توجد فئة ',
+      category: book.categories.length > 0 ? book.categories[0].name : 'لا توجد فئة',
       subcategory:
         book.subcategories.length > 0
           ? book.subcategories[0].name
@@ -62,9 +62,12 @@ export default function Table() {
       share_house_id: book.share_house?.name ?? 'لا يوجد دار نشر',
       cover_type_id: book.cover_type?.name ?? 'لا يوجد نوع غلاف',
       discount_type_arabic:
-        book.discount_type == 'percentage' ? 'نسبة مئوية' : 'قيمة مالية',
-      status_arabic: book.status == 'available' ? 'متوفر' : 'غير متوفر'
-    })) || [];
+        book.discount_type === 'percentage' ? 'نسبة مئوية' : 'قيمة مالية',
+      status_arabic: book.status === 'available' ? 'متوفر' : 'غير متوفر',
+      corner_id: book.corner?.name ?? 'لا يوجد ركن',
+    };
+  }) || [];
+
 
   const [columnState, setColumnState] = useState(columnDefinitions);
 
