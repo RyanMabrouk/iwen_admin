@@ -14,6 +14,7 @@ import {
   Image,
   Laptop,
   LayoutDashboardIcon,
+  ListOrdered,
   Loader2,
   LogIn,
   LucideIcon,
@@ -36,6 +37,7 @@ import {
 export type Icon = LucideIcon;
 
 export const Icons = {
+  order: ListOrdered,
   dashboard: LayoutDashboardIcon,
   logo: Command,
   login: LogIn,

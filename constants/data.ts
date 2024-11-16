@@ -145,6 +145,12 @@ export const navItems: NavItem[] = [
     label: 'addBook'
   },
   {
+    title: 'الطلبات',
+    href: '/dashboard/orders',
+    icon: 'order',
+    label: 'orders'
+  },
+  {
     title: 'تسجيل الخروج',
     href: '/',
     icon: 'login',

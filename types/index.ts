@@ -1,6 +1,6 @@
 import { Icons } from '@/components/icons';
 import { ComparisonOperator } from 'kysely';
-import { Tables } from './database.types';
+import { Enums, Tables } from './database.types';
 import { Table } from '@tanstack/react-table';
 
 export interface InfinityPaginationQueryType<
@@ -45,7 +45,15 @@ export interface NavItem {
   label?: string;
   description?: string;
 }
+// IOrderProduct represents a single product in an order
 
+
+export interface IOrderProduct extends Tables<"orders_products">, Tables<"books"> {
+}
+
+export interface IOrder extends Tables<"orders"> {
+  products: IOrderProduct[];
+}
 export interface IBookPayload {
   title?: string;
   writer_id?: string;
