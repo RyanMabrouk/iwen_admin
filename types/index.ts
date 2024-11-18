@@ -4,26 +4,26 @@ import { Enums, Tables } from './database.types';
 import { Table } from '@tanstack/react-table';
 
 export interface InfinityPaginationQueryType<
- EntityFilterKeys extends string | number | symbol,
+  EntityFilterKeys extends string | number | symbol
 > {
- page?: number;
- limit?: number;
- sort?: {
- order: 'asc' | 'desc';
- orderBy: EntityFilterKeys;
- };
- filters?: {
- [key in EntityFilterKeys]?: {
- operator: ComparisonOperator;
- value: string | null | string[];
- }[];
- };
- search?: {
- [key in EntityFilterKeys]?: {
- operator: ComparisonOperator;
- value: string | null | string[];
- }[];
- };
+  page?: number;
+  limit?: number;
+  sort?: {
+    order: 'asc' | 'desc';
+    orderBy: EntityFilterKeys;
+  };
+  filters?: {
+    [key in EntityFilterKeys]?: {
+      operator: ComparisonOperator;
+      value: string | null | string[];
+    }[];
+  };
+  search?: {
+    [key in EntityFilterKeys]?: {
+      operator: ComparisonOperator;
+      value: string | null | string[];
+    }[];
+  };
 }
 export type InfinityPaginationResultType<T> = Readonly<{
   data: T[];
@@ -47,11 +47,11 @@ export interface NavItem {
 }
 // IOrderProduct represents a single product in an order
 
+export interface IOrderProduct
+  extends Tables<'orders_products'>,
+    Tables<'books'> {}
 
-export interface IOrderProduct extends Tables<"orders_products">, Tables<"books"> {
-}
-
-export interface IOrder extends Tables<"orders"> {
+export interface IOrder extends Tables<'orders'> {
   products: IOrderProduct[];
 }
 export interface IBookPayload {
@@ -64,7 +64,7 @@ export interface IBookPayload {
   weight: number;
   isbn: string;
   price: number;
-  price_dhs: number;
+  price_dollar: number;
   discount: number;
   stock: number;
   meta_keywords: string[];
@@ -83,14 +83,14 @@ export interface IBookPayload {
   slug: string;
   structured_data: FormDataEntryValue | null;
 }
-export interface IBookPopulated extends Tables<"books"> {
-  categories: Tables<"categories">[];
-  subcategories: Tables<"subcategories">[];
-  cover_type: Tables<"cover_types"> | null;
-  writer: Tables<"writers"> | null;
-  share_house: Tables<"share_houses"> | null;
-  corner: Tables<"corners"> | null;
- }
+export interface IBookPopulated extends Tables<'books'> {
+  categories: Tables<'categories'>[];
+  subcategories: Tables<'subcategories'>[];
+  cover_type: Tables<'cover_types'> | null;
+  writer: Tables<'writers'> | null;
+  share_house: Tables<'share_houses'> | null;
+  corner: Tables<'corners'> | null;
+}
 
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
@@ -119,7 +119,11 @@ export interface IError<T extends object> {
   type: string;
   timestamp: number;
   errors?: IValidationErrors<T>;
- }
- export type IValidationErrors<T extends object> = {
+}
+export type IValidationErrors<T extends object> = {
   [key in keyof T]: string[];
- };
+};
+
+export interface IEvent extends Tables<'events'> {
+  books: Tables<'books'>[];
+}

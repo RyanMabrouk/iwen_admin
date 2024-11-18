@@ -19,8 +19,10 @@ import {
   LogIn,
   LucideIcon,
   LucideProps,
+  Megaphone,
   Moon,
   MoreVertical,
+  PartyPopper,
   Pizza,
   Plus,
   Settings,
@@ -37,6 +39,8 @@ import {
 export type Icon = LucideIcon;
 
 export const Icons = {
+  events:PartyPopper,
+  banner : Megaphone,
   order: ListOrdered,
   dashboard: LayoutDashboardIcon,
   logo: Command,

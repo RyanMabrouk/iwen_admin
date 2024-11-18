@@ -85,7 +85,7 @@ export default function Form() {
       const page_count = Number(formData.get('pageCount'));
       const isbn = String(formData.get('isbn'));
       const price = Number(formData.get('price'));
-      const price_dhs = Number(formData.get('price_dhs'));
+      const price_dollar = Number(formData.get('price_dollar'));
       const number_of_volumes = Number(formData.get('number_of_volumes'));
       const discount = Number(formData.get('discount'));
       const slug = String(formData.get('slug'));
@@ -135,7 +135,7 @@ export default function Form() {
         weight,
         isbn,
         price,
-        price_dhs,
+        price_dollar,
         discount,
         stock,
         meta_keywords: meta_keywords,
@@ -334,11 +334,11 @@ export default function Form() {
         />
         <Input
           label="السعر (بالدرهم)"
-          name="price_dhs"
+          name="price_dollar"
           type="number"
-          defaultValue={book?.data?.price_dhs || ''}
+          defaultValue={book?.data?.price_dollar || ''}
           placeholder="أدخل السعر (بالدينار)"
-          error={errors?.price_dhs}
+          error={errors?.price_dollar}
         />
         <Input
           label="السعر (بالدولار)"

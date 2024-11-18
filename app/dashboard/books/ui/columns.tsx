@@ -24,11 +24,11 @@ export const columnDefinitions = [
     header: 'الفئة الفرعية',
     visible: false
   },
-   {
+  {
     accessorKey: 'corner_id',
     header: 'الركن ',
     visible: false
-   },
+  },
   {
     accessorKey: 'description',
     header: 'الوصف',
@@ -40,7 +40,7 @@ export const columnDefinitions = [
     visible: true
   },
   {
-    accessorKey: 'price_dhs',
+    accessorKey: 'price_dollar',
     header: 'السعر بالدولار',
     visible: false
   },
@@ -94,8 +94,7 @@ export const columnDefinitions = [
     accessorKey: 'number_of_volumes',
     header: 'عدد المجلدات',
     visible: false
-  }
-  ,
+  },
   {
     accessorKey: 'weight',
     header: 'الوزن',
