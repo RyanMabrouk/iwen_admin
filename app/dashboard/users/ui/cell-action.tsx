@@ -8,7 +8,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Employee } from '@/constants/data';
 import { Tables } from '@/types/database.types';
 import {  MoreHorizontal } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
