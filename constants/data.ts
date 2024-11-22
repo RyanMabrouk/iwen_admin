@@ -40,7 +40,7 @@ export const navItems: NavItem[] = [
   {
     title: 'إضافة إعلان',
     href: '/dashboard/banner',
-    icon: 'banner',
+    icon: 'add',
     label: 'banner'
   },
 
@@ -54,7 +54,7 @@ export const navItems: NavItem[] = [
   {
     title: 'إضافة فعالية',
     href: '/dashboard/event',
-    icon: 'events',
+    icon: 'add',
     label: 'event'
   },
 

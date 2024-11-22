@@ -21,7 +21,7 @@ export function MobileSidebar({ className }: SidebarProps) {
           <MenuIcon />
         </SheetTrigger>
         <SheetContent side="left" className="!px-0">
-          <div className="space-y-4 py-4">
+          <div className="space-y-4 py-4 " >
             <div className="px-3 py-2">
               <div className="ml-auto hidden p-5 pt-10 lg:block">
                 <Image src="/logo.png" width={150} height={150} alt="logo" />

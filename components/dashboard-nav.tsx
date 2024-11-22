@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import { cn } from '@/lib/utils';
 import { NavItem } from '@/types';
 import { Dispatch, SetStateAction } from 'react';
@@ -13,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
+import { Icons } from './icons';
 
 interface DashboardNavProps {
   items: NavItem[];
@@ -33,40 +33,29 @@ export function DashboardNav({
   }
 
   return (
-    <nav className="grid items-start gap-2 ">
-      <TooltipProvider>
-        {items.map((item, index) => (
-          <Tooltip key={index}>
-            <TooltipTrigger asChild>
-              {
+    <nav className="grid items-start gap-2">
+        {items.map((item, index) => {
+          const Icon = Icons[item.icon || 'arrowRight'];
+
+          return (
+            <div key={index}>
                 <Link
                   href={item.disabled ? '/' : item?.href || '/'}
                   className={cn(
-                    'flex items-center gap-2 overflow-hidden rounded-md px-2 mr-4 py-2 text-base font-medium',
+                    'mr-4 flex items-center gap-2 overflow-hidden rounded-md px-2 py-2 text-base font-medium',
                     item.disabled && 'cursor-not-allowed opacity-80',
                     path === item.href && 'bg-white text-color1',
                     path !== item.href ? 'hover:opacity-50' : ''
                   )}
                 >
+                  {Icon && <Icon className="h-5 w-5" />}
                   {isMobileNav || (!isMinimized && !isMobileNav) ? (
                     <span className="mr-2 truncate">{item.title}</span>
-                  ) : (
-                    ''
-                  )}
+                  ) : null}
                 </Link>
-              }
-            </TooltipTrigger>
-            <TooltipContent
-              align="center"
-              side="right"
-              sideOffset={8}
-              className={!isMinimized ? 'hidden' : 'inline-block'}
-            >
-              {item.title}
-            </TooltipContent>
-          </Tooltip>
-        ))}
-      </TooltipProvider>
+            </div>
+          );
+        })}
     </nav>
   );
 }

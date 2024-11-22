@@ -96,7 +96,7 @@ export default function Sidebar({ className }: SidebarProps) {
               )}
             >
               <span>{icon}</span>
-              <span className="mr-2">{group}</span>
+              <span className={`mr-2 ${isMinimized?"hidden" : ""}`}>{group}</span>
               <span className="mr-auto">
                 {expandedGroups.includes(group) ? (
                   <ChevronDown className="text-xl" />
