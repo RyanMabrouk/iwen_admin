@@ -18,6 +18,7 @@ import { useSidebar } from '@/hooks/useSidebar';
 import Image from 'next/image';
 import Link from 'next/link';
 import ConfirmationWindowLogout from '@/app/dashboard/ui/confirmationWindow';
+import { usePathname } from 'next/navigation';
 
 type SidebarProps = {
   className?: string;
@@ -27,6 +28,7 @@ export default function Sidebar({ className }: SidebarProps) {
   const { isMinimized, toggle } = useSidebar();
   const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const path = usePathname();
 
   const toggleGroup = (group: string) => {
     setExpandedGroups((prev) =>
@@ -118,10 +120,17 @@ export default function Sidebar({ className }: SidebarProps) {
         {standaloneNavItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center px-4 py-2 text-xl font-medium hover:opacity-70"
+            className={`flex items-center px-4 py-2 text-xl font-medium  ${
+              path == item.href ? ' ' : 'hover:opacity-70'
+            }`}
           >
             {item.href ? (
-              <Link href={item.href} className="flex w-full items-center">
+              <Link
+                href={item.href}
+                className={`flex w-full items-center ${
+                  path == item.href ? 'bg-white text-color1 hover:opacity-100  p-2 rounded-md' : ''
+                }`}
+              >
                 <span className="ml-2">{item.icon}</span>
                 {!isMinimized && <span className="mr-2">{item.title}</span>}
               </Link>
