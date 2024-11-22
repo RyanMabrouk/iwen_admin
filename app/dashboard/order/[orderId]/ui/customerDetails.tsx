@@ -27,7 +27,7 @@ export default function CustomerDetails({ id }: CustomerDetailsProps) {
       </div>
       <div className="flex items-center gap-3">
         <Image
-          src={customer?.data?.avatar ?? ''}
+          src={customer?.data?.avatar ?? '/noAvatar.jpg'}
           width={50}
           height={50}
           alt="Customer Avatar"

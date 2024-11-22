@@ -1,19 +1,11 @@
 import { NavItem } from '@/types';
 
-
 export const navItems: NavItem[] = [
   /*{
     title: 'Dashboard',
     href: '/dashboard',
     icon: 'dashboard',
     label: 'Dashboard'
-  },
-  {
-    title: 'المستخ',
-    href: '/dashboard/user',
-    icon: 'user',
-    label: 'users'
-
   },*/
   {
     title: 'المستخدمين',
@@ -26,9 +18,7 @@ export const navItems: NavItem[] = [
     href: '/dashboard/books',
     icon: 'book',
     label: 'books'
-
-  }
-  ,
+  },
   {
     title: 'إضافة كتاب',
     href: '/dashboard/book',
@@ -42,18 +32,32 @@ export const navItems: NavItem[] = [
     label: 'orders'
   },
   {
-    title: 'إضافة راية',
+    title: 'الإعلانات',
+    href: '/dashboard/banners',
+    icon: 'banner',
+    label: 'banners'
+  },
+  {
+    title: 'إضافة إعلان',
     href: '/dashboard/banner',
     icon: 'banner',
     label: 'banner'
-  } ,
-  /*
+  },
+
   {
-    title: 'إضافة حدث',
+    title: 'الفعاليات',
+    href: '/dashboard/events',
+    icon: 'events',
+    label: 'events'
+  },
+
+  {
+    title: 'إضافة فعالية',
     href: '/dashboard/event',
     icon: 'events',
     label: 'event'
-  } ,*/
+  },
+
   {
     title: 'تسجيل الخروج',
     href: '/',

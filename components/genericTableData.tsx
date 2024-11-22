@@ -27,7 +27,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  total_pages: number;
+  total_pages?: number;
   page: number;
   setPage: (page: number) => void;
   setSelectedIds?: (selectedIds: string[]) => void;

@@ -62,7 +62,7 @@ export default function DeleteBooks({ ids , setSelectedIds }: { ids: string[]; s
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild dir="rtl ">
         <button
-          onClick={() => setIsDialogOpen(true)} // Ensure this triggers the dialog opening
+          onClick={() => setIsDialogOpen(true)} 
           className="ml-auto flex items-center justify-start mr-2 gap-2 "
         >
           <Trash className="h-4 w-4" />

@@ -5,11 +5,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import getEndpoint from '@/services/getEndpoint';
 import CRUDData from '@/services/CRUDData';
-import { v4 as uuidv4 } from 'uuid';
 import { useToast } from '@/components/ui/use-toast';
 import { SearchIcon } from 'lucide-react';
 import useEvent from '@/hooks/data/events/useEvent';
 import { Tables } from '@/types/database.types';
+import { IBookPopulated, IEventPayload, IValidationErrors } from '@/types';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function Event() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -18,13 +19,26 @@ export default function Event() {
   const { data: event, isLoading } = useEvent(String(eventId));
   const queryClient = useQueryClient();
   const toast = useToast();
-  
+  const [errors, setErrors] = useState<
+    IValidationErrors<IEventPayload> | null | undefined
+  >();
+
   const [eventName, setEventName] = useState<string>(event?.data?.name ?? '');
-  const [selectedBooks, setSelectedBooks] = useState<Tables<'books'>[]>(event?.data?.books ?? []);
+  const [selectedBooks, setSelectedBooks] = useState<IBookPopulated[]>(
+    event?.data?.books ?? []
+  );
+  useEffect(() => {
+    if (event?.data?.books) {
+      setSelectedBooks(event.data.books);
+    }
+    if (event?.data?.name) {
+      setEventName(event.data.name);
+    }
+    }, [event?.data]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
-  const { data: books, isLoading: booksLoading } = useBooks({
+  const { data: books } = useBooks({
     search: {
       'books.title': [
         {
@@ -37,37 +51,39 @@ export default function Event() {
     limit: 4
   });
 
-  const handleSelectBook = (book: Tables<'books'>) => {
-    if (!selectedBooks.some(selectedBook => selectedBook.id === book.id)) {
-      setSelectedBooks(prev => [...prev, book]);
+  const handleSelectBook = (book: IBookPopulated) => {
+    if (!selectedBooks.some((selectedBook) => selectedBook.id === book.id)) {
+      setSelectedBooks((prev) => [...prev, book]);
       setSearchQuery('');
       setShowSuggestions(false);
     }
   };
 
   const handleRemoveBook = (bookId: string) => {
-    setSelectedBooks(prev => prev.filter(book => book.id !== bookId));
+    setSelectedBooks((prev) => prev.filter((book) => book.id !== bookId));
   };
 
   const updateEventMutation = useMutation({
     mutationFn: async () => {
-      if (!eventName) {
-        throw new Error('يجب إدخال اسم الفعالية');
-      }
-      if (selectedBooks.length === 0) {
-        throw new Error('يجب اختيار كتاب واحد على الأقل');
-      }
       const payload = {
         name: eventName,
-        bookIds: selectedBooks.map(book => book.id)
+        books_ids: selectedBooks.map((book) => book.id)
       };
       const url = getEndpoint({
         resourse: 'events',
         action: eventId ? 'updateEvent' : 'createEvent'
       });
       const method = eventId ? 'PATCH' : 'POST';
-      const { error } = await CRUDData({ method, url: url(String(eventId)), payload });
-      if (error) throw new Error(error);
+      const { error, validationErrors } = await CRUDData<
+        Tables<'banners'>,
+        IEventPayload
+      >({ method, url: url(String(eventId)), payload });
+      if (error || validationErrors) {
+        if (validationErrors) {
+          setErrors(validationErrors);
+        }
+        throw new Error(error ?? '');
+      }
     },
     onSuccess: () => {
       toast.toast({
@@ -83,18 +99,24 @@ export default function Event() {
       queryClient.invalidateQueries({ queryKey: ['events'] });
     },
     onError: (error) => {
-      const errorMessage = (error as Error).message;
-      console.error(errorMessage);
       toast.toast({
-        description: errorMessage || 'حدث خطأ أثناء عملية التحديث'
+        description: eventId
+          ? 'حدث خطأ أثناء عملية تعديل'
+          : 'حدث خطأ أثناء عملية الإضافة'
       });
     }
   });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+  if (isLoading)
+    return (
+      <div className="m-auto flex min-h-screen items-center justify-center">
+        <Player
+          autoplay
+          loop
+          src="/loading.json"
+          style={{ height: '10rem', width: '10rem' }}
+        />
+      </div>
+    );
   return (
     <form
       ref={formRef}
@@ -104,7 +126,7 @@ export default function Event() {
       }}
     >
       <div className="mb-4">
-        <label htmlFor="eventName" className="block mb-2 font-semibold">
+        <label htmlFor="eventName" className="mb-2 block font-semibold">
           اسم الفعالية
         </label>
         <input
@@ -113,12 +135,16 @@ export default function Event() {
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           className="w-full rounded-sm border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-color2"
-          required
         />
+        {errors?.name?.map((err, index) => (
+          <p key={index} className="mt-2 text-red-500">
+            {err}
+          </p>
+        ))}
       </div>
 
       <div className="relative mb-4">
-        <label className="block mb-2 font-semibold">البحث عن كتب</label>
+        <label className="mb-2 block font-semibold">البحث عن كتب</label>
         <div className="flex items-center gap-2 rounded border border-gray-300 p-2 shadow-sm">
           <input
             type="text"
@@ -139,34 +165,43 @@ export default function Event() {
 
         {showSuggestions && (books?.data?.data?.length ?? 0) > 0 && (
           <div className="absolute max-h-60 w-full border bg-white shadow-md">
-            {books?.data?.data.map((book) => (
-              <div
-                key={book.id}
-                onMouseDown={() => handleSelectBook(book)}
-                className="flex items-center p-2 cursor-pointer hover:bg-gray-100"
-              >
-                <span>{book.title}</span>
-              </div>
-            ))}
+            {books?.data?.data
+              .filter(
+                (book) =>
+                  !selectedBooks.some(
+                    (selectedBook) => selectedBook.id === book.id
+                  )
+              )
+              .map((book) => (
+                <div
+                  key={book.id}
+                  onMouseDown={() => handleSelectBook(book)}
+                  className="flex cursor-pointer items-center p-2 hover:bg-gray-100"
+                >
+                  <span>{book.title}</span>
+                </div>
+              ))}
           </div>
         )}
       </div>
 
       <div className="mb-4">
-        <label className="block mb-2 font-semibold">الكتب المختارة</label>
+        <label className="mb-2 block font-semibold">الكتب المختارة</label>
+        {errors?.books_ids?.map((err, index) => (
+          <p key={index} className="mt-2 text-red-500">
+            {err}
+          </p>
+        ))}
         <div className="flex flex-wrap gap-2">
           {selectedBooks.map((book) => (
-            <div
-              key={book.id}
-              className="flex items-center gap-2 p-2 border rounded"
-            >
+            <div key={book.id} className="flex items-center gap-2 rounded  p-2">
               <span>{book.title}</span>
               <button
                 type="button"
                 onClick={() => handleRemoveBook(book.id)}
-                className="text-red-500"
+                className="text-2xl font-bold text-red-500"
               >
-                إزالة
+                x
               </button>
             </div>
           ))}
@@ -175,7 +210,7 @@ export default function Event() {
 
       <button
         type="submit"
-        className="px-4 py-3 text-lg text-white bg-color2 rounded shadow-lg transition-opacity hover:opacity-80"
+        className="rounded bg-color2 px-4 py-3 text-lg text-white shadow-lg transition-opacity hover:opacity-80"
         disabled={updateEventMutation.isPending}
       >
         {updateEventMutation.isPending

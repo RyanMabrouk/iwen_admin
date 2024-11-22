@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Icons } from '@/components/icons';
 import { cn } from '@/lib/utils';
-
 import { NavItem } from '@/types';
 import { Dispatch, SetStateAction } from 'react';
 import { useSidebar } from '@/hooks/useSidebar';
@@ -16,7 +13,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
-import ConfirmationWindow from '@/app/dashboard/ui/confirmationWindow';
 
 interface DashboardNavProps {
   items: NavItem[];
@@ -31,7 +27,6 @@ export function DashboardNav({
 }: DashboardNavProps) {
   const path = usePathname();
   const { isMinimized } = useSidebar();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (!items?.length) {
     return null;
@@ -40,61 +35,38 @@ export function DashboardNav({
   return (
     <nav className="grid items-start gap-2 ">
       <TooltipProvider>
-        {items.map((item, index) => {
-          const Icon = Icons[item.icon || 'arrowRight'];
-
-          return (
-            <Tooltip key={index}>
-              <TooltipTrigger asChild>
-                {item.label === 'logOut' ? (
-                  <button
-                    className={cn(
-                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-lg font-medium hover:opacity-50'
-                    )}
-                    onClick={() => setIsDialogOpen(true)}
-                  >
-                    <Icon className="ml-3 size-5 flex-none" />
-                    {isMobileNav || (!isMinimized && !isMobileNav) ? (
-                      <span className="mr-2 truncate">{item.title}</span>
-                    ) : (
-                      ''
-                    )}
-                  </button>
-                ) : (
-                  <Link
-                    href={item.disabled ? '/' : item?.href || '/'}
-                    className={cn(
-                      'flex items-center px-2 gap-2 overflow-hidden rounded-md py-2 text-lg font-medium',
-                      item.disabled && 'cursor-not-allowed opacity-80',
-                      path === item.href && 'bg-white text-color1',
-                      path !== item.href ? 'hover:opacity-50' : ''
-                    )}
-                  >
-                    <Icon className="ml-3 size-5 flex-none" />
-                    {isMobileNav || (!isMinimized && !isMobileNav) ? (
-                      <span className="mr-2 truncate">{item.title}</span>
-                    ) : (
-                      ''
-                    )}
-                  </Link>
-                )}
-              </TooltipTrigger>
-              <TooltipContent
-                align="center"
-                side="right"
-                sideOffset={8}
-                className={!isMinimized ? 'hidden' : 'inline-block'}
-              >
-                {item.title}
-              </TooltipContent>
-            </Tooltip>
-          );
-        })}
+        {items.map((item, index) => (
+          <Tooltip key={index}>
+            <TooltipTrigger asChild>
+              {
+                <Link
+                  href={item.disabled ? '/' : item?.href || '/'}
+                  className={cn(
+                    'flex items-center gap-2 overflow-hidden rounded-md px-2 mr-4 py-2 text-base font-medium',
+                    item.disabled && 'cursor-not-allowed opacity-80',
+                    path === item.href && 'bg-white text-color1',
+                    path !== item.href ? 'hover:opacity-50' : ''
+                  )}
+                >
+                  {isMobileNav || (!isMinimized && !isMobileNav) ? (
+                    <span className="mr-2 truncate">{item.title}</span>
+                  ) : (
+                    ''
+                  )}
+                </Link>
+              }
+            </TooltipTrigger>
+            <TooltipContent
+              align="center"
+              side="right"
+              sideOffset={8}
+              className={!isMinimized ? 'hidden' : 'inline-block'}
+            >
+              {item.title}
+            </TooltipContent>
+          </Tooltip>
+        ))}
       </TooltipProvider>
-      
-      {isDialogOpen && (
-        <ConfirmationWindow isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
-      )}
     </nav>
   );
 }

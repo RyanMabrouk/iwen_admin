@@ -160,7 +160,7 @@ export default function Form() {
           resourse: 'books',
           action: 'updateBook'
         });
-        const { error, valdiationErrors } = await CRUDData<
+        const { error, validationErrors } = await CRUDData<
           IBookPopulated,
           IBookPayload
         >({
@@ -169,14 +169,14 @@ export default function Form() {
           payload
         });
         if (error) {
-          if (valdiationErrors) {
-            setErrors(valdiationErrors);
+          if (validationErrors) {
+            setErrors(validationErrors);
           }
           throw new Error(error);
         }
       } else {
         const urlAdd = getEndpoint({ resourse: 'books', action: 'createBook' });
-        const { error, valdiationErrors } = await CRUDData<
+        const { error, validationErrors } = await CRUDData<
           IBookPopulated,
           IBookPayload
         >({
@@ -185,8 +185,8 @@ export default function Form() {
           payload
         });
         if (error) {
-          if (valdiationErrors) {
-            setErrors(valdiationErrors);
+          if (validationErrors) {
+            setErrors(validationErrors);
           }
           throw new Error(error);
         }

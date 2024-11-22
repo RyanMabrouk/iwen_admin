@@ -125,5 +125,16 @@ export type IValidationErrors<T extends object> = {
 };
 
 export interface IEvent extends Tables<'events'> {
-  books: Tables<'books'>[];
+  books: IBookPopulated[];
 }
+
+export interface IEventPayload {
+  name: string;
+  books_ids: string[];
+}
+
+export interface IBannerPayload {
+  book_id: string;
+  url: string;  
+}
+  

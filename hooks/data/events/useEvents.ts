@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { InfinityPaginationQueryType } from "@/types";
 import { Tables } from "@/types/database.types";
 import { eventsQuery } from "./eventsQuery";
-export default function useEvents(args:InfinityPaginationQueryType<`events.${keyof Tables<"events">}`>) {
-  const query = useQuery(eventsQuery(args));
+export default function useEvents() {
+  const query = useQuery(eventsQuery());
   return query;
 }

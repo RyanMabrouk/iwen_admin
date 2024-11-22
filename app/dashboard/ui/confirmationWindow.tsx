@@ -4,12 +4,11 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  DialogTrigger,
   DialogClose // Add this import
 } from '@/components/ui/dialog';
 import signOut from '@/actions/(auth)/signout';
 
-export default function ConfirmationWindow({
+export default function ConfirmationWindowLogout({
   isDialogOpen,
   setIsDialogOpen
 }: {
