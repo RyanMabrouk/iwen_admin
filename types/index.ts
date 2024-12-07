@@ -136,5 +136,6 @@ export interface IEventPayload {
 export interface IBannerPayload {
   book_id: string;
   url: string;  
+  phone_url: string;
 }
   

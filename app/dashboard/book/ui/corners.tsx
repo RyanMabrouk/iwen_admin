@@ -11,11 +11,17 @@ const url = getEndpoint({
   action: 'createCorner'
 });
 
-export default function Corners({ defaultValue , errors}: { defaultValue: string , errors?: string[]}) {
+export default function Corners({
+  defaultValue,
+  errors
+}: {
+  defaultValue: string;
+  errors?: string[];
+}) {
   const [value, setValue] = useState<string>(defaultValue);
-  const deleteCorner = useDeleteCorner(); 
+  const deleteCorner = useDeleteCorner();
   const handleDeleteOption = (id: string) => {
-    deleteCorner.mutate(id); 
+    deleteCorner.mutate(id);
   };
   const { data: corners } = useCorners();
   const Options = corners?.data?.map((item) => ({
@@ -24,26 +30,28 @@ export default function Corners({ defaultValue , errors}: { defaultValue: string
   }));
   return (
     <div>
-      <label className="block font-semibold"> الركن </label>
+      <label className="block font-semibold"> القسم </label>
       <div className="flex items-center gap-2">
         <SelectGeneric
           options={Options ?? []}
-          placeholder="أدخل الركن"
+          placeholder="أدخل القسم"
           name="corner"
           selectedValue={value}
           setSelectedValue={setValue}
           handelDeleteOption={handleDeleteOption}
         />
         <AddWindow
-          title="إضافة الركن"
-          placeholder="أدخل الركن"
+          title="إضافة القسم"
+          placeholder="أدخل القسم"
           url={url()}
           resourse="corners"
         />
       </div>
       {errors?.map((err, index) => (
-          <p key={index} className="text-red-500 mt-2">{err}</p>
-        ))}
+        <p key={index} className="mt-2 text-red-500">
+          {err}
+        </p>
+      ))}
     </div>
   );
 }

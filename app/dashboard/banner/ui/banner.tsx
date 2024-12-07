@@ -13,7 +13,10 @@ import CRUDData from '@/services/CRUDData';
 import { useToast } from '@/components/ui/use-toast';
 import { SearchIcon } from 'lucide-react';
 import { Tables } from '@/types/database.types';
-import { IBannerPayload, IValidationErrors } from '@/types';
+import { IBannerPayload, IBookPopulated, IValidationErrors } from '@/types';
+import BannerPhonePicUpload from './bannerPhonePictureUpload';
+import useBook from '@/hooks/data/books/useBook';
+import Image from 'next/image';
 
 export default function Banner() {
   const [errors, setErrors] = useState<
@@ -23,10 +26,17 @@ export default function Banner() {
   const searchParams = useSearchParams();
   const bannerId = searchParams.get('bannerId');
   const { data: banner, isLoading } = useBanner(String(bannerId));
-  const [preview, setPreview] = useState(banner?.data?.url ?? '/no-banner.png');
+  const [preview, setPreview] = useState(
+    banner?.data?.url ?? '/no-banner-pc.png'
+  );
+  const [preview2, setPreview2] = useState(
+    banner?.data?.phone_url ?? '/no-banner-phone.png'
+  );
   const queryClient = useQueryClient();
   const toast = useToast();
-  const [bookId, setBookId] = useState(banner?.data?.book_id ?? '');
+  const { data: defaultSelectedBook } = useBook(banner?.data?.book_id ?? '');
+  const [selectedBook, setSelectedBook] = useState<IBookPopulated | null>(null);
+
   const [searchQuery, setSearchQuery] = useState('');
   const { data: books } = useBooks({
     search: {
@@ -35,25 +45,24 @@ export default function Banner() {
     page: 1,
     limit: 4
   });
-  const [selectedBook, setSelectedBook] = useState<{
-    title: string;
-    imageUrl: string;
-  } | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  useEffect(() => {
+    if (defaultSelectedBook?.data) setSelectedBook(defaultSelectedBook.data);
+  }, [defaultSelectedBook?.data]);
 
   useEffect(() => {
-    const book = books?.data?.data.find((book) => book.id === bookId);
-    if (book)
-      setSelectedBook({ title: book.title, imageUrl: book.images_urls[0] });
-  }, [bookId, books]);
+    if (banner?.data) {
+      setPreview(banner?.data?.url ?? '/no-banner-pc.png');
+      setPreview2(
+        (banner?.data?.phone_url == ''
+          ? '/no-banner-phone.png'
+          : banner?.data?.phone_url) ?? '/no-banner-phone.png'
+      );
+    }
+  }, [banner?.data]);
 
-  const handleSelectBook = (book: {
-    id: string;
-    title: string;
-    imageUrl: string;
-  }) => {
-    setBookId(book.id);
-    setSelectedBook({ title: book.title, imageUrl: book.imageUrl });
+  const handleSelectBook = (book: IBookPopulated) => {
+    setSelectedBook(book);
     setSearchQuery(book.title);
     setShowSuggestions(false);
   };
@@ -61,11 +70,26 @@ export default function Banner() {
   const updateBannerMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       const file = formData.get('filepicture') as File;
-      const picurl =
+      const pcUrl =
         file.size > 0
           ? await uploadFile({ formData, name: 'filepicture', title: uuidv4() })
           : undefined;
-      const payload = { url: picurl, book_id: bookId };
+      console.log('🚀 ~ mutationFn: ~ pcUrl:', pcUrl);
+
+      const file2 = formData.get('filepicture2') as File;
+      const phoneUrl =
+        file2.size > 0
+          ? await uploadFile({
+              formData,
+              name: 'filepicture2',
+              title: uuidv4()
+            })
+          : undefined;
+      const payload = {
+        url: pcUrl,
+        book_id: selectedBook?.id,
+        phone_url: phoneUrl
+      };
       const url = getEndpoint({
         resourse: 'banners',
         action: bannerId ? 'updateBanner' : 'createBanner'
@@ -91,8 +115,8 @@ export default function Banner() {
       });
       if (!bannerId && formRef.current) {
         formRef.current.reset();
-        setPreview('/no-banner.png');
-        setBookId('');
+        setPreview('/no-banner-pc.png');
+        setPreview2('/no-banner-phone.png');
         setSearchQuery('');
         setSelectedBook(null);
       }
@@ -126,11 +150,19 @@ export default function Banner() {
         updateBannerMutation.mutate(new FormData(formRef.current!));
       }}
     >
-      <BannerPicUpload
-        picture={preview}
-        setPicture={setPreview}
-        errors={errors?.url ?? []}
-      />
+      <div className="flex flex-col items-center gap-5 md:flex-row">
+        <BannerPicUpload
+          picture={preview}
+          setPicture={setPreview}
+          errors={errors?.url ?? []}
+        />
+        <BannerPhonePicUpload
+          picture2={preview2}
+          setPicture2={setPreview2}
+          errors={errors?.phone_url ?? []}
+        />
+      </div>
+
       <div className="relative">
         <div className="m-2 flex w-full max-w-md flex-row items-center gap-2 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
           <input
@@ -159,23 +191,29 @@ export default function Banner() {
             {books?.data?.data.map((book) => (
               <div
                 key={book.id}
-                onMouseDown={() =>
-                  handleSelectBook({
-                    id: book.id,
-                    title: book.title,
-                    imageUrl: book.images_urls[0]
-                  })
-                }
-                className="flex cursor-pointer items-center p-2 hover:bg-gray-100"
+                onMouseDown={() => handleSelectBook(book)}
+                className="flex cursor-pointer items-center gap-2 p-2 hover:bg-gray-100"
               >
-                <span>{book.title}</span>
+                <Image
+                  src={book?.images_urls?.[0] ?? '/empty-book.svg'}
+                  width={50}
+                  height={50}
+                  alt=""
+                />
+                <span>{book?.title}</span>
               </div>
             ))}
           </div>
         )}
       </div>
-      {selectedBook && (
+      {selectedBook?.title && (
         <div className="mt-4 flex items-center gap-4">
+          <Image
+            src={selectedBook?.images_urls?.[0] ?? '/empty-book.svg'}
+            width={50}
+            height={50}
+            alt=""
+          />
           <span className="font-semibold">{selectedBook.title}</span>
         </div>
       )}

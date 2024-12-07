@@ -11,6 +11,7 @@ import useEvent from '@/hooks/data/events/useEvent';
 import { Tables } from '@/types/database.types';
 import { IBookPopulated, IEventPayload, IValidationErrors } from '@/types';
 import { Player } from '@lottiefiles/react-lottie-player';
+import Image from 'next/image';
 
 export default function Event() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -34,7 +35,7 @@ export default function Event() {
     if (event?.data?.name) {
       setEventName(event.data.name);
     }
-    }, [event?.data]);
+  }, [event?.data]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
@@ -176,8 +177,14 @@ export default function Event() {
                 <div
                   key={book.id}
                   onMouseDown={() => handleSelectBook(book)}
-                  className="flex cursor-pointer items-center p-2 hover:bg-gray-100"
+                  className="flex cursor-pointer items-center gap-2 p-2 hover:bg-gray-100"
                 >
+                  <Image
+                    src={book.images_urls[0] ?? '/empty-book.svg'}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
                   <span>{book.title}</span>
                 </div>
               ))}
@@ -195,7 +202,14 @@ export default function Event() {
         <div className="flex flex-wrap gap-2">
           {selectedBooks.map((book) => (
             <div key={book.id} className="flex items-center gap-2 rounded  p-2">
+              <Image
+                src={book.images_urls[0] ?? '/empty-book.svg'}
+                width={50}
+                height={50}
+                alt=""
+              />
               <span>{book.title}</span>
+
               <button
                 type="button"
                 onClick={() => handleRemoveBook(book.id)}

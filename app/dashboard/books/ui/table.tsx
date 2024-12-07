@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import useBooks from '@/hooks/data/books/useBooks';
 import { booksQuery } from '@/hooks/data/books/booksQuery';
-import { columnDefinitions, columns } from './columns'; 
+import { columnDefinitions, columns } from './columns';
 import { IBookPopulated } from '@/types';
 import { useBooksPagination } from '../context/useBooksPagination';
 import { GenericTableData } from '@/components/genericTableData';
@@ -50,24 +50,24 @@ export default function Table() {
   }, [page, books?.data?.meta?.has_next_page, queryClient, searchQuery]);
 
   const transformedBooksData =
-  books?.data?.data?.map((book: IBookPopulated) => {
-    return {
-      ...book,
-      category: book.categories.length > 0 ? book.categories[0].name : 'لا توجد فئة',
-      subcategory:
-        book.subcategories.length > 0
-          ? book.subcategories[0].name
-          : 'لا توجد فئة فرعية',
-      writer_id: book.writer?.name ?? 'لا يوجد مؤلف',
-      share_house_id: book.share_house?.name ?? 'لا يوجد دار نشر',
-      cover_type_id: book.cover_type?.name ?? 'لا يوجد نوع غلاف',
-      discount_type_arabic:
-        book.discount_type === 'percentage' ? 'نسبة مئوية' : 'قيمة مالية',
-      status_arabic: book.status === 'available' ? 'متوفر' : 'غير متوفر',
-      corner_id: book.corner?.name ?? 'لا يوجد ركن',
-    };
-  }) || [];
-
+    books?.data?.data?.map((book: IBookPopulated) => {
+      return {
+        ...book,
+        category:
+          book.categories.length > 0 ? book.categories[0].name : 'لا توجد فئة',
+        subcategory:
+          book.subcategories.length > 0
+            ? book.subcategories[0].name
+            : 'لا توجد فئة فرعية',
+        writer_id: book.writer?.name ?? 'لا يوجد مؤلف',
+        share_house_id: book.share_house?.name ?? 'لا يوجد دار نشر',
+        cover_type_id: book.cover_type?.name ?? 'لا يوجد نوع غلاف',
+        discount_type_arabic:
+          book.discount_type === 'percentage' ? 'نسبة مئوية' : 'قيمة مالية',
+        status_arabic: book.status === 'available' ? 'متوفر' : 'غير متوفر',
+        corner_id: book.corner?.name ?? 'لا يوجد قسم'
+      };
+    }) || [];
 
   const [columnState, setColumnState] = useState(columnDefinitions);
 
@@ -83,10 +83,8 @@ export default function Table() {
 
   return (
     <div>
-      <h1 className='text-xl font-semibold mt-4'>
-        ضبط عرض الجدول
-      </h1>
-      <div className='flex flex-wrap gap-4 pb-5 pt-3'>
+      <h1 className="mt-4 text-xl font-semibold">ضبط عرض الجدول</h1>
+      <div className="flex flex-wrap gap-4 pb-5 pt-3">
         {columnState.map((col) => (
           <SwitchGeneric
             key={col.accessorKey}
@@ -97,7 +95,6 @@ export default function Table() {
         ))}
       </div>
       <Separator />
-
 
       <GenericTableData
         data={transformedBooksData}

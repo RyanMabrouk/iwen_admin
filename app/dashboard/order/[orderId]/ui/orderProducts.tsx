@@ -41,7 +41,7 @@ export default function OrderProducts({
                 <td className="px-2 py-4">
                   <div className="flex items-center gap-2">
                     <Image
-                      src={product.images_urls[0]}
+                      src={product.images_urls[0] ?? "/empty-book.svg"}
                       alt={product.title}
                       width={60}
                       height={60}
@@ -62,14 +62,18 @@ export default function OrderProducts({
                       <div className="mt-2 space-y-1 sm:hidden">
                         <div className="flex gap-2">
                           <span className="text-gray-500">السعر:</span>
-                          <div className="inline-flex flex-row items-center gap-1">
+                          {
+                            product.price_before_discount != product.price_after_discount ? <div className="inline-flex flex-row items-center gap-1">
                             <span className="text-gray-500 line-through">
                               {product.price_before_discount}
                             </span>
                             <span className="font-medium">
                               {product.price_after_discount} د.م
                             </span>
-                          </div>
+                          </div> : <span>{product.price_after_discount} د.م</span>
+
+                          }
+                          
                         </div>
                         <div className="flex gap-2">
                           <span className="text-gray-500">الكمية:</span>
@@ -87,14 +91,17 @@ export default function OrderProducts({
                   </div>
                 </td>
                 <td className="hidden px-2 py-4 text-right sm:table-cell">
-                  <div className="inline-flex flex-col items-end gap-1 md:flex-row md:items-center">
+                  {
+                    product.price_before_discount != product.price_after_discount ? <div className="inline-flex flex-col items-end gap-1 md:flex-row md:items-center">
                     <span className="text-gray-500 line-through">
                       {product.price_before_discount}
                     </span>
                     <span className="font-medium">
                       {product.price_after_discount} د.م
                     </span>
-                  </div>
+                  </div> : <span>{product.price_after_discount} د.م</span>
+                  }
+                 
                 </td>
                 <td className="hidden px-2 py-4 text-right sm:table-cell">
                   {product.quantity}

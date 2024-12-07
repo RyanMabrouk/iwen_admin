@@ -81,11 +81,10 @@ export default function Form() {
         String(formData.get('cover_type')) === ''
           ? undefined
           : String(formData.get('cover_type'));
-      const weight = Number(formData.get('weight'));
       const page_count = Number(formData.get('pageCount'));
       const isbn = String(formData.get('isbn'));
       const price = Number(formData.get('price'));
-      const price_dollar = Number(formData.get('price_dollar'));
+      const price_dollar = Number(formData.get('price'));
       const number_of_volumes = Number(formData.get('number_of_volumes'));
       const discount = Number(formData.get('discount'));
       const slug = String(formData.get('slug'));
@@ -132,7 +131,6 @@ export default function Form() {
         editor,
         release_year,
         description,
-        weight,
         isbn,
         price,
         price_dollar,
@@ -299,14 +297,6 @@ export default function Form() {
           errors={errors?.cover_type_id}
         />
         <Input
-          label="الوزن"
-          name="weight"
-          type="number"
-          defaultValue={book?.data?.weight || ''}
-          placeholder="أدخل الوزن"
-          error={errors?.weight}
-        />
-        <Input
           label="عدد الصفحات"
           name="pageCount"
           type="number"
@@ -333,21 +323,14 @@ export default function Form() {
           error={errors?.isbn}
         />
         <Input
-          label="السعر (بالدرهم)"
-          name="price_dollar"
-          type="number"
-          defaultValue={book?.data?.price_dollar || ''}
-          placeholder="أدخل السعر (بالدينار)"
-          error={errors?.price_dollar}
-        />
-        <Input
-          label="السعر (بالدولار)"
+          label="السعر"
           name="price"
           type="number"
           defaultValue={book?.data?.price || ''}
-          placeholder="أدخل السعر (بالدولار)"
-          error={errors?.price}
+          placeholder="أدخل السعر"
+          error={errors?.price_dollar}
         />
+
         <Input
           label="الخصم (%)"
           name="discount"

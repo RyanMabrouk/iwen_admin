@@ -11,7 +11,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import getEndpoint from '@/services/getEndpoint';
 import CRUDData from '@/services/CRUDData';
-import { Trash2 } from 'lucide-react';
+import { Trash, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 export default function ConfirmationWindow({ bannerId }: { bannerId: string }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -51,13 +51,13 @@ export default function ConfirmationWindow({ bannerId }: { bannerId: string }) {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger>
-        <Button
-          size="icon"
-          className="absolute left-2 top-2 bg-red-500 opacity-0 transition-opacity group-hover:opacity-100"
+      <DialogTrigger >
+        <button
+          className="  flex items-center justify-start gap-2 "
         >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+          <Trash className="h-4 w-4" />
+          <div>حذف</div>
+        </button>
       </DialogTrigger>
       <DialogContent dir="rtl">
         <DialogTitle>هل أنت متأكد من حذف الإعلان ؟ </DialogTitle>

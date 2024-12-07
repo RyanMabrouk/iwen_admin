@@ -26,7 +26,7 @@ export const columnDefinitions = [
   },
   {
     accessorKey: 'corner_id',
-    header: 'الركن ',
+    header: 'القسم ',
     visible: false
   },
   {
@@ -38,11 +38,6 @@ export const columnDefinitions = [
     accessorKey: 'price',
     header: 'السعر',
     visible: true
-  },
-  {
-    accessorKey: 'price_dollar',
-    header: 'السعر بالدولار',
-    visible: false
   },
   {
     accessorKey: 'discount',
@@ -93,11 +88,6 @@ export const columnDefinitions = [
   {
     accessorKey: 'number_of_volumes',
     header: 'عدد المجلدات',
-    visible: false
-  },
-  {
-    accessorKey: 'weight',
-    header: 'الوزن',
     visible: false
   },
   {
