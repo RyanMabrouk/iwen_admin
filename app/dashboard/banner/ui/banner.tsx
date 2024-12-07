@@ -74,8 +74,6 @@ export default function Banner() {
         file.size > 0
           ? await uploadFile({ formData, name: 'filepicture', title: uuidv4() })
           : undefined;
-      console.log('🚀 ~ mutationFn: ~ pcUrl:', pcUrl);
-
       const file2 = formData.get('filepicture2') as File;
       const phoneUrl =
         file2.size > 0
@@ -150,21 +148,8 @@ export default function Banner() {
         updateBannerMutation.mutate(new FormData(formRef.current!));
       }}
     >
-      <div className="flex flex-col items-center gap-5 md:flex-row">
-        <BannerPicUpload
-          picture={preview}
-          setPicture={setPreview}
-          errors={errors?.url ?? []}
-        />
-        <BannerPhonePicUpload
-          picture2={preview2}
-          setPicture2={setPreview2}
-          errors={errors?.phone_url ?? []}
-        />
-      </div>
-
       <div className="relative">
-        <div className="m-2 flex w-full max-w-md flex-row items-center gap-2 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
+        <div className="m-2 flex w-full max-w-md flex-row items-center gap-4 rounded-lg border-2 border-gray-300 bg-white shadow-sm">
           <input
             type="text"
             placeholder="بحث ..."
@@ -187,7 +172,7 @@ export default function Banner() {
           </p>
         ))}
         {showSuggestions && books?.data?.data && books.data.data.length > 0 && (
-          <div className="absolute max-h-60 w-full rounded-md border border-gray-200 bg-white shadow-md">
+          <div className="absolute  w-full border bg-white shadow-md">
             {books?.data?.data.map((book) => (
               <div
                 key={book.id}
@@ -206,17 +191,33 @@ export default function Banner() {
           </div>
         )}
       </div>
-      {selectedBook?.title && (
-        <div className="mt-4 flex items-center gap-4">
-          <Image
-            src={selectedBook?.images_urls?.[0] ?? '/empty-book.svg'}
-            width={50}
-            height={50}
-            alt=""
-          />
-          <span className="font-semibold">{selectedBook.title}</span>
-        </div>
-      )}
+      <div>
+        {selectedBook?.title && (
+          <div className="mt-4 flex items-center gap-4">
+            <Image
+              src={selectedBook?.images_urls?.[0] ?? '/empty-book.svg'}
+              width={50}
+              height={50}
+              alt=""
+            />
+            <span className="font-semibold">{selectedBook.title}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col items-center gap-5 md:flex-row">
+        <BannerPicUpload
+          picture={preview}
+          setPicture={setPreview}
+          errors={errors?.url ?? []}
+        />
+        <BannerPhonePicUpload
+          picture2={preview2}
+          setPicture2={setPreview2}
+          errors={errors?.phone_url ?? []}
+        />
+      </div>
+
       <button
         type="submit"
         className="mt-5 w-fit rounded-sm bg-color2 px-4 py-3 text-lg text-white shadow-lg transition-opacity hover:opacity-80"

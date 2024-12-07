@@ -51,9 +51,10 @@ export default function ConfirmationWindow({ bannerId }: { bannerId: string }) {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger >
+      <DialogTrigger asChild dir="rtl ">
         <button
-          className="  flex items-center justify-start gap-2 "
+          onClick={() => setIsDialogOpen(true)}
+          className="ml-auto mr-2 flex items-center justify-start gap-2 "
         >
           <Trash className="h-4 w-4" />
           <div>حذف</div>

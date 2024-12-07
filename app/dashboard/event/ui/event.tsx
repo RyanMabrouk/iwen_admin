@@ -165,7 +165,7 @@ export default function Event() {
         </div>
 
         {showSuggestions && (books?.data?.data?.length ?? 0) > 0 && (
-          <div className="absolute max-h-60 w-full border bg-white shadow-md">
+          <div className="absolute  w-full border bg-white shadow-md">
             {books?.data?.data
               .filter(
                 (book) =>
