@@ -45,7 +45,7 @@ export default function BannerPhonePicUpload({
           onChange={handleImageChange}
         />
         <div className="mx-auto w-48 text-center text-xs text-gray-500">
-          حمل صورة الإعلان
+          حمل صورة الإعلان للهاتف
         </div>
       </div>
       {errors?.map((err, index) => (

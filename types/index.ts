@@ -132,10 +132,19 @@ export interface IEventPayload {
   name: string;
   books_ids: string[];
 }
-
+export interface IOffer extends Tables<'offers'> {
+  books: IBookPopulated[];
+}
+export interface IOfferPayload {
+  title: string;
+  description: string;
+  price_before_offer: number;
+  price_after_offer: number;
+  image_url: string;
+  books_ids: string[];
+}
 export interface IBannerPayload {
   book_id: string;
-  url: string;  
+  url: string;
   phone_url: string;
 }
-  

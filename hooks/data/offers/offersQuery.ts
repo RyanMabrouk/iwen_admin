@@ -1,17 +1,16 @@
 import CRUDData from '@/services/CRUDData';
 import getEndpoint from '@/services/getEndpoint';
 import {
-  IEvent,
+  IOffer
 } from '@/types';
 
-const eventsQuery = (
+const offersQuery = (
  
 ) => ({
-  queryKey: ['events'],
+  queryKey: ['offers'],
   queryFn: async () => {
-    const url = getEndpoint({ resourse: 'events', action: 'getEvents' });
-
-    const { error, data } = await CRUDData<IEvent[]>
+    const url = getEndpoint({ resourse: 'offers', action: 'getOffers' });
+    const { error, data } = await CRUDData<IOffer[]>
 ({
       method: 'GET',
       url: url()
@@ -21,4 +20,4 @@ const eventsQuery = (
     else return { data, error: null };
   }
 });
-export { eventsQuery };
+export { offersQuery };

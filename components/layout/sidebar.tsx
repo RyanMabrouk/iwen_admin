@@ -9,7 +9,9 @@ import {
   Image as ImageIcon,
   Users,
   LogOut,
-  ClipboardList
+  ClipboardList,
+  GiftIcon,
+  Feather
 } from 'lucide-react';
 import { DashboardNav } from '@/components/dashboard-nav';
 import { navItems } from '@/constants/data';
@@ -54,10 +56,17 @@ export default function Sidebar({ className }: SidebarProps) {
         (item) => item.label === 'banners' || item.label === 'banner'
       ),
       icon: <ImageIcon />
+    },
+    العروض: {
+      items: navItems.filter(
+        (item) => item.label === 'offers' || item.label === 'offer'
+      ),
+      icon: <GiftIcon />
     }
   };
 
   const standaloneNavItems = [
+    { href: '/dashboard/authors', title: 'المؤلفون', icon: <Feather /> },
     { href: '/dashboard/orders', title: 'الطلبات', icon: <ClipboardList /> },
     { href: '/dashboard/users', title: 'المستخدمون', icon: <Users /> },
     {
@@ -96,7 +105,9 @@ export default function Sidebar({ className }: SidebarProps) {
               )}
             >
               <span>{icon}</span>
-              <span className={`mr-2 ${isMinimized?"hidden" : ""}`}>{group}</span>
+              <span className={`mr-2 ${isMinimized ? 'hidden' : ''}`}>
+                {group}
+              </span>
               <span className="mr-auto">
                 {expandedGroups.includes(group) ? (
                   <ChevronDown className="text-xl" />
@@ -128,7 +139,9 @@ export default function Sidebar({ className }: SidebarProps) {
               <Link
                 href={item.href}
                 className={`flex w-full items-center ${
-                  path == item.href ? 'bg-white text-color1 hover:opacity-100  p-2 rounded-md' : ''
+                  path == item.href
+                    ? 'rounded-md bg-white p-2  text-color1 hover:opacity-100'
+                    : ''
                 }`}
               >
                 <span className="ml-2">{item.icon}</span>

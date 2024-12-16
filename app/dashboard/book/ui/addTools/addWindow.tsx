@@ -12,6 +12,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CRUDData from '@/services/CRUDData';
 import getEndpoint, { IResourse } from '@/services/getEndpoint';
+import SelectGeneric from '@/components/selectGeneric';
+import { nationalities } from '@/constants/data';
 
 interface AddWindowProps {
   title: string;
@@ -19,12 +21,14 @@ interface AddWindowProps {
   url: string;
   resourse: IResourse;
   category_id?: string;
+  author?: boolean;
 }
 
 // Define the type for the payload
 interface AddPayload {
   name: string;
   category_id?: string; // category_id is optional
+  nationality?: string;
 }
 
 export default function AddWindow({
@@ -32,9 +36,12 @@ export default function AddWindow({
   placeholder,
   url,
   resourse,
-  category_id
+  category_id,
+  author
 }: AddWindowProps) {
   const [inputValue, setInputValue] = useState('');
+  const [value, setValue] = useState<string>('');
+
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -45,6 +52,9 @@ export default function AddWindow({
       const payload: AddPayload = { name: inputValue };
       if (category_id) {
         payload.category_id = category_id;
+      }
+      if (author && value!="") {
+        payload.nationality = value;
       }
       const { error } = await CRUDData({
         method: 'POST',
@@ -94,6 +104,21 @@ export default function AddWindow({
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
+        {author && (
+          <div>
+            <label className="block font-semibold">الجنسية</label>
+            <div className="flex items-center gap-2">
+              <SelectGeneric
+                options={nationalities}
+                placeholder="أدخل الجنسية"
+                name="nationality"
+                selectedValue={value}
+                setSelectedValue={setValue}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="flex w-full justify-between">
           <button
             onClick={handleConfirm}

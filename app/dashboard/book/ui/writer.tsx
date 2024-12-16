@@ -10,8 +10,8 @@ import { useDeleteWriter } from '@/hooks/data/books/writers/deleteWriter';
 
 export default function Writer({defaultValue,errors}:{defaultValue: string , errors?: string[]}) {
   const url = getEndpoint({  resourse: "writers", action : "createWriter" });
-  const {data: writers} = useWriters();
-  const Options = writers?.data?.map((writer) => ({
+  const {data: writers} = useWriters({});
+  const Options = writers?.data?.data.map((writer) => ({
     label: writer.name,
     value: writer.id,
   }));
@@ -37,6 +37,7 @@ export default function Writer({defaultValue,errors}:{defaultValue: string , err
           placeholder="أدخل اسم المؤلف" 
           url={url()}
           resourse='writers'
+          author={true}
         /> 
       </div>
       {errors?.map((err, index) => (

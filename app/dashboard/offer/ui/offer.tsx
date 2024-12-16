@@ -7,35 +7,50 @@ import getEndpoint from '@/services/getEndpoint';
 import CRUDData from '@/services/CRUDData';
 import { useToast } from '@/components/ui/use-toast';
 import { SearchIcon } from 'lucide-react';
-import useEvent from '@/hooks/data/events/useEvent';
 import { Tables } from '@/types/database.types';
-import { IBookPopulated, IEventPayload, IValidationErrors } from '@/types';
+import { IBookPopulated, IOfferPayload, IValidationErrors } from '@/types';
 import { Player } from '@lottiefiles/react-lottie-player';
 import Image from 'next/image';
+import useOffer from '@/hooks/data/offers/useOffer';
+import OfferPicUpload from './offerPictureUpload';
+import { uploadFile } from '@/api/uploadFile';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function Event() {
+export default function Offer() {
   const formRef = useRef<HTMLFormElement>(null);
   const searchParams = useSearchParams();
-  const eventId = searchParams.get('eventId');
-  const { data: event, isLoading } = useEvent(String(eventId));
+  const offerId = searchParams.get('offerId');
+  const { data: offer, isLoading } = useOffer(String(offerId));
+  const [preview, setPreview] = useState(
+    offer?.data?.image_url ?? '/no-offer.jpg'
+  );
   const queryClient = useQueryClient();
   const toast = useToast();
   const [errors, setErrors] = useState<
-    IValidationErrors<IEventPayload> | null | undefined
+    IValidationErrors<IOfferPayload> | null | undefined
   >();
 
-  const [eventName, setEventName] = useState<string>(event?.data?.name ?? '');
   const [selectedBooks, setSelectedBooks] = useState<IBookPopulated[]>(
-    event?.data?.books ?? []
+    offer?.data?.books ?? []
   );
+  const [priceBeforeOffer, setPriceBeforeOffer] = useState<number>(0);
   useEffect(() => {
-    if (event?.data?.books) {
-      setSelectedBooks(event.data.books);
+    const totalPrice = selectedBooks.reduce(
+      (sum, book) => sum + (book.price || 0),
+      0
+    );
+    setPriceBeforeOffer(totalPrice);
+  }, [selectedBooks]);
+  useEffect(() => {
+    if (offer?.data) {
+      setPreview(offer?.data?.image_url ?? '/no-offer.jpg');
     }
-    if (event?.data?.name) {
-      setEventName(event.data.name);
+  }, [offer?.data]);
+  useEffect(() => {
+    if (offer?.data?.books) {
+      setSelectedBooks(offer.data.books);
     }
-  }, [event?.data]);
+  }, [offer?.data]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
@@ -64,21 +79,34 @@ export default function Event() {
     setSelectedBooks((prev) => prev.filter((book) => book.id !== bookId));
   };
 
-  const updateEventMutation = useMutation({
-    mutationFn: async () => {
+  const updateofferMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const title = String(formData.get('title'));
+      const description = String(formData.get('description'));
+      const price_before_offer = Number(formData.get('price_before_offer'));
+      const price_after_offer = Number(formData.get('price_after_offer'));
+      const file = formData.get('filepicture') as File;
+      const pcUrl =
+        file.size > 0
+          ? await uploadFile({ formData, name: 'filepicture', title: uuidv4() })
+          : undefined;
       const payload = {
-        name: eventName,
-        books_ids: selectedBooks.map((book) => book.id)
+        title: title,
+        description: description,
+        price_before_offer: price_before_offer,
+        price_after_offer: price_after_offer,
+        image_url: pcUrl,
+        book_ids: selectedBooks.map((book) => book.id)
       };
       const url = getEndpoint({
-        resourse: 'events',
-        action: eventId ? 'updateEvent' : 'createEvent'
+        resourse: 'offers',
+        action: offerId ? 'updateOffer' : 'createOffer'
       });
-      const method = eventId ? 'PATCH' : 'POST';
+      const method = offerId ? 'PATCH' : 'POST';
       const { error, validationErrors } = await CRUDData<
-        Tables<'events'>,
-        IEventPayload
-      >({ method, url: url(String(eventId)), payload });
+        Tables<'offers'>,
+        IOfferPayload
+      >({ method, url: url(String(offerId)), payload });
       if (error || validationErrors) {
         if (validationErrors) {
           setErrors(validationErrors);
@@ -88,20 +116,20 @@ export default function Event() {
     },
     onSuccess: () => {
       toast.toast({
-        description: eventId
-          ? 'تمت عملية تعديل الفعالية بنجاح'
-          : 'تمت عملية إضافة الفعالية بنجاح'
+        description: offerId
+          ? 'تمت عملية تعديل العرض بنجاح'
+          : 'تمت عملية إضافة العرض بنجاح'
       });
-      if (!eventId && formRef.current) {
+      if (!offerId && formRef.current) {
         formRef.current.reset();
-        setEventName('');
         setSelectedBooks([]);
+        setPreview('/no-offer.jpg');
       }
-      queryClient.invalidateQueries({ queryKey: ['events'] });
+      queryClient.invalidateQueries({ queryKey: ['offers'] });
     },
     onError: (error) => {
       toast.toast({
-        description: eventId
+        description: offerId
           ? 'حدث خطأ أثناء عملية تعديل'
           : 'حدث خطأ أثناء عملية الإضافة'
       });
@@ -119,25 +147,60 @@ export default function Event() {
       </div>
     );
   return (
-    <form
-      ref={formRef}
-      onSubmit={(e) => {
-        e.preventDefault();
-        updateEventMutation.mutate();
-      }}
-    >
+    <form ref={formRef} action={updateofferMutation.mutate}>
       <div className="mb-4">
-        <label htmlFor="eventName" className="mb-2 block font-semibold">
-          اسم الفعالية
-        </label>
+        <label className="mb-2 block font-semibold">عنوان العرض</label>
         <input
+          name="title"
           type="text"
-          id="eventName"
-          value={eventName}
-          onChange={(e) => setEventName(e.target.value)}
+          defaultValue={offer?.data?.title}
           className="w-full rounded-sm border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-color2"
         />
-        {errors?.name?.map((err, index) => (
+        {errors?.title?.map((err, index) => (
+          <p key={index} className="mt-2 text-red-500">
+            {err}
+          </p>
+        ))}
+      </div>
+      <div className="mb-4">
+        <label className="mb-2 block font-semibold">الوصف</label>
+        <input
+          type="text"
+          name="description"
+          defaultValue={offer?.data?.description}
+          className="w-full rounded-sm border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-color2"
+        />
+        {errors?.description?.map((err, index) => (
+          <p key={index} className="mt-2 text-red-500">
+            {err}
+          </p>
+        ))}
+      </div>
+
+      <div className="mb-4">
+        <label className="mb-2 block font-semibold">السعر قبل العرض</label>
+        <input
+          type="number"
+          name="price_before_offer"
+          value={priceBeforeOffer}
+          onChange={(e) => setPriceBeforeOffer(Number(e.target.value))}
+          className="w-full rounded-sm border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-color2"
+        />
+        {errors?.price_before_offer?.map((err, index) => (
+          <p key={index} className="mt-2 text-red-500">
+            {err}
+          </p>
+        ))}
+      </div>
+      <div className="mb-4">
+        <label className="mb-2 block font-semibold">السعر بعد العرض</label>
+        <input
+          type="number"
+          name="price_after_offer"
+          defaultValue={offer?.data?.price_after_offer}
+          className="w-full rounded-sm border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-color2"
+        />
+        {errors?.price_after_offer?.map((err, index) => (
           <p key={index} className="mt-2 text-red-500">
             {err}
           </p>
@@ -221,17 +284,24 @@ export default function Event() {
           ))}
         </div>
       </div>
+      <div className="flex flex-col items-center gap-5 md:flex-row">
+        <OfferPicUpload
+          picture={preview}
+          setPicture={setPreview}
+          errors={errors?.image_url ?? []}
+        />
+      </div>
 
       <button
         type="submit"
         className="rounded bg-color2 px-4 py-3 text-lg text-white shadow-lg transition-opacity hover:opacity-80"
-        disabled={updateEventMutation.isPending}
+        disabled={updateofferMutation.isPending}
       >
-        {updateEventMutation.isPending
+        {updateofferMutation.isPending
           ? 'جاري المعالجة...'
-          : eventId
-          ? 'تعديل الفعالية'
-          : 'إضافة فعالية'}
+          : offerId
+          ? 'تعديل العرض'
+          : 'إضافة عرض'}
       </button>
     </form>
   );

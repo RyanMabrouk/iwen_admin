@@ -8,8 +8,10 @@ import {
   CircuitBoardIcon,
   Command,
   CreditCard,
+  Feather,
   File,
   FileText,
+  Gift,
   HelpCircle,
   Image,
   Laptop,
@@ -39,6 +41,8 @@ import {
 export type Icon = LucideIcon;
 
 export const Icons = {
+  writers :Feather  ,
+  offers: Gift,
   events:PartyPopper,
   banner : Megaphone,
   order: ListOrdered,

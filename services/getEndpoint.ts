@@ -4,6 +4,7 @@ import { categoriesEndpoints } from '@/endpoints/categoriesRoutes';
 import { cornersEndpoints } from '@/endpoints/cornersRoutes';
 import { cover_typesEndpoints } from '@/endpoints/coverTypes';
 import { eventsEndpoints } from '@/endpoints/eventRoutes';
+import { offersEndpoints } from '@/endpoints/offersRoutes';
 import { ordersEndpoints } from '@/endpoints/ordersRoutes';
 import { publishHousesEndpoints } from '@/endpoints/publishHouses';
 import { subCategoriesEndpoints } from '@/endpoints/subCategories';
@@ -22,6 +23,7 @@ const resources = {
   orders: ordersEndpoints,
   banners:bannersEndpoints,
   events: eventsEndpoints,
+  offers: offersEndpoints
 } as const;
 export type IResourse = keyof typeof resources;
 export default function getEndpoint<

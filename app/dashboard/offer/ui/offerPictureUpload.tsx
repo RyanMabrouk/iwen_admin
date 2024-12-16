@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-export default function BannerPicUpload({
+export default function OfferPicUpload({
   picture,
   setPicture,
   errors
@@ -33,7 +33,7 @@ export default function BannerPicUpload({
           src={picture}
           width={150}
           height={150}
-          alt="Banner Picture"
+          alt="Offer Picture"
           className="m-auto h-auto min-h-[7rem] w-[12rem] min-w-[12rem] max-w-[12rem]"
         />
         <input
@@ -45,7 +45,7 @@ export default function BannerPicUpload({
           onChange={handleImageChange}
         />
         <div className="mx-auto w-48 text-center text-xs text-gray-500">
-          حمل صورة الإعلان للكمبيوتر
+          حمل صورة العرض 
         </div>
       </div>
       {errors?.map((err, index) => (
