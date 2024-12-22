@@ -7,15 +7,23 @@ import { Separator } from '@/components/ui/separator';
 import { SwitchGeneric } from '@/components/switchGeneric';
 import { useOrdersPagination } from '../context/useOrdersPagination';
 import { ordersQuery } from '@/hooks/data/payments/orders/ordersQuery';
-import { Tables } from '@/types/database.types';
+import { Enums, Tables } from '@/types/database.types';
 import useOrders from '@/hooks/data/payments/orders/useOrders';
 
+
+const options = [
+  { label: 'جميع', value: "" },
+  { label: 'قيد الانتظار', value: 'pending' },
+  { label: 'مدفوع', value: 'paid' },
+  { label: 'ملغى', value: 'canceled' }
+]
 export default function Table() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filter,setFilter] = useState<Enums<"payment_status_enum"> |null >();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { page, setPage } = useOrdersPagination();
   const limit = 8;
-  const { data: orders, isLoading } = useOrders({
+  const { data: orders, isLoading ,error } = useOrders({
     page,
     limit,
     search: {
@@ -25,8 +33,18 @@ export default function Table() {
           value: `%${searchQuery}%`
         }
       ]
-    }
+    },
+    filters:filter ?  {
+          'orders.status': [
+            {
+              operator: '=',
+              value: filter
+            }
+          ]
+        }: {}
   });
+  console.log("🚀 ~ Table ~ error:", error?.message)
+
 
   const queryClient = useQueryClient();
 
@@ -43,7 +61,15 @@ export default function Table() {
                 value: `%${searchQuery}%`
               }
             ]
-          }
+          },
+          filters:filter ?  {
+            'orders.status': [
+              {
+                operator: '=',
+                value: filter
+              }
+            ]
+          }: undefined
         })
       );
     }
@@ -109,7 +135,10 @@ export default function Table() {
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         isLoading={isLoading}
-      />
+        filterOptions={options}
+        filter={filter as Enums<"status_enum">}
+        setFilter={(value: string) => setFilter(value as Enums<"payment_status_enum">)}
+        />
     </div>
   );
 }

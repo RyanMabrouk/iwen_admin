@@ -21,8 +21,10 @@ import { SearchIcon } from 'lucide-react';
 import Pagination from '@mui/material/Pagination';
 import { Player } from '@lottiefiles/react-lottie-player';
 import DeleteBooks from '@/app/dashboard/books/ui/deleteBook';
+import SelectGeneric from './selectGeneric';
+import { useEffect } from 'react';
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue, TFilter extends string> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchQuery: string;
@@ -35,9 +37,12 @@ interface DataTableProps<TData, TValue> {
   total_counts?: number;
   tableName?: string;
   isLoading?: boolean;
+  filterOptions?: { label: string; value: TFilter }[];
+  filter?: TFilter;
+  setFilter?: (filter: TFilter) => void;
 }
 
-export function GenericTableData<TData, TValue>({
+export function GenericTableData<TData, TValue, TFilter extends string>({
   columns,
   data,
   searchQuery,
@@ -48,8 +53,11 @@ export function GenericTableData<TData, TValue>({
   selectedIds,
   total_counts,
   setSelectedIds,
-  isLoading
-}: DataTableProps<TData, TValue>) {
+  isLoading,
+  filterOptions,
+  filter,
+  setFilter
+}: DataTableProps<TData, TValue, TFilter>) {
   const table = useReactTable({
     data,
     columns,
@@ -61,6 +69,9 @@ export function GenericTableData<TData, TValue>({
     setPage(1);
     setSearchQuery(event.target.value);
   }
+  useEffect(() => {
+    setPage(1);
+  }, [filter, searchQuery,setPage]);
 
   return (
     <div dir="rtl" className="z-0 overflow-visible">
@@ -86,6 +97,17 @@ export function GenericTableData<TData, TValue>({
           </div>
         ) : (
           ''
+        )}
+        {filterOptions && filterOptions.length > 0 && (
+          <SelectGeneric
+            options={filterOptions}
+            placeholder="تصفية "
+            name="filter"
+            selectedValue={filter}
+            setSelectedValue={
+              setFilter as ((option: string) => void) | undefined
+            }
+          />
         )}
       </div>
 

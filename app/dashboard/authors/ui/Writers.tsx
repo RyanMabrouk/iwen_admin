@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 export default function Writers() {
   const { data: writers, isLoading } = useWriters({});
-
   return (
     <>
       <div className="flex items-start justify-between">
