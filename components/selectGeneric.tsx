@@ -1,10 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import {
-  SelectItem,
   Select,
   SelectTrigger,
-  SelectValue,
   SelectContent
 } from '@/components/ui/select';
 import { Trash } from 'lucide-react';
@@ -25,6 +23,7 @@ export default function SelectGeneric({
   handelDeleteOption?: (id: string) => void;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);  // State to track menu open/close
 
   useEffect(() => {
     if (selectedValue) {
@@ -38,14 +37,15 @@ export default function SelectGeneric({
 
   return (
     <Select
-      name={name}
       {...(selectedValue ? { value: selectedValue } : {})}
       onValueChange={(value) => {
-        // Only update the value if it's a valid selection
         if (setSelectedValue) {
           setSelectedValue(value);
         }
+        setIsOpen(false);  
       }}
+      open={isOpen}
+      onOpenChange={(open) => setIsOpen(open)} 
     >
       <SelectTrigger
         dir="rtl"
@@ -53,10 +53,13 @@ export default function SelectGeneric({
           selectedValue ? '' : 'text-gray-400'
         }`}
       >
-        <SelectValue
-          placeholder={placeholder}
-          {...(selectedValue ? { defaultValue: selectedValue } : {})}
-        />
+        <div>
+          {selectedValue
+            ? options.find((option) => option.value === selectedValue)?.label
+            : placeholder}
+        </div>
+        <input className="hidden" name={name} value={selectedValue} />
+
       </SelectTrigger>
       <SelectContent
         dir="rtl"
@@ -78,14 +81,14 @@ export default function SelectGeneric({
         {filteredOptions.length > 0 ? (
           filteredOptions.map((option) => (
             <div
-             
               key={option.value}
               onClick={() => {
                 if (setSelectedValue) {
                   setSelectedValue(option.value);
                 }
+                setIsOpen(false);  
               }}
-              className="relative px-4 py-1 line-clamp-1 w-full cursor-pointer overflow-hidden truncate break-words text-right"
+              className="relative hover:bg-stone-200 line-clamp-1 w-full cursor-pointer overflow-hidden truncate break-words px-4 py-1 text-right"
             >
               <span className="line-clamp-1 w-[11rem] overflow-hidden  truncate break-words text-right">
                 {option.label}
