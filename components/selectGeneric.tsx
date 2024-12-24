@@ -77,12 +77,17 @@ export default function SelectGeneric({
         </div>
         {filteredOptions.length > 0 ? (
           filteredOptions.map((option) => (
-            <SelectItem
+            <div
+             
               key={option.value}
-              value={option.value}
-              className="relative line-clamp-1 w-full cursor-pointer overflow-hidden truncate break-words text-right"
+              onClick={() => {
+                if (setSelectedValue) {
+                  setSelectedValue(option.value);
+                }
+              }}
+              className="relative px-4 py-1 line-clamp-1 w-full cursor-pointer overflow-hidden truncate break-words text-right"
             >
-              <span className="line-clamp-1 w-[10rem] overflow-hidden break-words text-right">
+              <span className="line-clamp-1 w-[11rem] overflow-hidden  truncate break-words text-right">
                 {option.label}
               </span>
 
@@ -98,7 +103,7 @@ export default function SelectGeneric({
                   <Trash className="size-4 hover:text-red-500" />
                 </div>
               )}
-            </SelectItem>
+            </div>
           ))
         ) : (
           <div className="p-2 text-gray-500">لا توجد نتائج</div>
