@@ -43,7 +43,6 @@ export default function Table() {
           ]
         }: {}
   });
-  console.log("🚀 ~ Table ~ error:", error?.message)
 
 
   const queryClient = useQueryClient();
@@ -138,6 +137,7 @@ export default function Table() {
         filterOptions={options}
         filter={filter as Enums<"status_enum">}
         setFilter={(value: string) => setFilter(value as Enums<"payment_status_enum">)}
+        tableName='orders'
         />
     </div>
   );

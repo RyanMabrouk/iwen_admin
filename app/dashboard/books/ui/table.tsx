@@ -108,6 +108,7 @@ export default function Table() {
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         isLoading={isLoading}
+        tableName='books'
       />
     </div>
   );

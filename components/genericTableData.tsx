@@ -23,6 +23,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import DeleteBooks from '@/app/dashboard/books/ui/deleteBook';
 import SelectGeneric from './selectGeneric';
 import { useEffect } from 'react';
+import DeleteOrders from '@/app/dashboard/orders/ui/deleteOrders';
 
 interface DataTableProps<TData, TValue, TFilter extends string> {
   columns: ColumnDef<TData, TValue>[];
@@ -56,7 +57,8 @@ export function GenericTableData<TData, TValue, TFilter extends string>({
   isLoading,
   filterOptions,
   filter,
-  setFilter
+  setFilter,
+  tableName
 }: DataTableProps<TData, TValue, TFilter>) {
   const table = useReactTable({
     data,
@@ -71,7 +73,7 @@ export function GenericTableData<TData, TValue, TFilter extends string>({
   }
   useEffect(() => {
     setPage(1);
-  }, [filter, searchQuery,setPage]);
+  }, [filter, searchQuery, setPage]);
 
   return (
     <div dir="rtl" className="z-0 overflow-visible">
@@ -88,16 +90,17 @@ export function GenericTableData<TData, TValue, TFilter extends string>({
             <SearchIcon size={15} />
           </button>
         </div>
-        {selectedIds?.length ?? 0 > 0 ? (
-          <div className="text-red-500">
-            <DeleteBooks
-              ids={selectedIds ?? []}
-              setSelectedIds={setSelectedIds}
-            />
+        {(selectedIds?.length ?? 0) > 0 && (
+          <div className=" justify-center flex items-center ml-2 text-red-500 mb-[-4px]">
+            {tableName === 'books' && (
+              <DeleteBooks ids={selectedIds ?? []} setSelectedIds={setSelectedIds} />
+            )}
+            {tableName === 'orders' && (
+              <DeleteOrders ids={selectedIds ?? []} setSelectedIds={setSelectedIds} />
+            )}
           </div>
-        ) : (
-          ''
         )}
+
         {filterOptions && filterOptions.length > 0 && (
           <SelectGeneric
             options={filterOptions}
